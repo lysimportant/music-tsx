@@ -104,13 +104,12 @@ const LCarousel = defineComponent({
     // 组件合成
     const node = this.dynamicArrar.map((item, index) => {
       return (
-        <RouterLink to='/'>
-        <img
-          style={`z-index: ${this.curretnIndex === index ? 1 : 0}`}
-          src={item.props.imgUrl}
-        />
+        <RouterLink to="/">
+          <img
+            style={`z-index: ${this.curretnIndex === index ? 1 : 0}`}
+            src={item.props.imgUrl}
+          />
         </RouterLink>
-
       )
     })
     // 小浮点

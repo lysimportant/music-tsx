@@ -13,7 +13,7 @@ const Home = defineComponent({
   render() {
     return (
       <div class="card">
-       <Suspense>
+        <Suspense>
           <HBanner></HBanner>
         </Suspense>
         <Suspense>

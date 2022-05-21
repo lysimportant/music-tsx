@@ -4,24 +4,26 @@ import LRecommend from '@/components/l-recommend/l-recommend'
 import './style/h-recommend'
 import { findRecommendSongList } from '@/api/home'
 const HRecommend = defineComponent({
-  name: "HRecommend",
+  name: 'HRecommend',
   components: {
     LMore
   },
-  async setup (props, { emit }) {
+  async setup(props, { emit }) {
     const { result }: any = await findRecommendSongList()
     return {
       result
     }
   },
-  render () {
-    return <>
-      <div class="h-recommend container">
-      {/* v-slots={{ footer: () => 'footer'}} */}
-        <LMore to='/song' title='推荐歌单'></LMore>
-        <LRecommend list={this.result}></LRecommend>
-      </div>
-    </>
+  render() {
+    return (
+      <>
+        <div class="h-recommend container">
+          {/* v-slots={{ footer: () => 'footer'}} */}
+          <LMore to="/song" title="推荐歌单"></LMore>
+          <LRecommend list={this.result}></LRecommend>
+        </div>
+      </>
+    )
   }
 })
 
