@@ -10,7 +10,6 @@ const HRecommend = defineComponent({
   },
   async setup (props, { emit }) {
     const { result }: any = await findRecommendSongList()
-    console.log(result)
     return {
       result
     }

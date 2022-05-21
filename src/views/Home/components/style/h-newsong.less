@@ -1,0 +1,49 @@
+.newsong-container {
+  .newsong-container-item {
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    padding: .2rem;
+    font-size: .4rem;
+    img {
+      width: 2rem;
+      height: 2rem;
+    }
+    .songname {
+      position: absolute;
+      top: .3rem;
+      left: 2.3rem;
+    }
+    .singername {
+      position: absolute;
+      bottom: .3rem;
+      left: 2.3rem;
+      color: #808080;
+      font-size: .3rem;
+    }
+    .newsong-bofang {
+      position: absolute;
+      top: 25%;
+      right: 7%;
+      font-size: 1rem;
+      color: rgba(0, 0, 0, 0.6);
+      display: none;
+    }
+    .songtime {
+      position: absolute;
+      top: .8rem;
+      right: .2rem;
+      font-size: .32rem;
+    }
+    &:hover {
+      background: rgba(0, 0, 0, 0.2);
+      .newsong-bofang {
+        display: block;
+      }
+      .songtime {
+        display: none;
+      }
+    }
+
+  }
+}
