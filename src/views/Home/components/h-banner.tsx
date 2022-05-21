@@ -11,6 +11,7 @@ const HBanner = defineComponent({
   async setup() {
     // 获取轮播图数据
     const { banners }: any = await findBanner()
+    console.log(banners, 'banners')
     return {
       banners
     }

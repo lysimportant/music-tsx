@@ -79,7 +79,7 @@ const LInput = defineComponent({
           onInput={($event: any) => this.inputChange($event.target!.value)}
           value={this.modelValue}
         ></input>
-        {this.clearable && (this.modelValue!.length) ? (
+        {this.clearable && this.modelValue!.length ? (
           <i
             onClick={() => this.clearClick()}
             class="iconfont l-quxiao search-clear"
@@ -87,7 +87,7 @@ const LInput = defineComponent({
         ) : (
           ''
         )}
-        {this.showPssword && (this.modelValue!.length) ? (
+        {this.showPssword && this.modelValue!.length ? (
           this.eyeFlag ? (
             <i
               onClick={() => (this.eyeFlag = !this.eyeFlag)}

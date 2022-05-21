@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "dayjs": "^1.11.2",
     "pinia": "^2.0.13",
     "pinia-persistedstate-plugin": "^0.1.0",
     "vue": "^3.2.33",
