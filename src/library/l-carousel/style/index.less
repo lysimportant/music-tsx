@@ -1,0 +1,56 @@
+.l-carousel {
+  position: relative;
+  &-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    img {
+      transition: all 0.3s linear;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      // fill cover contain scale-down
+      object-fit: fill;
+      border-radius: 2px;
+    }
+  }
+  .arrow {
+    position: absolute;
+    top: 45%;
+    font-size: 20px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 100%;
+    z-index: 999;
+    &-left {
+      left: 15px;
+      &:hover {
+        background: rgba(255, 255, 255, 0.6);
+      }
+    }
+    &-right {
+      right: 15px;
+      &:hover {
+        background: rgba(255, 255, 255, 0.6);
+      }
+    }
+  }
+  .orgin {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%, -0%);
+    z-index: 999;
+    li {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: rgba(255, 255, 255, 0.3);
+      margin: 0 10px;
+      border-radius: 100%;
+    }
+    .active {
+      background-color: rgba(255, 255, 255);
+    }
+  }
+}

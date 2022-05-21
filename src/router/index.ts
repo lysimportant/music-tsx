@@ -4,7 +4,14 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('../views/Layout')
+      component: () => import('../views/Layout'),
+      redirect: '/recommend',
+      children: [
+        {
+          path: '/recommend',
+          component: () => import('@/views/Home/Home')
+        }
+      ]
     }
   ]
 })

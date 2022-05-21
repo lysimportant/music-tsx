@@ -17,7 +17,7 @@ const LHeader = defineComponent({
       search
     }
   },
-  render () {
+  render() {
     return (
       <>
         <div class="l-header">
@@ -49,13 +49,13 @@ const LHeader = defineComponent({
           <div class="right">
             <LInput showPssword clearable active v-model={this.search}></LInput>
             <LButton onClick={() => this.btnClick()}>
-              <i class='iconfont l-sousuo search'></i>
+              <i class="iconfont l-sousuo search"></i>
               {/* <svg class="icon search" aria-hidden="true">
                 <use xlinkHref="#l-sousuo"></use>
               </svg> */}
             </LButton>
             <div class={'header-user'}>
-              <i class='iconfont l-user'></i>
+              <i class="iconfont l-user"></i>
               <span> 请先登录</span>
             </div>
           </div>

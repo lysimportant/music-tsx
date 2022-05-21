@@ -1,5 +1,6 @@
 import { defineComponent } from 'vue'
 import LHeader from '@/components/l-header/l-header'
+import { RouterView } from 'vue-router'
 const Layout = defineComponent({
   name: 'Layout',
   setup() {},
@@ -9,7 +10,9 @@ const Layout = defineComponent({
         <div class="app-header">
           <LHeader></LHeader>
         </div>
-        <div class="app-body container"></div>
+        <div class="app-body clearfix">
+          <RouterView></RouterView>
+        </div>
       </>
     )
   }

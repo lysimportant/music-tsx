@@ -24,7 +24,7 @@
         list-style: none;
         font-size: 0.32rem;
         a {
-          padding: 0 .3rem;
+          padding: 0 0.3rem;
           &:hover {
             color: skyblue;
           }
@@ -34,17 +34,21 @@
   }
   .center {
     span {
-      transition: all .3s linear;
+      transition: all 0.3s linear;
       cursor: pointer;
-        font-size: .32rem;
-        height: .6rem;
-        line-height: 1.5rem;
-        background-image:-webkit-linear-gradient(right, skyblue, pink);//开始方向，渐变颜色
-        -webkit-background-clip:text;//以盒子内的文字作为裁剪区域向外裁剪，文字之外的区域都将被裁剪掉。
-        -webkit-text-fill-color:transparent;//把文字变透明
-        &:hover {
-          font-size: .4rem;
-        }
+      font-size: 0.32rem;
+      height: 0.6rem;
+      line-height: 1.5rem;
+      background-image: -webkit-linear-gradient(
+        right,
+        skyblue,
+        pink
+      ); //开始方向，渐变颜色
+      -webkit-background-clip: text; //以盒子内的文字作为裁剪区域向外裁剪，文字之外的区域都将被裁剪掉。
+      -webkit-text-fill-color: transparent; //把文字变透明
+      &:hover {
+        font-size: 0.4rem;
+      }
     }
   }
   .right {
@@ -52,29 +56,29 @@
     align-items: center;
     .l-input {
       margin-right: -0.04rem;
-      font-size: .32rem;
-      padding-left: .2rem;
+      font-size: 0.32rem;
+      padding-left: 0.2rem;
       z-index: 1;
     }
     .l-button {
       .l-sousuo:before {
         position: absolute;
-        top: .02rem;
-        left: .32rem;
+        top: 0.02rem;
+        left: 0.32rem;
         color: #000;
-        font-size: .5rem;
+        font-size: 0.5rem;
       }
     }
     .header-user {
       cursor: pointer;
       text-align: center;
-      padding: 0 .6rem;
+      padding: 0 0.6rem;
       line-height: 1.6rem;
-      .l-user:before  {
-        font-size: .6rem;
+      .l-user:before {
+        font-size: 0.6rem;
       }
       span {
-  font-size: .32rem;
+        font-size: 0.32rem;
       }
     }
   }

@@ -9,13 +9,13 @@ function reset() {
     html.style.fontSize = '50px'
     pc_andorid.value = true
   } else {
-    html.style.fontSize = '36px'
-
     pc_andorid.value = false
   }
   if (pc_andorid.value) {
-    import('@/assets/style/index.css')
+    import('@/assets/style/index.less')
   } else {
+    import('@/assets/style/index.less')
+
     // window.location.href = "https://www.lianghj.top"
   }
 }

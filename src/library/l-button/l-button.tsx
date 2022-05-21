@@ -21,7 +21,7 @@ const LButton = defineComponent({
     },
     size: {
       type: String,
-      default: "middle"
+      default: 'middle'
     }
   },
   render() {

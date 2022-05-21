@@ -1,4 +1,4 @@
-@import url('./nromalize.css');
+@import url('./nromalize.less');
 * {
   padding: 0;
   margin: 0;
@@ -12,6 +12,11 @@ input {
   outline: none;
   border: 0;
 }
+li,
+dl,
+ol {
+  list-style: none;
+}
 body,
 html,
 #app {
@@ -22,11 +27,13 @@ html,
 }
 
 .container {
-  width: 28rem;
+  width: 28rem !important;
   margin: auto;
-  background-color: pink;
 }
-
+.lager-container {
+  width: 100% !important;
+  margin: auto;
+}
 a {
   text-decoration: none;
   color: black;
@@ -38,4 +45,18 @@ a {
   fill: currentColor;
   overflow: hidden;
   color: #000;
+}
+.app-body {
+  margin-top: 0.5rem;
+}
+.clearfix:before,
+.clearfix:after {
+  content: '';
+  display: table; /*转换成表格*/
+}
+.clearfix:after {
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
 }
