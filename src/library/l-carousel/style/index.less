@@ -1,17 +1,26 @@
 .l-carousel {
   position: relative;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .3);
+  // background: transparent;
   &-container {
     display: flex;
     align-items: center;
     height: 100%;
-    img {
-      transition: all 0.3s linear;
+  // background: transparent;
+    a {
       position: absolute;
       width: 100%;
       height: 100%;
-      // fill cover contain scale-down
-      object-fit: fill;
-      border-radius: 2px;
+      img {
+        transition: all 0.3s linear;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 9;
+        // fill cover contain scale-down
+        object-fit: fill;
+        border-radius: 5px;
+      }
     }
   }
   .arrow {
@@ -42,6 +51,7 @@
     transform: translate(-50%, -0%);
     z-index: 999;
     li {
+      cursor: pointer;
       display: inline-block;
       width: 10px;
       height: 10px;

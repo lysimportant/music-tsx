@@ -4,7 +4,7 @@ const LInput = defineComponent({
   name: 'LInput',
   props: {
     modelValue: {
-      type: [String, Number],
+      type: [String],
       default: ''
     },
     placeholder: {
@@ -76,10 +76,10 @@ const LInput = defineComponent({
           class={`l-input ${
             this.active && this.activeInput ? 'l-input-active' : ''
           }`}
-          onInput={$event => this.inputChange($event.target!.value)}
+          onInput={($event: any) => this.inputChange($event.target!.value)}
           value={this.modelValue}
         ></input>
-        {this.clearable && (this.modelValue.length as string) ? (
+        {this.clearable && (this.modelValue!.length) ? (
           <i
             onClick={() => this.clearClick()}
             class="iconfont l-quxiao search-clear"
@@ -87,7 +87,7 @@ const LInput = defineComponent({
         ) : (
           ''
         )}
-        {this.showPssword && (this.modelValue.length as string) ? (
+        {this.showPssword && (this.modelValue!.length) ? (
           this.eyeFlag ? (
             <i
               onClick={() => (this.eyeFlag = !this.eyeFlag)}

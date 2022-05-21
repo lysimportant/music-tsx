@@ -1,4 +1,5 @@
 import { defineComponent, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import './style'
 const LCarousel = defineComponent({
   name: 'LCarousel',
@@ -18,12 +19,16 @@ const LCarousel = defineComponent({
     duration: {
       type: Number,
       default: 3
+    },
+    banner: {
+      type: Object,
+      default: () => ({})
     }
   },
-  setup(props, { slots }) {
+  setup(props, { slots }: any) {
     // 获取动态插槽
     const panels = slots.default()
-    const dynamicArrar = []
+    const dynamicArrar: any[] = []
     panels.forEach((item: any) => {
       if (item.type.name) {
         dynamicArrar.push(item)
@@ -50,80 +55,92 @@ const LCarousel = defineComponent({
         }
       }, props.duration * 1000)
     }
-    // 清空
+    // 清空 加载时线清除再到下面开启
     if (timer) {
       clearInterval(timer)
     }
-    //
+    // props 是否开始自动
     if (props.autoPlay) {
       autoPlayer()
+    }
+    // 鼠标进入清除自动播放
+    const mouseenter = () => {
+      showArrow.value = true
+      clearInterval(timer)
+    }
+    // 鼠标离开添加自动播放
+    const mouseleave = () => {
+      showArrow.value = false
+      autoPlayer()
+    }
+    // 上一页
+    const onPage = () => {
+      if (curretnIndex.value <= 0) {
+        curretnIndex.value = dynamicArrar.length
+      }
+      curretnIndex.value--
+    }
+    // 下一页
+    const downPage = () => {
+      if (curretnIndex.value >= dynamicArrar.length - 1) {
+        curretnIndex.value = 0
+      } else {
+        curretnIndex.value++
+      }
     }
     return {
       curretnIndex,
       showArrow,
       timer,
+      dynamicArrar,
       autoPlayer,
-      dynamicArrar
+      mouseenter,
+      mouseleave,
+      onPage,
+      downPage
     }
   },
   render() {
     // 组件合成
     const node = this.dynamicArrar.map((item, index) => {
       return (
-        <>
-          <img
-            style={`z-index: ${this.curretnIndex === index ? 1 : 0}`}
-            src={item.props.imgUrl}
-            alt=""
-          />
-        </>
+        <RouterLink to='/'>
+        <img
+          style={`z-index: ${this.curretnIndex === index ? 1 : 0}`}
+          src={item.props.imgUrl}
+        />
+        </RouterLink>
+
       )
     })
+    // 小浮点
     const lis = this.dynamicArrar.map((item, index) => {
       return (
-        <>
-          <li
-            onClick={() => {
-              this.curretnIndex = index
-            }}
-            class={`${this.curretnIndex === index ? 'active' : ''}`}
-          />
-        </>
+        <li
+          onClick={() => {
+            this.curretnIndex = index
+          }}
+          class={`${this.curretnIndex === index ? 'active' : ''}`}
+        />
       )
     })
 
     return (
       <div
         class="l-carousel container"
-        onMouseenter={() => {
-          ;(this.showArrow = true), clearInterval(this.timer)
-        }}
-        onMouseleave={() => {
-          ;(this.showArrow = false), this.autoPlayer()
-        }}
+        onMouseenter={() => this.mouseenter()}
+        onMouseleave={() => this.mouseleave()}
         style={`height:${this.height}px; width: ${this.width}px !important}`}
       >
         <div class={`l-carousel-container`}>{node}</div>
-        {/* 后退/ 前进 操作 */}
         {this.showArrow ? (
           <>
             <i
-              onClick={() => {
-                if (this.curretnIndex <= 0) {
-                  this.curretnIndex = this.dynamicArrar.length
-                }
-                this.curretnIndex--
-              }}
+              onClick={() => this.onPage()}
               class={`arrow iconfont l-31fanhui1 arrow-left`}
             ></i>
             <i
-              onClick={() => {
-                if (this.curretnIndex >= this.dynamicArrar.length - 1) {
-                  this.curretnIndex = 0
-                } else {
-                  this.curretnIndex++
-                }
-              }}
+              onClick={() => this.downPage()}
               class={`arrow iconfont l-31fanhui2 arrow-right`}
             ></i>
           </>

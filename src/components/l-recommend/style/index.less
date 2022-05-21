@@ -1,0 +1,43 @@
+.l-recommend-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  &-item {
+    position: relative;
+    margin: 10px 20px;
+    width: 240px;
+    img {
+      cursor: pointer;
+      width: 240px;
+      height: 220px;
+      border-radius: .2rem;
+    }
+    p {
+      font-size: .32rem;
+    }
+    &:hover {
+      i {
+        display: block;
+        color: rgba(0, 0, 0, 0.6);
+      }
+    }
+    i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 70px;
+      transform: translate(-50%, -80%);
+      display: none;
+    }
+    .playcount {
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: #FFFF;
+      font-size: .4rem;
+      background: rgba(0, 0, 0, .5);
+      padding: .1rem .2rem;
+      border-radius: .2rem;
+    }
+  }
+}

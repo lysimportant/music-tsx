@@ -17,7 +17,7 @@ const HBanner = defineComponent({
   },
   render() {
     return (
-      <LCarousel autoPlay height={500} width={200}>
+      <LCarousel banner={this.banners} autoPlay height={400} width={200}>
         {this.banners.map((item: any, index: number) => {
           return <LCarouselItem imgUrl={item.imageUrl}></LCarouselItem>
         })}

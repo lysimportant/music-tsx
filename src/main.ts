@@ -4,6 +4,7 @@ import { createPersistedState } from 'pinia-persistedstate-plugin'
 import App from './App.vue'
 import router from './router'
 import { reset } from '@/plugins/screen-adaptation'
+import './plugins/bg'
 reset()
 // app的创建
 const app = createApp(App)
