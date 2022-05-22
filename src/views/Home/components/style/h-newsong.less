@@ -1,9 +1,10 @@
 .newsong-container {
   .newsong-container-item {
+    cursor: pointer;
     position: relative;
     display: inline-block;
-    width: 50%;
-    padding: 0.2rem;
+    width: 48%;
+    margin: 0.2rem;
     font-size: 0.4rem;
     img {
       width: 2rem;
@@ -23,11 +24,26 @@
     }
     .newsong-bofang {
       position: absolute;
-      top: 25%;
-      right: 7%;
+      top: 24%;
+      left: 3.8%;
       font-size: 1rem;
-      color: rgba(0, 0, 0, 0.6);
+      color: rgba(0, 0, 0, .8);
       display: none;
+      &:hover {
+        color: red!important;
+      }
+    }
+    .newsong-shoucang  {
+      cursor: pointer;
+      position: absolute;
+      top: 30%;
+      right: 7%;
+      font-size: .5rem;
+      color: rgba(0, 0, 0, .8);
+      display: none;
+      &:hover {
+        color: red!important;
+      }
     }
     .songtime {
       position: absolute;
@@ -37,7 +53,7 @@
     }
     &:hover {
       background: rgba(0, 0, 0, 0.2);
-      .newsong-bofang {
+      .newsong-bofang,.newsong-shoucang {
         display: block;
       }
       .songtime {

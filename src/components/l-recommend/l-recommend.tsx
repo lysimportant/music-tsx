@@ -23,7 +23,7 @@ const LRecommend = defineComponent({
                 this.$router.push(`/`)
               }}
             >
-              <img src={item.picUrl} alt="" />
+              <img v-lazy={item.picUrl} alt="" />
               <p class={`ellipsis`}>{item.name}</p>
               <i class={`iconfont l-24gf-playCircle`}></i>
               <span class={`playcount`}>{playCountFormat(item.playCount)}</span>

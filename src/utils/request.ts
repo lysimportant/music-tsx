@@ -27,7 +27,7 @@ const network = (config: AxiosRequestConfig) => {
   return instance(config)
 }
 
-export default function (url: string, method = 'get', data?: any) {
+export default function (url: string,  data?: any, method = 'get') {
   return network({
     method,
     url,

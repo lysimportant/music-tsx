@@ -3,11 +3,11 @@
   display: flex;
   flex-wrap: wrap;
   &-item {
-    position: relative;
+      cursor: pointer;
+      position: relative;
     margin: 10px 20px;
     width: 240px;
     img {
-      cursor: pointer;
       width: 240px;
       height: 220px;
       border-radius: 0.2rem;
@@ -23,11 +23,14 @@
     }
     i {
       position: absolute;
-      top: 50%;
+      top: 57%;
       left: 50%;
       font-size: 70px;
       transform: translate(-50%, -80%);
       display: none;
+      &:hover {
+        color: red;
+      }
     }
     .playcount {
       position: absolute;
