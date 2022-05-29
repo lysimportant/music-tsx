@@ -160,7 +160,7 @@ export default defineComponent({
               title="显示/隐藏列表"
               onClick={() => (this.showList = !this.showList)}
               class={`${
-                this.showList ? 'music-list-open-deg' : 'music-list-close-deg'
+                this.showList ? 'music-list-close-deg' : 'music-list-open-deg'
               } iconfont music-arrow-left l-31fanhui1`}
             ></i>
           ) : (

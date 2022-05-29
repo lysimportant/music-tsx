@@ -14,6 +14,10 @@ const router = createRouter({
         {
           path: '/newsong',
           component: () => import('@/views/NewMusic/NewMusic')
+        },
+        {
+          path: '/leaderboard',
+          component: () => import('@/views/LeaderBoard/LeaderBoard')
         }
       ]
     }

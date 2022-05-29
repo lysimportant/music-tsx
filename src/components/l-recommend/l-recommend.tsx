@@ -25,7 +25,7 @@ const LRecommend = defineComponent({
                 this.$emit('itemClick', item)
               }}
             >
-              <img src={item.picUrl} alt="" />
+              <img src={item.picUrl ?? item.coverImgUrl} alt="" />
               <p class={`ellipsis`}>{item.name}</p>
               <i class={`iconfont l-24gf-playCircle`}></i>
               {item.playCount > 0 ? (

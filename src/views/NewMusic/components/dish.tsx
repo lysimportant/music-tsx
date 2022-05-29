@@ -50,11 +50,18 @@ const Dish = defineComponent({
         </div>
         <div class="dish-container">
           {this.musicList.map((item: any) => {
-            return <div onClick={() => {this.playMusic(item.id)}} class="dish-container-item">
-            <img src={item.picUrl} alt="" />
-            <p class={`ellipsis`}>{item.name}</p>
-            <span>{item.artist.name}</span>
-          </div>
+            return (
+              <div
+                onClick={() => {
+                  this.playMusic(item.id)
+                }}
+                class="dish-container-item"
+              >
+                <img src={item.picUrl} alt="" />
+                <p class={`ellipsis`}>{item.name}</p>
+                <span>{item.artist.name}</span>
+              </div>
+            )
           })}
         </div>
       </>

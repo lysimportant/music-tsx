@@ -15,19 +15,19 @@ export const arr = [
     name: '最新音乐'
   },
   {
-    path: '',
+    path: '/leaderboard',
     name: '排行榜'
   },
   {
-    path: '',
+    path: '/songlist',
     name: '歌单'
   },
   {
-    path: '',
+    path: '/singer',
     name: '歌手'
   },
   {
-    path: '',
+    path: '/mv',
     name: 'MV'
   }
 ]
