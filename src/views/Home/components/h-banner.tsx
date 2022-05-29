@@ -11,6 +11,7 @@ const HBanner = defineComponent({
   async setup() {
     // 获取轮播图数据
     const { banners }: any = await findBanner()
+    console.log(banners)
     return {
       banners
     }
@@ -18,9 +19,10 @@ const HBanner = defineComponent({
   render() {
     return (
       <LCarousel banner={this.banners} autoPlay height={400} width={200}>
-        {this.banners.map((item: any, index: number) => {
-          return <LCarouselItem imgUrl={item.imageUrl}></LCarouselItem>
-        })}
+        {this.banners &&
+          this.banners.map((item: any, index: number) => {
+            return <LCarouselItem imgUrl={item.imageUrl}></LCarouselItem>
+          })}
       </LCarousel>
     )
   }

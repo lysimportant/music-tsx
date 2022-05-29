@@ -27,10 +27,13 @@ const HNewSong = defineComponent({
   render() {
     return (
       <div class={`newsong-container container`}>
-        <LMore title="新音乐" to="/"></LMore>
+        <LMore title="新音乐" to="/newsong"></LMore>
         {this.result.map(item => {
           return (
-            <div class="newsong-container-item" onClick={() => this.playMusic(item)}>
+            <div
+              class="newsong-container-item"
+              onClick={() => this.playMusic(item)}
+            >
               <img v-lazy={item.picUrl} alt="" />
               <span class={`songname`}>{item.name}</span>
               <span class={`singername`}>

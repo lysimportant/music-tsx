@@ -8,12 +8,12 @@
   height: 60px;
   background-color: #fff;
   display: flex;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   &:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, .8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   }
   margin: 0 0 20px;
-  z-index: 999999999999999;
+  z-index: 99;
   &-left {
     position: relative;
     height: 60px;
@@ -26,7 +26,7 @@
       height: 80px;
       object-fit: cover;
       border-radius: 100%;
-      box-shadow:  0 0 10px rgba(0, 0, 0, .7);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
     }
   }
   &-center {
@@ -49,6 +49,17 @@
         font-size: 12px;
         color: #4d4545;
       }
+    }
+    .el-slider {
+      width: 87%;
+    }
+    .el-slider__button {
+      bottom: 10px;
+      left: 9px;
+      position: absolute;
+    }
+    .el-popper {
+      z-index: 9999999999999999999999999999999999999999999999999999999999999;
     }
     .music-progress {
       margin-top: 10px;
@@ -91,74 +102,107 @@
   }
   &-right {
     position: relative;
-    width: 200px;
+    width: 180px;
     height: 60px;
+    display: flex;
+    align-items: center;
+    z-index: -99;
+    .box {
+      position: relative;
+      bottom: 110px;
+      left: 14px;
+      z-index: 999999;
+      background-color: #ccc;
+      padding: 20px 0 10px;
+      border-radius: 10px;
+      .el-slider__button {
+        bottom: 10px;
+        left: 9px;
+        position: absolute;
+      }
+    }
+
     span {
       cursor: pointer;
     }
+    .music-volume {
+      cursor: pointer;
+      position: absolute;
+      top: 18px;
+      font-size: 23px;
+      left: 25px;
+      color: #d9d9d9;
+      &:hover {
+        color: #000;
+      }
+    }
     .music-back {
-      &::after, &::before {
+      &::after,
+      &::before {
         content: '';
         border: 12px solid transparent;
-        border-bottom: 20px solid #D9D9D9;
+        border-bottom: 20px solid #d9d9d9;
         position: absolute;
         top: 50%;
-        left: 25px;
+        left: 65px;
         transform: translate(-50%, -50%) rotate(-90deg);
       }
       &::before {
         content: '';
-        left: 35px!important;
-      //   border: 10px solid transparent;
-      //   border-bottom: 20px solid #D9D9D9;
-      //   position: absolute;
+        left: 75px !important;
+        //   border: 10px solid transparent;
+        //   border-bottom: 20px solid #D9D9D9;
+        //   position: absolute;
         // top: 11px;
-      //   transform: rotate(-90deg);
+        //   transform: rotate(-90deg);
       }
       &:hover {
-        &::after, &::before {
-          border-bottom: 20px solid #000!important;
+        &::after,
+        &::before {
+          border-bottom: 20px solid #000 !important;
         }
       }
     }
     .music-pause {
-      &::after, &::before{
+      &::after,
+      &::before {
         &:hover {
-          border-color: #000!important;
+          border-color: #000 !important;
         }
+        z-index: 999999;
         position: absolute;
         top: 50%;
-        left: 48%;
+        left: 66%;
         content: '';
         border: 12px solid transparent;
-        border-top: 12px solid #D9D9D9;
-        border-left: 3px solid #D9D9D9;
-        border-right: 3px solid #D9D9D9;
-        border-bottom: 10px solid #D9D9D9;
+        border-top: 12px solid #d9d9d9;
+        border-left: 4px solid #d9d9d9;
+        border-right: 4px solid #d9d9d9;
+        border-bottom: 10px solid #d9d9d9;
         border-radius: 12px;
-        position: absolute;
         transform: translate(-50%, -50%) rotate(180deg);
       }
       &::before {
-        left: 53%;
+        left: 61%;
       }
       &:hover {
-        &::after, &::before {
+        &::after,
+        &::before {
           border-top: 12px solid #000;
-          border-left: 3px solid #000;
-          border-right: 3px solid #000;
+          border-left: 4px solid #000;
+          border-right: 4px solid #000;
           border-bottom: 10px solid #000;
         }
       }
     }
     .music-start {
-      &::after{
+      &::after {
         position: absolute;
         top: 50%;
-        left: 58%;
+        left: 68%;
         content: '';
         border: 12px solid transparent;
-        border-bottom: 20px solid #D9D9D9;
+        border-bottom: 20px solid #d9d9d9;
         position: absolute;
         transform: translate(-50%, -50%) rotate(90deg);
       }
@@ -169,10 +213,11 @@
       }
     }
     .music-forward {
-      &::after, &::before {
+      &::after,
+      &::before {
         content: '';
         border: 12px solid transparent;
-        border-bottom: 20px solid #D9D9D9;
+        border-bottom: 20px solid #d9d9d9;
         position: absolute;
         top: 50%;
         right: -8px;
@@ -188,24 +233,32 @@
         // transform: rotate(90deg);
       }
       &:hover {
-        &::after,&::before {
+        &::after,
+        &::before {
           border-bottom: 20px solid #000;
         }
       }
     }
   }
-  .l-31fanhui1, .l-31fanhui2 {
-    transition: all .3s linear;
+  .l-31fanhui1,
+  .l-31fanhui2 {
+    transition: all 0.3s linear;
     cursor: pointer;
     font-size: 40px;
     line-height: 60px;
     color: #ccc;
     &:hover {
-      color: #000!important;
+      color: #000 !important;
     }
   }
   .music-deg {
     transform: rotate(180deg);
+  }
+  .music-list-close-deg {
+    transform: rotate(270deg);
+  }
+  .music-list-open-deg {
+    transform: rotate(90deg);
   }
   .music_play {
     animation: playimge 2s infinite linear;
@@ -218,5 +271,4 @@
       transform: rotate(360deg);
     }
   }
-
 }

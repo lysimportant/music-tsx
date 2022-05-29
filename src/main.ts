@@ -5,13 +5,16 @@ import App from './App.vue'
 import router from './router'
 import registerDirective from './plugins/registerDirective'
 import { reset } from '@/plugins/screen-adaptation'
+import registerComponents from './plugins/registerComponents'
 import './plugins/bg'
 reset()
+window.localStorage.clear()
 // app的创建
 const app = createApp(App)
 // 集中式状态管理 pinia
 const pinia = createPinia()
 app.use(registerDirective)
+registerComponents(app)
 // pinia 使用 持久化插件
 pinia.use(createPersistedState())
 // 注册 pinia

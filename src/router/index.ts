@@ -10,6 +10,10 @@ const router = createRouter({
         {
           path: '/recommend',
           component: () => import('@/views/Home/Home')
+        },
+        {
+          path: '/newsong',
+          component: () => import('@/views/NewMusic/NewMusic')
         }
       ]
     }

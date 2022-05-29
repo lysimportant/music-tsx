@@ -1,8 +1,11 @@
 import axios from 'axios'
 import type { AxiosRequestConfig } from 'axios'
+// import {} from ''
 const network = (config: AxiosRequestConfig) => {
   const instance = axios.create({
-    baseURL: 'https://lianghj.top:3000',
+    // http://localhost:3000
+    baseURL: 'http://localhost:3000/',
+    // baseURL: 'http://120.78.137.246:3000/',
     timeout: 5000
   })
 
@@ -27,7 +30,7 @@ const network = (config: AxiosRequestConfig) => {
   return instance(config)
 }
 
-export default function (url: string,  data?: any, method = 'get') {
+export default function (url: string, data?: any, method = 'get') {
   return network({
     method,
     url,

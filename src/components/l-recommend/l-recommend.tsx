@@ -9,6 +9,7 @@ const LRecommend = defineComponent({
       default: () => []
     }
   },
+  emits: ['itemClick'],
   setup(props, { emit }) {
     return {}
   },
@@ -21,12 +22,19 @@ const LRecommend = defineComponent({
               class="l-recommend-container-item"
               onClick={() => {
                 this.$router.push(`/`)
+                this.$emit('itemClick', item)
               }}
             >
-              <img v-lazy={item.picUrl} alt="" />
+              <img src={item.picUrl} alt="" />
               <p class={`ellipsis`}>{item.name}</p>
               <i class={`iconfont l-24gf-playCircle`}></i>
-              <span class={`playcount`}>{playCountFormat(item.playCount)}</span>
+              {item.playCount > 0 ? (
+                <span class={`playcount`}>
+                  {playCountFormat(item.playCount)}
+                </span>
+              ) : (
+                ''
+              )}
             </div>
           )
         })}

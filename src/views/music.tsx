@@ -2,24 +2,29 @@ import { defineComponent, watch, ref } from 'vue'
 import { useMusic } from '@/stores/music'
 import LMusic from '@/library/l-music/l-music'
 export default defineComponent({
-  name: "Music",
+  name: 'Music',
   components: {
     LMusic
   },
-  setup () {
+  setup() {
     const store = useMusic()
     const audio = ref()
-    watch(() => store.list, () => {
-      audio.value = store.list
-      console.log(audio.value)
-    }, { immediate: true })
+    watch(
+      () => store.list,
+      () => {
+        audio.value = store.list
+      },
+      { immediate: true }
+    )
     return {
       audio
     }
   },
-  render () {
-    return <>
-      <LMusic audio={this.audio}></LMusic>
-    </>
+  render() {
+    return (
+      <>
+        <LMusic audio={this.audio}></LMusic>
+      </>
+    )
   }
 })

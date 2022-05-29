@@ -1,10 +1,10 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { findMusicDetail, findMusicLyrics, findMusicURL} from '@/api/music'
+import { findMusicDetail, findMusicLyrics, findMusicURL } from '@/api/music'
 interface stateType {
   list: AudioType[] // 歌曲存放的数组
 }
-type AudioType  = {
+type AudioType = {
   id: string
   picUrl: string
   singerName: string
@@ -12,18 +12,23 @@ type AudioType  = {
   url: string
   duration: number
 }
+interface State {
+  list: []
+  isPlay: boolean
+}
 export const useMusic = defineStore('useMusic', {
-  state (): stateType {
+  state(): State {
     return {
-      list: []
+      list: [],
+      isPlay: false
     }
   },
   actions: {
-    async playMusic (ids: [number]) {
+    async playMusic(ids: [number]) {
       const audio: AudioType = {}
       const list = []
       const lrc = ref()
-      const { songs: detail} = await findMusicDetail(ids)
+      const { songs: detail } = await findMusicDetail(ids)
       const { data: url } = await findMusicURL(ids)
       console.log(url, detail)
       const currentMsuic = this.list.map(item => item.id)
@@ -37,13 +42,16 @@ export const useMusic = defineStore('useMusic', {
         audio.songName = item.name
         audio.url = url[index].url
         let obj = this.list.find(item => item.id === audio.id)
-        if (!obj) {
+        if (!obj && this.isPlay) {
           const obj = JSON.stringify(audio)
           list.push(JSON.parse(obj))
+          this.list = [...this.list, ...list]
+        } else {
+          const obj = JSON.stringify(audio)
+          list.unshift(JSON.parse(obj))
+          this.list = [...list, ...this.list]
         }
       })
-      this.list = [...this.list, ...list]
     }
   }
 })
-

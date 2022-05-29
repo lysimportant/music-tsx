@@ -1,6 +1,6 @@
 .newsong-container {
+  margin-bottom: 200px;
   .newsong-container-item {
-    cursor: pointer;
     position: relative;
     display: inline-block;
     width: 48%;
@@ -9,6 +9,7 @@
     img {
       width: 2rem;
       height: 2rem;
+      cursor: pointer;
     }
     .songname {
       position: absolute;
@@ -23,26 +24,28 @@
       font-size: 0.3rem;
     }
     .newsong-bofang {
+      cursor: pointer;
       position: absolute;
+      cursor: pointer;
       top: 24%;
       left: 3.8%;
       font-size: 1rem;
-      color: rgba(0, 0, 0, .8);
+      color: rgba(0, 0, 0, 0.8);
       display: none;
       &:hover {
-        color: red!important;
+        color: red !important;
       }
     }
-    .newsong-shoucang  {
+    .newsong-shoucang {
       cursor: pointer;
       position: absolute;
       top: 30%;
       right: 7%;
-      font-size: .5rem;
-      color: rgba(0, 0, 0, .8);
+      font-size: 0.5rem;
+      color: rgba(0, 0, 0, 0.8);
       display: none;
       &:hover {
-        color: red!important;
+        color: red !important;
       }
     }
     .songtime {
@@ -53,7 +56,8 @@
     }
     &:hover {
       background: rgba(0, 0, 0, 0.2);
-      .newsong-bofang,.newsong-shoucang {
+      .newsong-bofang,
+      .newsong-shoucang {
         display: block;
       }
       .songtime {

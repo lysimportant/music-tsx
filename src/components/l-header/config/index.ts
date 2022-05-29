@@ -3,15 +3,15 @@ import imgUrl from '@/assets/image/logo.png'
 // 列表集中处理
 export const arr = [
   {
-    path: '',
+    path: '/',
     name: imgUrl
   },
   {
-    path: '',
+    path: '/recommend',
     name: '个性推荐'
   },
   {
-    path: '',
+    path: '/newsong',
     name: '最新音乐'
   },
   {

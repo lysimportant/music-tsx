@@ -1,15 +1,22 @@
-import { defineComponent, Suspense } from 'vue'
+import { defineComponent, Suspense, ref } from 'vue'
 import HBanner from './components/h-banner'
 import HRecommend from './components/h-recommend'
 import HNewSong from './components/h-newsong'
+import lSilder from '@/library/l-slider/l-silder'
 const Home = defineComponent({
   name: 'Home',
   components: {
     HBanner,
     HRecommend,
-    HNewSong
+    HNewSong,
+    lSilder
   },
-  setup() {},
+  setup() {
+    const val = ref(0)
+    return {
+      val
+    }
+  },
   render() {
     return (
       <div class="card">

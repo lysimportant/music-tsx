@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Music from './views/music';
+import Music from './views/music'
 </script>
 
 <template>
