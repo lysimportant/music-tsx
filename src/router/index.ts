@@ -18,6 +18,10 @@ const router = createRouter({
         {
           path: '/leaderboard',
           component: () => import('@/views/LeaderBoard/LeaderBoard')
+        },
+        {
+          path: '/songlist',
+          component: () => import('@/views/SongList/SongList')
         }
       ]
     }

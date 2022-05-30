@@ -13,6 +13,15 @@
   /*大设置或检索伸缩盒对象的子元素的排列方式*/
   -webkit-box-orient: vertical;
 }
+.ellipsis-3 {
+  overflow: hidden;
+  text-overflow: ellipsis; /* 弹性伸缩盒子模型显示*/
+  display: -webkit-box;
+  /* 限制在一个块元素显示的文本的行数*/
+  -webkit-line-clamp: 3;
+  /*大设置或检索伸缩盒对象的子元素的排列方式*/
+  -webkit-box-orient: vertical;
+}
 p {
   padding: 0;
   margin: 0;
@@ -94,6 +103,9 @@ img {
 .songTypeActive {
   color: #409eff;
 }
+.active {
+  color: #409eff;
+}
 .playnew {
   position: absolute;
   top: 57%;
@@ -112,3 +124,4 @@ img {
   transform: translate(-50%, -50%);
   display: none;
 }
+

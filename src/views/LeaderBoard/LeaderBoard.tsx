@@ -1,6 +1,6 @@
 import { defineComponent, ref, withModifiers } from 'vue'
 import { findLeaderBoardDetail } from '@/api/leaderboard'
-import { findSongDetail } from '@/api/songdetail'
+import { findSongDetail } from '@/api/songDetail'
 import { findMusicDetail } from '@/api/music'
 import LRecommend from '@/components/l-recommend/l-recommend'
 import { useMusic } from '@/stores/music'
@@ -9,36 +9,36 @@ const LeaderBoard = defineComponent({
   name: 'LeaderBoard',
   setup(props, { emit }) {
     const MStore = useMusic()
-    const officialLeaderBoaedList = ref([])
+    const officialLeaderBoardList = ref([])
     // 全球榜
     const globalLeaderBoardList = ref([])
     // 获取要展示五个歌单的前五个
-    const exhibtList = ref([])
+    const exhibitList = ref([])
     // 五个歌单id的集合
-    const songid = ref([])
-    const songdetail = ref([])
+    const songId = ref([])
+    const songDetail = ref([])
     findLeaderBoardDetail().then(res => {
-      officialLeaderBoaedList.value = res.list.splice(0, 4)
+      officialLeaderBoardList.value = res.list.splice(0, 4)
       globalLeaderBoardList.value = res.list
       // 官方榜
-      officialLeaderBoaedList.value.forEach(async item => {
+      officialLeaderBoardList.value.forEach(async item => {
         // 获取歌单详情
         const data = await findSongDetail(item.id)
         // 分割歌单ID的集合
-        exhibtList.value.push(data.privileges.slice(0, 5))
-        if (exhibtList.value.length === 4) {
+        exhibitList.value.push(data.privileges.slice(0, 5))
+        if (exhibitList.value.length === 4) {
           // 遍历ID
-          exhibtList.value.forEach((item, index) => {
+          exhibitList.value.forEach((item, index) => {
             item.forEach(async element => {
-              songid.value.push(element.id)
-              if (songid.value.length === 20) {
+              songId.value.push(element.id)
+              if (songId.value.length === 20) {
                 // 歌曲详情
-                const data = await findMusicDetail(songid.value)
+                const data = await findMusicDetail(songId.value)
                 // 分割
                 for (let i = 0; i < 5; i++) {
-                  songdetail.value.push(data.songs.splice(0, 5))
+                  songDetail.value.push(data.songs.splice(0, 5))
                 }
-                console.log(songdetail.value)
+                console.log(songDetail.value)
               }
             })
           })
@@ -55,10 +55,10 @@ const LeaderBoard = defineComponent({
       }
     }
     return {
-      officialLeaderBoaedList,
+      officialLeaderBoardList,
       globalLeaderBoardList,
-      songid,
-      songdetail,
+      songId,
+      songDetail,
       playMusic
     }
   },
@@ -66,7 +66,7 @@ const LeaderBoard = defineComponent({
     return (
       <div class={`card`}>
         <h1>官方榜</h1>
-        {this.officialLeaderBoaedList.map((item, index) => {
+        {this.officialLeaderBoardList.map((item, index) => {
           return (
             <div class="official-container">
               <div class={`left`}>
@@ -74,8 +74,8 @@ const LeaderBoard = defineComponent({
                 <i class={`iconfont bf l-24gf-playCircle`}></i>
               </div>
               <div class={`right`}>
-                <ul>
-                  {this.songdetail[index]?.map((item, index) => {
+              <ul>
+                  {this.songDetail[index]?.map((item, index) => {
                     return (
                       <li
                         onClick={() => {
@@ -87,14 +87,15 @@ const LeaderBoard = defineComponent({
                           {item.name}
                         </span>
                         <span class="left ellipsis">
-                          {item.ar.map(item => {
+                          {item.ar.map((ar, index) => {
                             return (
                               <span
                                 onClick={withModifiers(() => {
-                                  console.log(item)
+                                  console.log(ar)
                                 }, ['stop'])}
                               >
-                                {item.name}
+                                {ar.name}
+                                {index < item.ar.length - 1 ? ' / ' : ''}
                               </span>
                             )
                           })}
@@ -102,8 +103,13 @@ const LeaderBoard = defineComponent({
                       </li>
                     )
                   })}
-                  <li><i class={`jump-song-detail`} style={`font-size: 16px`}>查看全部{`>`} </i></li>
+                  <li>
+                    <i class={`jump-song-detail`} style={`font-size: 16px`}>
+                      查看全部{`>`}{' '}
+                    </i>
+                  </li>
                 </ul>
+
               </div>
             </div>
           )

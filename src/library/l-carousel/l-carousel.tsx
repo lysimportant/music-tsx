@@ -25,21 +25,21 @@ const LCarousel = defineComponent({
       default: () => ({})
     }
   },
-  setup(props, { slots }: any) {
+  setup(props, { slots }) {
     // 获取动态插槽
-    const panels = slots.default()
-    const dynamicArrar: any[] = []
-    panels.forEach((item: any) => {
+    const panels = slots?.default()
+    const dynamicArray: any[] = []
+    panels?.forEach((item: any) => {
       if (item.type.name) {
-        dynamicArrar.push(item)
+        dynamicArray.push(item)
       } else {
-        item.children.forEach((item: any) => {
-          dynamicArrar.push(item)
+        item.children?.forEach((item: any) => {
+          dynamicArray.push(item)
         })
       }
     })
     // 当前页面
-    const curretnIndex = ref(0)
+    const currentIndex = ref(0)
     // 箭头显示
     const showArrow = ref(false)
     // 定时器的存储
@@ -48,10 +48,10 @@ const LCarousel = defineComponent({
     const autoPlayer = () => {
       clearInterval(timer)
       timer = setInterval(() => {
-        if (curretnIndex.value >= dynamicArrar?.length - 1) {
-          curretnIndex.value = 0
+        if (currentIndex.value >= dynamicArray?.length - 1) {
+          currentIndex.value = 0
         } else {
-          curretnIndex.value += 1
+          currentIndex.value += 1
         }
       }, props.duration * 1000)
     }
@@ -75,24 +75,24 @@ const LCarousel = defineComponent({
     }
     // 上一页
     const onPage = () => {
-      if (curretnIndex.value <= 0) {
-        curretnIndex.value = dynamicArrar.length
+      if (currentIndex.value <= 0) {
+        currentIndex.value = dynamicArray.length
       }
-      curretnIndex.value--
+      currentIndex.value--
     }
     // 下一页
     const downPage = () => {
-      if (curretnIndex.value >= dynamicArrar.length - 1) {
-        curretnIndex.value = 0
+      if (currentIndex.value >= dynamicArray.length - 1) {
+        currentIndex.value = 0
       } else {
-        curretnIndex.value++
+        currentIndex.value++
       }
     }
     return {
-      curretnIndex,
+      currentIndex,
       showArrow,
       timer,
-      dynamicArrar,
+      dynamicArray,
       autoPlayer,
       mouseenter,
       mouseleave,
@@ -102,24 +102,24 @@ const LCarousel = defineComponent({
   },
   render() {
     // 组件合成
-    const node = this.dynamicArrar.map((item, index) => {
+    const node = this.dynamicArray.map((item, index) => {
       return (
         <RouterLink to="/">
           <img
-            style={`z-index: ${this.curretnIndex === index ? 1 : 0}`}
+            style={`z-index: ${this.currentIndex === index ? 1 : 0}`}
             src={item.props.imgUrl}
           />
         </RouterLink>
       )
     })
     // 小浮点
-    const lis = this.dynamicArrar.map((item, index) => {
+    const lis = this.dynamicArray.map((item, index) => {
       return (
         <li
           onClick={() => {
-            this.curretnIndex = index
+            this.currentIndex = index
           }}
-          class={`${this.curretnIndex === index ? 'active' : ''}`}
+          class={`${this.currentIndex === index ? 'active' : ''}`}
         />
       )
     })

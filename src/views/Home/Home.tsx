@@ -2,14 +2,12 @@ import { defineComponent, Suspense, ref } from 'vue'
 import HBanner from './components/h-banner'
 import HRecommend from './components/h-recommend'
 import HNewSong from './components/h-newsong'
-import lSilder from '@/library/l-slider/l-silder'
 const Home = defineComponent({
   name: 'Home',
   components: {
     HBanner,
     HRecommend,
-    HNewSong,
-    lSilder
+    HNewSong
   },
   setup() {
     const val = ref(0)
