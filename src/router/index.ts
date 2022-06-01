@@ -22,10 +22,22 @@ const router = createRouter({
         {
           path: '/songlist',
           component: () => import('@/views/SongList/SongList')
+        },
+        {
+          path: '/singer',
+          component: () => import('@/views/Singer/Singer')
+        },
+        {
+          path: '/singerdetail/:id',
+          component: () => import('@/views/SingerDetail/SingerDetail')
         }
       ]
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    // always scroll to top
+    return { top: 0, y: 0 };
+  },
 })
 
 export default router

@@ -1,7 +1,7 @@
 import { defineComponent, KeepAlive, ref } from 'vue'
 import NewSong from './components/song'
 import Dish from './components/dish'
-import './new-music'
+import './components/style/new-music'
 const NewMusic = defineComponent({
   name: 'NewMusic',
   setup(props, { emit }) {
@@ -25,7 +25,7 @@ const NewMusic = defineComponent({
             >
               新歌速递
             </span>
-            <i class={`diep`}></i>
+            <i class={`died`}></i>
             <span
               onClick={() => {
                 this.currentMusic = 1

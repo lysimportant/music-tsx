@@ -1,0 +1,41 @@
+.singer-detail-mv-container {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: visible;
+  &-item {
+    user-select: none;
+    position: relative;
+    width: 300px;
+    font-size: 20px;
+    margin: 30px 25px 40px;
+    img {
+      width: 300px;
+      height: 200px;
+    }
+    div {
+      position: absolute;
+
+    }
+    &-span {
+      font-size: 18px;
+      user-select:text;
+      margin: 10px 0;
+    }
+    &-top {
+      top: 0;
+      color: #fff;
+    }
+    &-bottom {
+      bottom: 0;
+      color: #fff;
+    }
+    &-top, &-bottom {
+      right: 3px;
+      // padding: 5px 10px;
+      font-size: 18px;
+      // background: rgba(0, 0, 0, .6);
+      // border-top-left-radius: 10px;
+      // border-bottom-left-radius: 10px;
+    }
+  }
+}

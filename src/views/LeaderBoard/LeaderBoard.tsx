@@ -74,7 +74,7 @@ const LeaderBoard = defineComponent({
                 <i class={`iconfont bf l-24gf-playCircle`}></i>
               </div>
               <div class={`right`}>
-              <ul>
+                <ul>
                   {this.songDetail[index]?.map((item, index) => {
                     return (
                       <li
@@ -109,7 +109,6 @@ const LeaderBoard = defineComponent({
                     </i>
                   </li>
                 </ul>
-
               </div>
             </div>
           )

@@ -6,13 +6,18 @@ import './style'
 const SongList = defineComponent({
   name: 'SongList',
   setup(props, { emit }) {
+    // 全部标签
     const catAllList: any = ref([])
+    // 部分标签
     const catList: any = ref([])
+    // 歌单列表
     const songList = ref([])
+    // 精品歌单
     const boutique = ref()
+    // 请求数据体
     const reqParams = reactive({
       cat: '全部',
-      limit: 10,
+      limit: 50,
       offset: 0,
       page: 1,
       pageSize: 10,
@@ -21,12 +26,11 @@ const SongList = defineComponent({
 
     const getSongList = async () => {
       reqParams.offset = (reqParams.page - 1) * reqParams.limit
-        // 获取歌单
+      // 获取歌单
       const res = await findSongList(reqParams)
       songList.value = res.playlists
       reqParams.total = res.total
     }
-
 
     // 获取所有歌单标签
     findSongCatList().then(res => {
@@ -34,26 +38,16 @@ const SongList = defineComponent({
       for (let i = 0; i < 10; i++) {
         catList.value.push(res.sub[i].name)
       }
+      // 添加一个前置标签
       catList.value.unshift('全部')
       res.sub.forEach((item: any) => {
         catAllList.value.push(item.name)
-        // if(arr.length === 70) {
-        //   for(let i = 0; i< 5;i++) {
-        //     catAllList.value.push([{type: i, name: res.categories[i]}])
-        //   }
-        //   arr.forEach((item, index) => {
-        //     if (item.type === 0) {
-        //       console.log(item)
-        //     }
-        //   })
-        //   // if (res.categories[0].type)
-        // }
       })
     })
     // 精品歌单第一个
     const getBoutique = async () => {
       const res = await findBoutique(reqParams.cat)
-      boutique.value =  res.playlists[0]
+      boutique.value = res.playlists[0]
     }
     watch(
       () => reqParams,
@@ -74,41 +68,59 @@ const SongList = defineComponent({
   render() {
     return (
       <section class={`card`}>
-        {this.boutique ?
-                <div class="song-list-header">
-                <img
-                  class={`song-list-header-bg`}
-                  src={this.boutique?.coverImgUrl}
-                  alt=""
-                />
-                <div class="left">
-                  <img src={this.boutique?.coverImgUrl} alt="" />
-                </div>
-                <div class="right">
-                  <h1>精品歌单</h1>
-                  <p>{this.boutique?.name}</p>
-                  <p class={`ellipsis-3`}>{this.boutique?.description}</p>
-                </div>
-              </div>
-        : ''}
-
+        {this.boutique ? (
+          <div class="song-list-header">
+            <img
+              class={`song-list-header-bg`}
+              src={this.boutique?.coverImgUrl}
+              alt=""
+            />
+            <div class="left">
+              <img src={this.boutique?.coverImgUrl} alt="" />
+            </div>
+            <div class="right">
+              <h1>精品歌单</h1>
+              <p style={`color: #fff;  font-size: 25px;`}>
+                {this.boutique?.name}
+              </p>
+              <p style={`color: #fff;`} class={`ellipsis-3`}>
+                {this.boutique?.description}
+              </p>
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
 
         <div class="song-list-cat">
           <div class="song-list-cat-left">
             <el-popover placement="bottom-start" width="200">
               {{
                 reference: () => {
-                  return <el-button type="primary">{this.reqParams.cat}</el-button>
+                  return (
+                    <el-button type="primary">
+                      {this.reqParams.cat}{' '}
+                      <i class={`iconfont l-31fanhui2`}> </i>
+                    </el-button>
+                  )
                 },
                 default: () => {
-                  return <ul class={`song-list-cat-left-ul`} >
-                    {this.catAllList.map(li => {
-                      return <li onClick={() => {
-                        this.reqParams.page = 1
-                        this.reqParams.cat = li
-                      }} >{li}</li>
-                    })}
-                  </ul>
+                  return (
+                    <ul class={`song-list-cat-left-ul`}>
+                      {this.catAllList.map(li => {
+                        return (
+                          <li
+                            onClick={() => {
+                              this.reqParams.page = 1
+                              this.reqParams.cat = li
+                            }}
+                          >
+                            {li}
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  )
                 }
               }}
             </el-popover>
@@ -133,15 +145,15 @@ const SongList = defineComponent({
         </div>
         <LRecommend list={this.songList}></LRecommend>
         <div class="pagenaintaion">
-        <el-pagination
-          v-model:currentPage={this.reqParams.page}
-          v-model:page-size={this.reqParams.limit}
-          page-sizes={[10, 20, 30]}
-          background
-          disable
-          layout="total, sizes, prev, pager, next, jumper"
-          total={this.reqParams.total}
-        />
+          <el-pagination
+            v-model:currentPage={this.reqParams.page}
+            v-model:page-size={this.reqParams.limit}
+            page-sizes={[50, 70, 100]}
+            background
+            disable
+            layout="total, sizes, prev, pager, next, jumper"
+            total={this.reqParams.total}
+          />
         </div>
       </section>
     )

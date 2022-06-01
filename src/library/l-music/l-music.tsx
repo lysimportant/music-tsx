@@ -173,7 +173,9 @@ export default defineComponent({
           >
             {this.audio.length > 0 ? (
               <img
-                onClick={() => this.toggle()}
+                onClick={() => {
+                  console.log(this.audio[this.currentIndex])
+                }}
                 class={`${this.playing ? 'music_play' : ''}`}
                 src={this.audio[this.currentIndex]?.picUrl}
                 alt=""

@@ -35,7 +35,14 @@ const LHeader = defineComponent({
                       </li>
                     ) : (
                       <li>
-                        <RouterLink to={item.path}>{item.name}</RouterLink>
+                        <RouterLink
+                          class={`${
+                            this.$route.path === item.path ? 'active' : ''
+                          }`}
+                          to={item.path}
+                        >
+                          {item.name}
+                        </RouterLink>
                       </li>
                     )}
                   </>
@@ -47,7 +54,7 @@ const LHeader = defineComponent({
             <span>代码开始旅行的地方</span>
           </div>
           <div class="right">
-            <LInput showPssword clearable active v-model={this.search}></LInput>
+            <LInput clearable active v-model={this.search}></LInput>
             <LButton onClick={() => this.btnClick()}>
               <i class="iconfont l-sousuo search"></i>
               {/* <svg class="icon search" aria-hidden="true">

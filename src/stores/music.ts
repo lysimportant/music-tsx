@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { findMusicDetail, findMusicLyrics, findMusicURL } from '@/api/music'
+import Toast from '@/plugins/Toast'
 interface stateType {
   list: AudioType[] // 歌曲存放的数组
 }
@@ -13,7 +14,7 @@ type AudioType = {
   duration: number
 }
 interface State {
-  list: []
+  list: any[]
   isPlay: boolean
 }
 export const useMusic = defineStore('useMusic', {
@@ -25,16 +26,14 @@ export const useMusic = defineStore('useMusic', {
   },
   actions: {
     async playMusic(ids: [number]) {
+      // 播放数据
       const audio: AudioType = {}
-      const list = []
-      const lrc = ref()
-      const { songs: detail } = await findMusicDetail(ids)
+      // 存储数据
+      const list: any = []
+      const { songs: detail }: any = await findMusicDetail(ids)
       const { data: url } = await findMusicURL(ids)
-      console.log(url, detail)
-      const currentMsuic = this.list.map(item => item.id)
-      const endlist = []
       console.log(detail, 'detail')
-      detail.map((item, index) => {
+      detail.map((item: any, index: number) => {
         audio.id = item.al.id
         audio.duration = item.dt
         audio.picUrl = item.al.picUrl
@@ -42,14 +41,19 @@ export const useMusic = defineStore('useMusic', {
         audio.songName = item.name
         audio.url = url[index].url
         let obj = this.list.find(item => item.id === audio.id)
+        // 不存在 且播放存到后面
         if (!obj && this.isPlay) {
           const obj = JSON.stringify(audio)
           list.push(JSON.parse(obj))
+          Toast('success', '已添加到播放列中')
           this.list = [...this.list, ...list]
-        } else {
+        } else if (!obj) {
           const obj = JSON.stringify(audio)
           list.unshift(JSON.parse(obj))
+          Toast('success', '正在播放')
           this.list = [...list, ...this.list]
+        } else {
+          Toast('warning', '歌曲已在列表中')
         }
       })
     }

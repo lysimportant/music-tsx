@@ -19,7 +19,7 @@ const HRecommend = defineComponent({
       <>
         <div class="h-recommend container">
           {/* v-slots={{ footer: () => 'footer'}} */}
-          <LMore to="/song" title="推荐歌单"></LMore>
+          <LMore to="/songlist" title="推荐歌单"></LMore>
           <LRecommend list={this.result}></LRecommend>
         </div>
       </>

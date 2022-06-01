@@ -1,4 +1,4 @@
-import ElementPlus, {
+import {
   ElSlider,
   ElButton,
   ElTooltip,
@@ -8,8 +8,9 @@ import ElementPlus, {
   ElPopover,
   ElPagination,
   ElBacktop,
+  ElTabs,
+  ElTabPane
 } from 'element-plus'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
 // import 'element-plus/dist/index.css'
 import type { App } from 'vue'
 const components = [
@@ -21,7 +22,9 @@ const components = [
   ElSkeleton,
   ElPopover,
   ElPagination,
-  ElBacktop
+  ElBacktop,
+  ElTabs,
+  ElTabPane
 ]
 export default function (app: App) {
   components.forEach(component => {

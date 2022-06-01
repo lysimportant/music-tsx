@@ -13,11 +13,9 @@ const Layout = defineComponent({
         <div class="app-body clearfix">
           <RouterView></RouterView>
         </div>
-        <el-backtop
-        visibility-height={450}
-        bottom={100}>
-    <div
-      style={`
+        <el-backtop visibility-height={450} bottom={100}>
+          <div
+            style={`
       height: 100%;
         width: 100%;
         background-color: #fff;
@@ -26,10 +24,10 @@ const Layout = defineComponent({
         line-height: 40px;
         transform: rotate(90deg);
         color: #1989fa;`}
-    >
-      <i class={`iconfont l-31fanhui1`}></i>
-    </div>
-  </el-backtop>
+          >
+            <i class={`iconfont l-31fanhui1`}></i>
+          </div>
+        </el-backtop>
       </>
     )
   }

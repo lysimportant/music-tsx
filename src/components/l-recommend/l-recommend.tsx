@@ -21,13 +21,27 @@ const LRecommend = defineComponent({
             <div
               class="l-recommend-container-item"
               onClick={() => {
-                this.$router.push(`/`)
-                this.$emit('itemClick', item)
+                if (this.$route.path === '/singer') {
+                  this.$router.push(
+                    `/singerdetail/${item.id ?? item.accountId}`
+                  )
+                } else if (this.$route.path === `/singerdetail/${this.$route.params.id}`) {
+                  this.$emit('itemClick', item)
+                }
               }}
             >
               <img src={item.picUrl ?? item.coverImgUrl} alt="" />
-              <p class={`ellipsis`}>{item.name}</p>
+              <p style={`margin: 5px 0 -5px;`} class={`ellipsis`}>
+                {item.name}
+              </p>
+
+              {this.$route.path !== '/singer'  ?
+              this.$route.path !== `/singerdetail/${this.$route.params.id}` ?
               <i class={`iconfont l-24gf-playCircle`}></i>
+              : ''
+              : '' }
+
+
               {item.playCount > 0 ? (
                 <span class={`playcount`}>
                   {playCountFormat(item.playCount)}

@@ -1,0 +1,46 @@
+.singer-detail-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 28rem;
+  height: 5rem;
+  border: 1px solid #ccc;
+  margin: 0.2rem auto;
+  &-left {
+    margin: 0 0.4rem;
+    img {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+  &-right {
+    user-select: none;
+    position: absolute;
+    top: 0;
+    left: 5rem;
+    h1 {
+      padding: 0;
+      margin: 0;
+      margin-top: 0.45rem;
+      font-size: 0.4rem;
+    }
+    section {
+      display: flex;
+      margin-top: 0.2rem;
+      height: 0.6rem;
+      span,
+      i {
+        height: 0.4rem;
+        margin-right: 0.4rem;
+        font-size: 0.4rem;
+      }
+    }
+    .el-button {
+      margin-top: -0.4rem;
+    }
+  }
+}
+.toggle-card {
+  width: 28rem;
+  margin: 0.2rem auto;
+}

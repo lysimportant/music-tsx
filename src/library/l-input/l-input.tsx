@@ -23,7 +23,7 @@ const LInput = defineComponent({
       type: String,
       default: 'text'
     },
-    showPssword: {
+    showPassword: {
       type: Boolean,
       default: false
     }
@@ -87,7 +87,7 @@ const LInput = defineComponent({
         ) : (
           ''
         )}
-        {this.showPssword && this.modelValue!.length ? (
+        {this.showPassword && this.modelValue!.length ? (
           this.eyeFlag ? (
             <i
               onClick={() => (this.eyeFlag = !this.eyeFlag)}
