@@ -82,15 +82,14 @@ const LHeader = defineComponent({
             <span>代码开始旅行的地方</span>
           </div>
           <div class="right">
-           <LInput clearable active v-model={this.search}></LInput>
-            <LButton  onClick={() => this.btnClick()}>
+            <LInput clearable active v-model={this.search}></LInput>
+            <LButton onClick={() => this.btnClick()}>
               <i class="iconfont l-sousuo search"></i>
               {/* <svg class="icon search" aria-hidden="true">
                 <use xlinkHref="#l-sousuo"></use>
               </svg> */}
             </LButton>
-            {this.profile ?
-            (
+            {this.profile ? (
               <div class={'header-user'}>
                 <el-popover
                   placement="bottom-start"

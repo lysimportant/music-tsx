@@ -1,12 +1,18 @@
-import { defineComponent , onMounted, onUnmounted, ref} from 'vue'
-import { generateQR, generateQRKey, checkGenerateQR , findUserDetail,getUserDetail} from '@/api/user'
+import { defineComponent, onMounted, onUnmounted, ref } from 'vue'
+import {
+  generateQR,
+  generateQRKey,
+  checkGenerateQR,
+  findUserDetail,
+  getUserDetail
+} from '@/api/user'
 import Toast from '@/plugins/Toast'
 import { useUser } from '@/stores/user'
 import '../style/QR'
 const QRLogin = defineComponent({
-  name: "QRLogin",
+  name: 'QRLogin',
   emits: ['qr-success'],
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const UStore = useUser()
     const QRKey = ref()
     const QRImage = ref()
@@ -31,7 +37,9 @@ const QRLogin = defineComponent({
           UStore.profile.cookie = res.cookie
           const us = await getUserDetail()
           UStore.profile = us
-          UStore.userDetail = await findUserDetail(UStore.profile?.profile.userId)
+          UStore.userDetail = await findUserDetail(
+            UStore.profile?.profile.userId
+          )
           emit('qr-success')
           return Toast('success', res.message)
         }
@@ -56,16 +64,26 @@ const QRLogin = defineComponent({
       resetQR
     }
   },
-  render () {
-    return <div class={`QR`}>
-      <h1 class={`QRImg`}>
-        <img src={this.QRImage} alt="" />
-      </h1>
-      <div class={`QRText`}>
-        {this.isExpired ? <div class={`resetQR`} onClick={() => this.resetQR()}><i>点击刷新二维码</i></div> : ''}
-        <span style={`font-size: 20px;`}>请使用 <i style={`color: skyblue;`}>网易云音乐App</i> 扫码登录</span>
+  render() {
+    return (
+      <div class={`QR`}>
+        <h1 class={`QRImg`}>
+          <img src={this.QRImage} alt="" />
+        </h1>
+        <div class={`QRText`}>
+          {this.isExpired ? (
+            <div class={`resetQR`} onClick={() => this.resetQR()}>
+              <i>点击刷新二维码</i>
+            </div>
+          ) : (
+            ''
+          )}
+          <span style={`font-size: 20px;`}>
+            请使用 <i style={`color: skyblue;`}>网易云音乐App</i> 扫码登录
+          </span>
+        </div>
       </div>
-    </div>
+    )
   }
 })
 

@@ -55,8 +55,10 @@ const Login = defineComponent({
               <div class="selected-login">
                 <h1>欢迎登录 Cloud Music</h1>
                 <el-tabs stretch>
-                <el-tab-pane label="扫码登录">
-                    <QRLogin onQr-success={() => this.$emit('logout', false)}></QRLogin>
+                  <el-tab-pane label="扫码登录">
+                    <QRLogin
+                      onQr-success={() => this.$emit('logout', false)}
+                    ></QRLogin>
                   </el-tab-pane>
                   <el-tab-pane label="帐号登录">
                     <AccountLogin

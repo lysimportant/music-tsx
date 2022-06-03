@@ -4,8 +4,7 @@ import { RouterView } from 'vue-router'
 import { useUser } from '@/stores/user'
 const Layout = defineComponent({
   name: 'Layout',
-  setup() {
-  },
+  setup() {},
   render: function () {
     return (
       <>

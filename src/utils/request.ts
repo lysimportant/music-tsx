@@ -15,8 +15,10 @@ const network = (config: AxiosRequestConfig) => {
 
   instance.interceptors.request.use(
     config => {
-      const res = JSON.parse(window.localStorage.getItem('pinia-useUser') as string)
-      if(res) {
+      const res = JSON.parse(
+        window.localStorage.getItem('pinia-useUser') as string
+      )
+      if (res) {
         const { cookie } = res.profile
         // config!.headers.Authorization = cookie
       }

@@ -20,7 +20,10 @@ export const login = ({ phone, password }: LoginType) => {
  * @returns Promise
  */
 export const sendCaptcha = (phone: string) => {
-  return request('/captcha/sent', { phone, timestamp:Date.parse(new Date()+'') })
+  return request('/captcha/sent', {
+    phone,
+    timestamp: Date.parse(new Date() + '')
+  })
 }
 
 /**
@@ -34,7 +37,11 @@ type verifyType = {
   captcha: string
 }
 export const verifyUserCaptcha = ({ phone, captcha }: verifyType) => {
-  return request('/captcha/verify', { phone, captcha, timestamp:Date.parse(new Date()+'') }, 'POST')
+  return request(
+    '/captcha/verify',
+    { phone, captcha, timestamp: Date.parse(new Date() + '') },
+    'POST'
+  )
 }
 // ?uid=32953014
 /**
@@ -68,25 +75,31 @@ export const logoutUser = () => {
 /**
  * 获取二维码生成的key
  * @returns Promise
-*/
+ */
 export const generateQRKey = () => {
-  return request('/login/qr/key', {timestamp:Date.parse(new Date()+'')})
+  return request('/login/qr/key', { timestamp: Date.parse(new Date() + '') })
 }
 
 /**
  * 根据QRKey来生成二维码
  * @param {String} key - 生成需要的key
  * @returns Promise
-*/
-export const generateQR = (key:string) => {
-  return request('/login/qr/create?qrimg=true', {key, timestamp:Date.parse(new Date()+'')})
+ */
+export const generateQR = (key: string) => {
+  return request('/login/qr/create?qrimg=true', {
+    key,
+    timestamp: Date.parse(new Date() + '')
+  })
 }
 
 /**
  * 二维码检测扫码状态
  * @param {String} key - 800 为二维码过期,801 为等待扫码,802 为待确认,803 为授权登录成功(803 状态码下会返回 cookies)
  * @returns Promise
-*/
+ */
 export const checkGenerateQR = (key: string) => {
-  return request('/login/qr/check', {key, timestamp:Date.parse(new Date()+'')})
+  return request('/login/qr/check', {
+    key,
+    timestamp: Date.parse(new Date() + '')
+  })
 }

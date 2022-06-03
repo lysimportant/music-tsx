@@ -1,6 +1,6 @@
 import { defineComponent, reactive, ref } from 'vue'
 import type { ElForm } from 'element-plus'
-import { login , findUserDetail} from '@/api/user'
+import { login, findUserDetail } from '@/api/user'
 import { rules } from './config'
 import Toast from '@/plugins/Toast'
 import { useUser } from '@/stores/user'

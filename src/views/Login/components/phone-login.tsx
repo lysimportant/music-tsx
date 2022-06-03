@@ -1,7 +1,12 @@
 import { defineComponent, reactive, ref } from 'vue'
 import type { ElForm } from 'element-plus'
 import { useIntervalFn } from '@vueuse/core'
-import { sendCaptcha, verifyUserCaptcha, getUserDetail, findUserDetail } from '@/api/user'
+import {
+  sendCaptcha,
+  verifyUserCaptcha,
+  getUserDetail,
+  findUserDetail
+} from '@/api/user'
 import { useUser } from '@/stores/user'
 import { rules } from './config'
 import Toast from '@/plugins/Toast'
@@ -36,7 +41,7 @@ const PhoneLogin = defineComponent({
       formRef.value?.validate(async valid => {
         if (!valid) return
         const res = await verifyUserCaptcha(PhoneForm)
-          UStore.userDetail = res
+        UStore.userDetail = res
         if (res?.code === 200) {
           Toast('success', '登录成功!')
           // UStore.profile = res
