@@ -1,6 +1,5 @@
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { findMusicDetail, findMusicLyrics, findMusicURL } from '@/api/music'
+import { findMusicDetail, findMusicURL } from '@/api/music'
 import Toast from '@/plugins/Toast'
 interface stateType {
   list: AudioType[] // 歌曲存放的数组
@@ -30,16 +29,16 @@ export const useMusic = defineStore('useMusic', {
       const audio: AudioType = {}
       // 存储数据
       const list: any = []
-      const { songs: detail }: any = await findMusicDetail(ids)
-      const { data: url } = await findMusicURL(ids)
+      const detail: any = await findMusicDetail(ids)
+      const songs: any = await findMusicURL(ids)
       console.log(detail, 'detail')
-      detail.map((item: any, index: number) => {
+      detail?.songs.map((item: any, index: number) => {
         audio.id = item.al.id
         audio.duration = item.dt
         audio.picUrl = item.al.picUrl
         audio.singerName = item.al.name
         audio.songName = item.name
-        audio.url = url[index].url
+        audio.url = songs?.data[index].url
         let obj = this.list.find(item => item.id === audio.id)
         // 不存在 且播放存到后面
         if (!obj && this.isPlay) {

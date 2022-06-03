@@ -1,7 +1,6 @@
 import { defineComponent, ref, watch, onMounted } from 'vue'
 import { playSongTime } from '@/hooks/index'
 import { useMusic } from '@/stores/music'
-import dayjs from 'dayjs'
 import './style'
 export default defineComponent({
   name: 'LMusic',
@@ -14,7 +13,7 @@ export default defineComponent({
   setup(props) {
     // 是否播放
     const store = useMusic()
-    const show = ref(false)
+    const show = ref(true)
     const showList = ref(false)
     // 当前歌曲
     const currentIndex = ref(0)
@@ -40,7 +39,15 @@ export default defineComponent({
     }
     onMounted(() => {
       audioRef.value.volume = volume.value / 100
-      console.log(audioRef.value.volume)
+      // 空格暂停
+      document.onkeydown = function (e) {
+        if (e.key === ' ' && props.audio.length > 0) {
+          // store.
+          e.preventDefault()
+          toggle()
+          return e.defaultPrevented
+        }
+      }
     })
     watch(
       () => props.audio,
@@ -92,7 +99,6 @@ export default defineComponent({
     }
     const volumeInput = (val: number) => {
       audioRef.value && (audioRef.value.volume = val / 100)
-      console.log(val)
     }
     const updateTime = val => {
       if (playing) {
@@ -107,6 +113,7 @@ export default defineComponent({
         }
       }
     }
+    // 改变播放进度
     const changeProgress = val => {
       if (playing) {
         audioRef.value.currentTime = progress.value

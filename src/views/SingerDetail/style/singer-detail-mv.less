@@ -11,25 +11,33 @@
     img {
       width: 300px;
       height: 200px;
+      cursor: pointer;
     }
     div {
       position: absolute;
-
     }
     &-span {
       font-size: 18px;
-      user-select:text;
+      user-select: text;
+      width: 300px;
       margin: 10px 0;
+      overflow: hidden;
     }
     &-top {
+      display: flex;
+      align-items: center;
       top: 0;
       color: #fff;
+      i {
+        margin-right: 2px;
+      }
     }
     &-bottom {
       bottom: 0;
       color: #fff;
     }
-    &-top, &-bottom {
+    &-top,
+    &-bottom {
       right: 3px;
       // padding: 5px 10px;
       font-size: 18px;

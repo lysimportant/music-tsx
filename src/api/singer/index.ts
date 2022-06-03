@@ -74,7 +74,7 @@ export const findAlbumDetail = (id: number | string) => {
  * @param {Integer|String} ID - 歌手ID
  * @returns Promise
  */
- export const findArtistDesc = (id: number | string) => {
+export const findArtistDesc = (id: number | string) => {
   return request('/artist/desc', { id })
 }
 
@@ -83,7 +83,7 @@ export const findAlbumDetail = (id: number | string) => {
  * @param {Integer|String} ID - 歌手ID
  * @returns Promise
  */
- export const findSimiArtist = (id: number | string) => {
+export const findSimiArtist = (id: number | string) => {
   return request('/simi/artist', { id })
 }
 
@@ -91,7 +91,7 @@ export const findAlbumDetail = (id: number | string) => {
  * 获取歌手MV
  * @param {Integer|String} ID - 歌手ID
  * @returns Promise
-*/
+ */
 export const findArtistMV = (id: number | string) => {
   return request('/artist/mv?limit=80', { id })
 }

@@ -1,9 +1,11 @@
 import { defineComponent } from 'vue'
 import LHeader from '@/components/l-header/l-header'
 import { RouterView } from 'vue-router'
+import { useUser } from '@/stores/user'
 const Layout = defineComponent({
   name: 'Layout',
-  setup() {},
+  setup() {
+  },
   render: function () {
     return (
       <>
@@ -19,7 +21,7 @@ const Layout = defineComponent({
       height: 100%;
         width: 100%;
         background-color: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,.45);
+        box-shadow: 5px 0 8px rgba(0,0,0,.45);
         text-align: center;
         line-height: 40px;
         transform: rotate(90deg);

@@ -65,7 +65,7 @@ const LeaderBoard = defineComponent({
   render() {
     return (
       <div class={`card`}>
-        <h1>官方榜</h1>
+        <h1 class={`leader-board-h1`}>官方榜</h1>
         {this.officialLeaderBoardList.map((item, index) => {
           return (
             <div class="official-container">
@@ -113,7 +113,7 @@ const LeaderBoard = defineComponent({
             </div>
           )
         })}
-        <h1>全球榜</h1>
+        <h1 class={`leader-board-h1`}>全球榜</h1>
         <LRecommend list={this.globalLeaderBoardList}></LRecommend>
       </div>
     )

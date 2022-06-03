@@ -17,12 +17,12 @@
       font-size: 0.32rem;
     }
     &:hover {
-      i {
+      .re-play {
         display: block;
         color: rgba(0, 0, 0, 0.6);
       }
     }
-    i {
+    .re-play {
       position: absolute;
       top: 57%;
       left: 50%;
@@ -33,15 +33,20 @@
         color: red;
       }
     }
-    .playcount {
+    .playCount {
       position: absolute;
       top: 0;
       right: 0;
       color: #ffff;
-      font-size: 0.4rem;
-      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      font-size: 0.3rem;
+      // background: rgba(0, 0, 0, 0.5);
       padding: 0.1rem 0.2rem;
       border-radius: 0.2rem;
+      i {
+        margin-right: 5px;
+      }
     }
   }
 }

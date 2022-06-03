@@ -14,7 +14,7 @@ export const findBanner = () => {
  * @returns Promise
  */
 
-export const findRecommendSongList = (limit = 10) => {
+export const findRecommendSongList = (limit = 15) => {
   return request(`/personalized?limit=${limit}`)
 }
 /**

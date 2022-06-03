@@ -1,7 +1,6 @@
 import { defineComponent, reactive, ref, watch } from 'vue'
 import LRecommend from '@/components/l-recommend/l-recommend'
 import { findSongList, findSongCatList, findBoutique } from '@/api/songdetail'
-import LButton from '@/library/l-button/l-button'
 import './style'
 const SongList = defineComponent({
   name: 'SongList',
@@ -17,10 +16,9 @@ const SongList = defineComponent({
     // 请求数据体
     const reqParams = reactive({
       cat: '全部',
-      limit: 50,
+      limit: 30,
       offset: 0,
       page: 1,
-      pageSize: 10,
       total: 0
     })
 
@@ -148,7 +146,7 @@ const SongList = defineComponent({
           <el-pagination
             v-model:currentPage={this.reqParams.page}
             v-model:page-size={this.reqParams.limit}
-            page-sizes={[50, 70, 100]}
+            page-sizes={[30, 50, 70, 100]}
             background
             disable
             layout="total, sizes, prev, pager, next, jumper"

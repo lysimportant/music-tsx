@@ -2,8 +2,10 @@ import { ref } from 'vue'
 import dayjs from 'dayjs'
 import { useIntersectionObserver } from '@vueuse/core'
 export const playCountFormat = (count: number) => {
-  if (count > 10000) {
-    return (count / 10000).toFixed(0) + 'w'
+  if (count > 100000000) {
+    return (count / 100000000).toFixed(2) + '亿'
+  } else if (count > 10000) {
+    return (count / 10000).toFixed(0) + '万'
   } else {
     return count
   }

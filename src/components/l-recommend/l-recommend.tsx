@@ -25,7 +25,9 @@ const LRecommend = defineComponent({
                   this.$router.push(
                     `/singerdetail/${item.id ?? item.accountId}`
                   )
-                } else if (this.$route.path === `/singerdetail/${this.$route.params.id}`) {
+                } else if (
+                  this.$route.path === `/singerdetail/${this.$route.params.id}`
+                ) {
                   this.$emit('itemClick', item)
                 }
               }}
@@ -35,15 +37,20 @@ const LRecommend = defineComponent({
                 {item.name}
               </p>
 
-              {this.$route.path !== '/singer'  ?
-              this.$route.path !== `/singerdetail/${this.$route.params.id}` ?
-              <i class={`iconfont l-24gf-playCircle`}></i>
-              : ''
-              : '' }
-
+              {this.$route.path !== '/singer' ? (
+                this.$route.path !==
+                `/singerdetail/${this.$route.params.id}` ? (
+                  <i class={`iconfont re-play l-24gf-playCircle`}></i>
+                ) : (
+                  ''
+                )
+              ) : (
+                ''
+              )}
 
               {item.playCount > 0 ? (
-                <span class={`playcount`}>
+                <span class={`playCount`}>
+                  <i class={`iconfont l-24gl-play`}></i>
                   {playCountFormat(item.playCount)}
                 </span>
               ) : (

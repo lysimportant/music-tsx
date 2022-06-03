@@ -30,14 +30,22 @@ const router = createRouter({
         {
           path: '/singerdetail/:id',
           component: () => import('@/views/SingerDetail/SingerDetail')
+        },
+        {
+          path: '/mv',
+          component: () => import('@/views/MV/MV')
+        },
+        {
+          path: '/mvdetail/:id',
+          component: () => import('@/views/MvDetail/MvDetail')
         }
       ]
     }
   ],
   scrollBehavior(to, from, savedPosition) {
     // always scroll to top
-    return { top: 0, y: 0 };
-  },
+    return { top: 0, y: 0 }
+  }
 })
 
 export default router

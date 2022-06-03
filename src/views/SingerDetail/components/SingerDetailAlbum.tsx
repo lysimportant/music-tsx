@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 import {
   findArtistTopSong,
   findArtistAlbum,
-  findAlbumDetail,
+  findAlbumDetail
 } from '@/api/singer'
 import { playSongTime } from '@/hooks'
 import { useMusic } from '@/stores/music'
@@ -17,26 +17,29 @@ const SingerDetailAlbum = defineComponent({
     const album: any = ref([])
     const route = useRoute()
 
-
     // 音乐播放
     const playMusic = (id: number) => {
       MStore.playMusic([id])
     }
-    watch(() => route.params.id, async () => {
-      console.log('请求数据')
-          // 获取歌手前50热门歌曲
-    findArtistTopSong(route.params.id as string).then(res => {
-      songs.value = res.songs
-    })
-        // 获取歌手专辑
-    findArtistAlbum(route.params.id as string).then(res => {
-      res.hotAlbums.forEach(item => {
-        findAlbumDetail(item.id).then(res => {
-          album.value.push(res)
+    watch(
+      () => route.params.id,
+      async () => {
+        console.log('请求数据')
+        // 获取歌手前50热门歌曲
+        findArtistTopSong(route.params.id as string).then(res => {
+          songs.value = res.songs
         })
-      })
-    })
-    }, { immediate: true})
+        // 获取歌手专辑
+        findArtistAlbum(route.params.id as string).then(res => {
+          res.hotAlbums.forEach(item => {
+            findAlbumDetail(item.id).then(res => {
+              album.value.push(res)
+            })
+          })
+        })
+      },
+      { immediate: true }
+    )
     return {
       songs,
       album,
@@ -46,7 +49,7 @@ const SingerDetailAlbum = defineComponent({
   render() {
     return (
       <>
-      {/* top 50 */}
+        {/* top 50 */}
         <div class={`singer-top-50`}>
           <h1>Top50首</h1>
           <el-table
@@ -70,7 +73,6 @@ const SingerDetailAlbum = defineComponent({
               align="right"
             ></el-table-column>
           </el-table>
-
         </div>
         {/* 专辑 */}
         {this.album.map(item => {

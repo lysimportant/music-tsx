@@ -9,7 +9,11 @@ import {
   ElPagination,
   ElBacktop,
   ElTabs,
-  ElTabPane
+  ElTabPane,
+  ElDialog,
+  ElForm,
+  ElFormItem,
+  ElInput
 } from 'element-plus'
 // import 'element-plus/dist/index.css'
 import type { App } from 'vue'
@@ -24,7 +28,11 @@ const components = [
   ElPagination,
   ElBacktop,
   ElTabs,
-  ElTabPane
+  ElTabPane,
+  ElDialog,
+  ElForm,
+  ElFormItem,
+  ElInput
 ]
 export default function (app: App) {
   components.forEach(component => {

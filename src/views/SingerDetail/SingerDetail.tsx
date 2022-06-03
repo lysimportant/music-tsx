@@ -24,7 +24,6 @@ const SingerDetail = defineComponent({
         getArtistsDetail()
         const res = await findSimiArtist(route.params.id as string)
         const resMv = await findArtistMV(route.params.id as string)
-        console.log(resMv, 'resMv')
         simiArtist.value = res.artists
         mv.value = resMv.mvs
       },
@@ -97,13 +96,18 @@ const SingerDetail = defineComponent({
               <SingerDetailMV mv={this.mv}></SingerDetailMV>
             </el-tab-pane>
             <el-tab-pane label="歌手详情" name="gs">
-              <SingerDetailDesc name={this.singerDetail?.artist.name}></SingerDetailDesc>
+              <SingerDetailDesc
+                name={this.singerDetail?.artist.name}
+              ></SingerDetailDesc>
             </el-tab-pane>
             <el-tab-pane label="相似歌手" name="xs">
               {/* <SingerSimiArtist></SingerSimiArtist> */}
-              <LRecommend onItemClick={(item) => {
-                this.$router.push(`/singerdetail/${item.id}`)
-              }} list={this.simiArtist}></LRecommend>
+              <LRecommend
+                onItemClick={item => {
+                  this.$router.push(`/singerdetail/${item.id}`)
+                }}
+                list={this.simiArtist}
+              ></LRecommend>
             </el-tab-pane>
           </el-tabs>
         </div>
