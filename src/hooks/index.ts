@@ -13,6 +13,9 @@ export const playCountFormat = (count: number) => {
 export const playSongTime = (time: number) => {
   return dayjs(time).format('mm:ss')
 }
+export const timeFormat = (timestamp: number) => {
+  return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss')
+}
 /**
  *数据懒加载
  * @param { Object } target - DOM Object

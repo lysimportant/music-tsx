@@ -17,6 +17,7 @@ const Login = defineComponent({
   emits: ['update:modelValue', 'logout'],
   setup(props, { emit }) {
     const isLC = ref(false)
+    const activeName = ref('Account')
     onMounted(() => {
       document.body.parentNode!.style.overflowY = 'hidden'
       isLC.value = true
@@ -26,7 +27,8 @@ const Login = defineComponent({
     })
     return {
       LoginBg,
-      isLC
+      isLC,
+      activeName
     }
   },
   render() {
@@ -54,22 +56,24 @@ const Login = defineComponent({
               ></i>
               <div class="selected-login">
                 <h1>欢迎登录 Cloud Music</h1>
-                <el-tabs stretch>
-                  <el-tab-pane label="扫码登录">
-                    <QRLogin
-                      onQr-success={() => this.$emit('logout', false)}
-                    ></QRLogin>
-                  </el-tab-pane>
-                  <el-tab-pane label="帐号登录">
+                <el-tabs stretch v-model={this.activeName}>
+                  <el-tab-pane label="帐号登录" name="Account"></el-tab-pane>
+                  <el-tab-pane label="扫码登录" name="QR"></el-tab-pane>
+                  <el-tab-pane label="短信登录" name="Phone"></el-tab-pane>
+
+                  {this.activeName === 'Account' ? (
                     <AccountLogin
                       onAccount-success={() => this.$emit('logout', false)}
                     ></AccountLogin>
-                  </el-tab-pane>
-                  <el-tab-pane label="短信登录">
+                  ) : this.activeName === 'QR' ? (
+                    <QRLogin
+                      onQr-success={() => this.$emit('logout', false)}
+                    ></QRLogin>
+                  ) : (
                     <PhoneLogin
                       onPhone-success={() => this.$emit('logout', false)}
                     ></PhoneLogin>
-                  </el-tab-pane>
+                  )}
                 </el-tabs>
               </div>
               <div class={`zs`}>

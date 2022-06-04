@@ -1,22 +1,54 @@
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { findMVDetail, findMvURL, findSimiMv } from '@/api/mv'
+import {
+  findMVDetail,
+  findMvURL,
+  findSimiMv,
+  findMvComment,
+} from '@/api/mv'
+import { operateComment } from '@/api/operate'
+import LComment from '@/components/l-comment/l-comment'
 import { playCountFormat, playSongTime } from '@/hooks'
 import './style'
+import Toast from '@/plugins/Toast'
 const MvDetail = defineComponent({
   name: 'MvDetail',
   setup(props, { emit }) {
     const route = useRoute()
+    // 评论
+    const comment = ref()
+    const hotComment = ref()
+    const reqParams = reactive({
+      id: route.params.id as string,
+      total: 0,
+      limit: 30,
+      offset: 0
+    })
+    // 详情
     const mv = ref()
+    // URL
     const mvURL = ref()
+    // 相似
     const simiMv = ref()
     const getMVDetail = async () => {
-      const { data } = await findMVDetail(route.params.id as string)
+      // 获取MV详情
+      const { data } = await findMVDetail(reqParams.id)
       mv.value = data
+      // 获取视频URL
       const res = await findMvURL(mv.value.id)
       mvURL.value = res.data.url
+      // 获取相似MV
       const simiRes = await findSimiMv(mv.value.id)
       simiMv.value = simiRes.mvs
+      getMvComment()
+    }
+    const getMvComment = async () => {
+      // 获取MV评论
+      const Comment = await findMvComment(reqParams)
+      reqParams.total = Comment.total
+      comment.value = Comment.comments
+      hotComment.value = Comment.hotComments
+      console.log('重新获取评论数据')
     }
     watch(
       () => route.params.id,
@@ -25,10 +57,36 @@ const MvDetail = defineComponent({
       },
       { immediate: true, deep: true }
     )
+    const operateCommentLike = (item: any) => {
+      const t = item.liked === true ? 0 : 1
+      operateComment({
+        type: 1,
+        id: mv.value.id,
+        cid: item.commentId,
+        t
+      }).then(async res => {
+        if (res.code === 200 && t === 1) {
+          await getMvComment()
+          Toast('success', '点赞成功')
+          return
+        } else if (res.code === 200 && t === 0) {
+          await getMvComment()
+          Toast('info', '取消点赞')
+          return
+        } else {
+          Toast('warning', '请求失败')
+          return
+        }
+      })
+    }
     return {
       mv,
       mvURL,
-      simiMv
+      simiMv,
+      comment,
+      hotComment,
+      reqParams,
+      operateCommentLike
     }
   },
   render() {
@@ -98,6 +156,11 @@ const MvDetail = defineComponent({
         ) : (
           ''
         )}
+        <LComment
+          onOperateCommentLike={this.operateCommentLike}
+          comment={this.comment}
+          hotComment={this.hotComment}
+        ></LComment>
       </div>
     )
   }

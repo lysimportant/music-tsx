@@ -17,7 +17,14 @@ type MV = {
   offset: number
 }
 export const findAllMV = ({ order, area, type, limit, offset }: MV) => {
-  return request('/mv/all', { order, area, type, limit, offset })
+  return request('/mv/all', {
+    order,
+    area,
+    type,
+    limit,
+    offset,
+    timestamp: Date.parse(new Date() + '')
+  })
 }
 
 /**
@@ -50,9 +57,38 @@ export const findSimiMv = (mvid: number | String) => {
 /**
  * 获取MV评论
  * @param {Integer|String} id - MV 的 ID
+ * @param {Integer|String} offset - 评论的分页
  * @returns Promise
  */
+interface MvComment {
+  id: string | number
+  offset: number
+  limit: number
+}
+export const findMvComment = ({ id, offset, limit }: MvComment) => {
+  return request('/comment/mv', {
+    id,
+    offset,
+    limit,
+    timestamp: Date.parse(new Date() + '')
+  })
+}
 
-export const findMvComment = (id: number | String) => {
-  return request('/comment/mv', { id })
+/**
+ *
+ * @param {}
+ * @returns Promise
+ */
+// 0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台 5: 视频 6: 动态
+export const findAllComment = (
+  type: number,
+  id: number | String,
+  offset: number
+) => {
+  return request('/comment/new?sortType=2', {
+    type,
+    id,
+    offset,
+    timestamp: Date.parse(new Date() + '')
+  })
 }

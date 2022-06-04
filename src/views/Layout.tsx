@@ -1,7 +1,6 @@
 import { defineComponent } from 'vue'
 import LHeader from '@/components/l-header/l-header'
 import { RouterView } from 'vue-router'
-import { useUser } from '@/stores/user'
 const Layout = defineComponent({
   name: 'Layout',
   setup() {},
