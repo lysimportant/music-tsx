@@ -23,3 +23,24 @@ export const operateComment = ({ type, id, cid, t }: operateComment) => {
     timestamp: Date.parse(new Date() + '')
   })
 }
+
+/**
+ * 发送评论
+ * @param {Integer} type - 0: 歌曲  1: mv 2: 歌单 3: 专辑 4: 电台 5: 视频 6: 动态
+ * @param {Integer} id - 资源ID
+ * @param {String} content :要发送的内容
+ * @param {Integer} t:1 发送, 2 回复
+ * @param {Integer} commentId :回复的评论 id (回复评论时必填)
+ * @returns Promise
+*/
+interface sendComment {
+  commentId?: number
+  content: string
+  type: number
+  id: number
+  t: number
+}
+export const sendComment = ({ type, id, content, t, commentId}: sendComment) => {
+  return request('/comment', { type, id, content, t, commentId })
+}
+

@@ -17,7 +17,7 @@ const Login = defineComponent({
   emits: ['update:modelValue', 'logout'],
   setup(props, { emit }) {
     const isLC = ref(false)
-    const activeName = ref('Account')
+    const activeName = ref('QR')
     onMounted(() => {
       document.body.parentNode!.style.overflowY = 'hidden'
       isLC.value = true

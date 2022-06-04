@@ -1,14 +1,9 @@
 import { defineComponent, reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import {
-  findMVDetail,
-  findMvURL,
-  findSimiMv,
-  findMvComment,
-} from '@/api/mv'
-import { operateComment } from '@/api/operate'
+import { findMVDetail, findMvURL, findSimiMv, findMvComment } from '@/api/mv'
+import { operateComment, sendComment } from '@/api/operate'
 import LComment from '@/components/l-comment/l-comment'
-import { playCountFormat, playSongTime } from '@/hooks'
+import { playCountFormat, playSongTime, isLoginStatus } from '@/hooks'
 import './style'
 import Toast from '@/plugins/Toast'
 const MvDetail = defineComponent({
@@ -19,7 +14,6 @@ const MvDetail = defineComponent({
     const comment = ref()
     const hotComment = ref()
     const reqParams = reactive({
-      id: route.params.id as string,
       total: 0,
       limit: 30,
       offset: 0
@@ -30,9 +24,16 @@ const MvDetail = defineComponent({
     const mvURL = ref()
     // 相似
     const simiMv = ref()
+    const getMvComment = async () => {
+      const Comment: any = await findMvComment({ id:route.params.id as string, ...reqParams})
+      reqParams.total = Comment.total
+      comment.value = Comment.comments
+      hotComment.value = Comment.hotComments
+      console.log('重新获取评论数据')
+    }
     const getMVDetail = async () => {
       // 获取MV详情
-      const { data } = await findMVDetail(reqParams.id)
+      const { data } = await findMVDetail(route.params.id as string)
       mv.value = data
       // 获取视频URL
       const res = await findMvURL(mv.value.id)
@@ -42,14 +43,9 @@ const MvDetail = defineComponent({
       simiMv.value = simiRes.mvs
       getMvComment()
     }
-    const getMvComment = async () => {
       // 获取MV评论
-      const Comment = await findMvComment(reqParams)
-      reqParams.total = Comment.total
-      comment.value = Comment.comments
-      hotComment.value = Comment.hotComments
-      console.log('重新获取评论数据')
-    }
+
+    // 初始化数据
     watch(
       () => route.params.id,
       () => {
@@ -57,27 +53,76 @@ const MvDetail = defineComponent({
       },
       { immediate: true, deep: true }
     )
+    // 评论点赞
     const operateCommentLike = (item: any) => {
-      const t = item.liked === true ? 0 : 1
-      operateComment({
-        type: 1,
-        id: mv.value.id,
-        cid: item.commentId,
-        t
-      }).then(async res => {
-        if (res.code === 200 && t === 1) {
-          await getMvComment()
-          Toast('success', '点赞成功')
-          return
-        } else if (res.code === 200 && t === 0) {
-          await getMvComment()
-          Toast('info', '取消点赞')
-          return
-        } else {
-          Toast('warning', '请求失败')
-          return
-        }
-      })
+      const isLogin = isLoginStatus()
+      if (isLogin.value) {
+        const t = item.liked === true ? 0 : 1
+        operateComment({
+          type: 1,
+          id: mv.value.id,
+          cid: item.commentId,
+          t
+        }).then(res => {
+          setTimeout(async () => {
+            if (res.code === 200 && t === 1) {
+              getMvComment()
+              Toast('success', '点赞成功')
+              return
+            } else if (res.code === 200 && t === 0) {
+              getMvComment()
+              Toast('info', '取消点赞')
+              return
+            } else {
+              Toast('warning', '请求失败')
+              return
+            }
+          } ,500)
+
+        })
+      } else {
+        Toast('warning', '亲 请先登录,再操作')
+      }
+
+    }
+    // 发表评论
+    const operateSendComment = async (value) => {
+      const isLogin = isLoginStatus()
+      if (isLogin.value) {
+        if (value.length < 1) return Toast('info', '文采不能为空噢~')
+        await sendComment({
+          content: value,
+          t: 1,
+          id: mv.value.id,
+          type: 1
+        })
+        setTimeout(() => {
+          getMvComment()
+        }, 500)
+        return Toast('success', '文采发送成功~')
+      } else {
+        return Toast('warning', '亲 请先登录 再发表文采!')
+      }
+    }
+    // 回复评论
+    const operateReply_ = (item: any, content: string) => {
+      const isLogin = isLoginStatus()
+      if (isLogin.value) {
+        sendComment({
+          type: 1,
+          id: mv.value.id,
+          content: content,
+          t: 2,
+          commentId: item.commentId
+        }).then(res => {
+          Toast('success', '回复评论成功~')
+          getMvComment()
+        }).catch(err => Toast('error', '回复失败'))
+      } else {
+        return Toast('warning', '亲 请先登录 再回复文采!')
+
+      }
+
     }
     return {
       mv,
@@ -86,7 +131,9 @@ const MvDetail = defineComponent({
       comment,
       hotComment,
       reqParams,
-      operateCommentLike
+      operateCommentLike,
+      operateSendComment,
+      operateReply_
     }
   },
   render() {
@@ -95,7 +142,8 @@ const MvDetail = defineComponent({
         {this.mv ? (
           <div class="mv-detail-header">
             <div class="mv-detail-header-left">
-              <video controls src={this.mvURL}></video>
+              <h1>MV详情</h1>
+              <video autoplay controls src={this.mvURL}></video>
               <div class="user-info">
                 <img
                   src={this.mv.artists[0].img1v1Url ?? this.mv.cover}
@@ -122,6 +170,7 @@ const MvDetail = defineComponent({
               </div>
             </div>
             <div class="mv-detail-header-right">
+              <h1>相关推荐</h1>
               {this.simiMv?.map(mv => {
                 return (
                   <div
@@ -158,6 +207,8 @@ const MvDetail = defineComponent({
         )}
         <LComment
           onOperateCommentLike={this.operateCommentLike}
+          onSendComment={this.operateSendComment}
+          onOperateReply={this.operateReply_}
           comment={this.comment}
           hotComment={this.hotComment}
         ></LComment>

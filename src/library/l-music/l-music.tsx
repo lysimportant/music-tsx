@@ -201,7 +201,7 @@ export default defineComponent({
               <span class={`songName`}>
                 {this.audio[this.currentIndex]?.songName}
               </span>
-              <span class={`singerName`}>
+              <span class={`singerName ellipsis`}>
                 -- {this.audio[this.currentIndex]?.singerName}
               </span>
             </div>

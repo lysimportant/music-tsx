@@ -1,4 +1,5 @@
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref } from 'vue'
+import Toast from '@/plugins/Toast'
 import './style'
 const LComment = defineComponent({
   name: 'LComment',
@@ -16,13 +17,33 @@ const LComment = defineComponent({
       default: 79
     }
   },
-  emits: ['operateCommentLike'],
+  emits: ['operateCommentLike', 'sendComment', "operateReply"],
   setup(props, { emit }) {
     const currentSelected = ref(0)
-    const currentComment: any = ref([])
+    const myselfId = ref(0)
+    const content = ref('')
+    const replyUser: any = ref(null)
+    const replyItem = ref()
+    const reply = (item?: any) => {
+      if (replyUser.value === null) {
+        const text = document.getElementById('comment')
+        replyUser.value = '@ ' + item?.user.nickname + '      礼貌发言噢'
+        text?.focus()
+        replyItem.value = item
+      } else {
+        emit('operateReply', replyItem.value, content.value)
+        console.log('去回复评论了')
+        replyUser.value = null
+        content.value = ''
+      }
+
+    }
     return {
       currentSelected,
-      currentComment
+      content,
+      myselfId,
+      replyUser,
+      reply
     }
   },
   render() {
@@ -32,17 +53,28 @@ const LComment = defineComponent({
         <div class="comment-send-container">
           <h1>评论</h1>
           <textarea
+            v-model={this.content}
+            placeholder={this.replyUser}
             name="comment"
             id="comment"
             cols={this.cols}
-            rows="6"
+            rows="3"
           ></textarea>
+          <el-button style={`display: block; margin-left: 15px;`} onMouseup={() => {
+            if (this.replyUser === null) {
+              const str = JSON.stringify(this.content)
+              this.$emit('sendComment', JSON.parse(str))
+              this.content = ''
+            } else {
+              this.reply()
+
+            }
+          }} type="primary">发送</el-button>
         </div>
         {/* 选择 */}
         <div class="clearfix selected-comment-header">
           <h1
             onClick={() => {
-              this.currentComment = this.$props.hotComment
               this.currentSelected = 0
             }}
             class={`${this.currentSelected === 0 ? 'active' : ''}`}
@@ -51,7 +83,6 @@ const LComment = defineComponent({
           </h1>
           <h1
             onClick={() => {
-              this.currentComment = this.$props.comment
               this.currentSelected = 1
             }}
             class={`${this.currentSelected === 1 ? 'active' : ''}`}
@@ -97,15 +128,19 @@ const LComment = defineComponent({
                       <div class={`comment-time`}>
                         <div>{item?.timeStr}</div>
                         <div
-                          onClick={() => this.$emit('operateCommentLike', item)}
+
                           class={`comment-time-right`}
                         >
+                          <div>
                           <i
+                           onClick={() => this.$emit('operateCommentLike', item)}
                             class={`${
                               item.liked ? 'active' : ''
                             } l-dianzan iconfont`}
                           ></i>
                           <span key={item.liked}>{item.likedCount}</span>
+                          </div>
+                          <i onClick={() => {this.reply(item)}} style={`margin-left: 10px`} class={`iconfont l-huifu`}></i>
                         </div>
                       </div>
                     </div>
@@ -150,15 +185,19 @@ const LComment = defineComponent({
                       <div class={`comment-time`}>
                         <div>{item?.timeStr}</div>
                         <div
-                          onClick={() => this.$emit('operateCommentLike', item)}
+
                           class={`comment-time-right`}
                         >
+                                                    <div>
                           <i
+                           onClick={() => this.$emit('operateCommentLike', item)}
                             class={`${
                               item.liked ? 'active' : ''
                             } l-dianzan iconfont`}
                           ></i>
                           <span key={item.liked}>{item.likedCount}</span>
+                          </div>
+                          <i  onClick={() => {this.reply(item)}}  style={`margin-left: 10px`} class={`iconfont l-huifu`}></i>
                         </div>
                       </div>
                     </div>

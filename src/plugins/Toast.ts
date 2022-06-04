@@ -1,6 +1,6 @@
 export default function Toast(type: string, text: string) {
   const div = document.createElement('div')
-  div.setAttribute('class', 'my-toast'+new Date())
+  div.setAttribute('class', 'my-toast' + new Date())
   const MessageType = {
     SUCCESS: 'success',
     WARNING: 'warning',

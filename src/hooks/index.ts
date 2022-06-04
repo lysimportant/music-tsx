@@ -39,3 +39,21 @@ export const useLazyData = (apiFn: Function) => {
   )
   return { result, target }
 }
+export const isLoginStatus = (): any => {
+  let isLogin = ref(false)
+  const res = JSON.parse(
+    window.localStorage.getItem('pinia-useUser') as string
+  )
+  if (res?.profile) {
+    const { profile } = res
+    isLogin.value = profile.code ? true : false
+  }
+  console.log(isLogin.value)
+  return isLogin
+}
+export const getProfileLocal = (): any => {
+  const res = JSON.parse(
+    window.localStorage.getItem('pinia-useUser') as string
+  )
+  return res
+}

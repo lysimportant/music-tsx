@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router'
 import { arr } from './config'
 import Login from '@/views/Login/Login'
 import { useUser } from '@/stores/user'
-import dayjs from 'dayjs'
+import { timeFormat } from '@/hooks'
 import './style'
 const LHeader = defineComponent({
   name: 'LHeader',
@@ -30,13 +30,21 @@ const LHeader = defineComponent({
       },
       { immediate: true, deep: true }
     )
+    const logout = () => {
+      profile.value = null
+      userDetail.value = null
+      UStore.$reset()
+      window.localStorage.removeItem('pinia-useUser')
+    }
+
     return {
       btnClick,
       login,
       search,
       isLogin,
       profile,
-      userDetail
+      userDetail,
+      logout
     }
   },
   render() {
@@ -125,6 +133,10 @@ const LHeader = defineComponent({
                             </ul>
                           </div>
                           <div class={`level`}>
+                            <span>ID</span>
+                            <span>{this.userDetail?.profile.userId}</span>
+                          </div>
+                          <div class={`level`}>
                             <span>等级</span>
                             <span>Lv{this.userDetail?.level}</span>
                           </div>
@@ -140,17 +152,11 @@ const LHeader = defineComponent({
                           <div class={`level`}>
                             <span>创建时间</span>
                             <span>
-                              {dayjs(this.userDetail?.createTime).format(
-                                'YYYY-MM-DD HH:mm:ss'
-                              )}
+                              {timeFormat(this.userDetail?.createTime)}
                             </span>
                           </div>
                           <el-button
-                            onClick={() => {
-                              this.profile = null
-                              this.userDetail = null
-                              window.localStorage.removeItem('pinia-useUser')
-                            }}
+                            onClick={() => this.logout()}
                           >
                             退出登录
                           </el-button>
