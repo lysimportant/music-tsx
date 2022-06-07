@@ -38,7 +38,6 @@ const LeaderBoard = defineComponent({
                 for (let i = 0; i < 5; i++) {
                   songDetail.value.push(data.songs.splice(0, 5))
                 }
-                console.log(songDetail.value)
               }
             })
           })
@@ -54,12 +53,19 @@ const LeaderBoard = defineComponent({
         console.log(item, item.originSongSimpleData.songId)
       }
     }
+    const playAll = item => {
+      findSongDetail(item.id).then((res: any) => {
+        console.log(res)
+        MStore.playMusic(res?.playlist.tracks.map(item => item.id))
+      })
+    }
     return {
       officialLeaderBoardList,
       globalLeaderBoardList,
       songId,
       songDetail,
-      playMusic
+      playMusic,
+      playAll
     }
   },
   render() {
@@ -70,8 +76,17 @@ const LeaderBoard = defineComponent({
           return (
             <div class="official-container">
               <div class={`left`}>
-                <img src={item?.coverImgUrl} alt="" />
-                <i class={`iconfont bf l-24gf-playCircle`}></i>
+                <img
+                  onClick={() =>
+                    this.$router.push(`/songlist/${item.id}/detail`)
+                  }
+                  src={item?.coverImgUrl}
+                  alt=""
+                />
+                <i
+                  onClick={() => this.playAll(item)}
+                  class={`iconfont bf l-24gf-playCircle`}
+                ></i>
               </div>
               <div class={`right`}>
                 <ul>
@@ -91,6 +106,7 @@ const LeaderBoard = defineComponent({
                             return (
                               <span
                                 onClick={withModifiers(() => {
+                                  this.$router.push(`/singerdetail/${ar.id}`)
                                   console.log(ar)
                                 }, ['stop'])}
                               >
@@ -104,7 +120,13 @@ const LeaderBoard = defineComponent({
                     )
                   })}
                   <li>
-                    <i class={`jump-song-detail`} style={`font-size: 16px`}>
+                    <i
+                      onClick={() => {
+                        this.$router.push(`/songlist/${item.id}/detail`)
+                      }}
+                      class={`jump-song-detail`}
+                      style={`font-size: 16px`}
+                    >
                       查看全部{`>`}{' '}
                     </i>
                   </li>

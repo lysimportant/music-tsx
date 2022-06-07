@@ -1,4 +1,6 @@
 import { defineComponent } from 'vue'
+import { findSongDetail } from '@/api/songDetail'
+import { useMusic } from '@/stores/music'
 import './style'
 import { playCountFormat } from '@/hooks'
 const LRecommend = defineComponent({
@@ -11,7 +13,16 @@ const LRecommend = defineComponent({
   },
   emits: ['itemClick'],
   setup(props, { emit }) {
-    return {}
+    const MStore = useMusic()
+    const playAllMusic = (id: any) => {
+      console.log(id)
+      findSongDetail(id).then((res: any) => {
+        MStore.playMusic(res?.playlist.tracks.map(item => item.id))
+      })
+    }
+    return {
+      playAllMusic
+    }
   },
   render() {
     return (
@@ -28,8 +39,13 @@ const LRecommend = defineComponent({
                 } else if (
                   this.$route.path === `/singerdetail/${this.$route.params.id}`
                 ) {
-                  this.$emit('itemClick', item)
+                  this.$router.push(
+                    `/singerdetail/${item.id ?? item.accountId}`
+                  )
+                } else {
+                  this.$router.push(`/songlist/${item.id}/detail`)
                 }
+                this.$emit('itemClick', item)
               }}
             >
               <img src={item.picUrl ?? item.coverImgUrl} alt="" />
@@ -40,7 +56,10 @@ const LRecommend = defineComponent({
               {this.$route.path !== '/singer' ? (
                 this.$route.path !==
                 `/singerdetail/${this.$route.params.id}` ? (
-                  <i class={`iconfont re-play l-24gf-playCircle`}></i>
+                  <i
+                    onClick={() => this.playAllMusic(item.id)}
+                    class={`iconfont re-play l-24gf-playCircle`}
+                  ></i>
                 ) : (
                   ''
                 )

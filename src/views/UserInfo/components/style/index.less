@@ -1,0 +1,40 @@
+.user-follows-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  &-item {
+    display: flex;
+    width: 30%;
+    height: 120px;
+    margin: 10px;
+    padding: 10px;
+    align-items: center;
+    .follows-img {
+      position: relative;
+      cursor: pointer;
+      .img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+      }
+      .img-detail {
+        position: absolute;
+        bottom: 0;
+        left: 70px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .follows-container {
+      padding-left: 20px;
+      div {
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+    }
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}

@@ -38,6 +38,26 @@ const router = createRouter({
         {
           path: '/mvdetail/:id',
           component: () => import('@/views/MvDetail/MvDetail')
+        },
+        {
+          path: '/songlist/:id/detail',
+          component: () => import('@/views/SongListDetail/SongListDetail')
+        },
+        {
+          path: '/album/:id/detail',
+          component: () => import('@/views/AlbumDetail/AlbumDetail')
+        },
+        {
+          path: '/user/:id/detail',
+          component: () => import('@/views/UserInfo/UserInfo')
+        },
+        {
+          path: '/user/follows/:id',
+          component: () => import('@/views/UserInfo/components/user-follows')
+        },
+        {
+          path: '/user/followed/:id',
+          component: () => import('@/views/UserInfo/components/user-follows')
         }
       ]
     }

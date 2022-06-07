@@ -32,7 +32,7 @@ export const operateComment = ({ type, id, cid, t }: operateComment) => {
  * @param {Integer} t:1 发送, 2 回复
  * @param {Integer} commentId :回复的评论 id (回复评论时必填)
  * @returns Promise
-*/
+ */
 interface sendComment {
   commentId?: number
   content: string
@@ -40,7 +40,19 @@ interface sendComment {
   id: number
   t: number
 }
-export const sendComment = ({ type, id, content, t, commentId}: sendComment) => {
-  return request('/comment', { type, id, content, t, commentId })
+export const sendComment = ({
+  type,
+  id,
+  content,
+  t,
+  commentId
+}: sendComment) => {
+  return request('/comment', {
+    type,
+    id,
+    content,
+    t,
+    commentId,
+    timestamp: Date.parse(new Date() + '')
+  })
 }
-

@@ -25,6 +25,7 @@ const SingerDetailAlbum = defineComponent({
       () => route.params.id,
       async () => {
         console.log('请求数据')
+        album.value = []
         // 获取歌手前50热门歌曲
         findArtistTopSong(route.params.id as string).then(res => {
           songs.value = res.songs
@@ -78,8 +79,17 @@ const SingerDetailAlbum = defineComponent({
         {this.album.map(item => {
           return (
             <div class="singer-detail-album">
-              <div class="singer-detail-album-left">
-                <img src={item?.album.picUrl} alt="" />
+              <div
+                class="singer-detail-album-left"
+                onClick={() =>
+                  this.$router.push(`/album/${item.album.id}/detail`)
+                }
+              >
+                <img
+                  onClick={() => console.log(item)}
+                  src={item?.album.picUrl}
+                  alt=""
+                />
               </div>
               <div class="singer-detail-album-right">
                 <div class="singer-detail-album-right-top">

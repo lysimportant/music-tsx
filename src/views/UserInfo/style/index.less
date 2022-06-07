@@ -1,0 +1,118 @@
+.user-header {
+  padding: 0 20px;
+  &-left {
+    height: 300px;
+    float: left;
+    img {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+    }
+  }
+  &-right {
+    padding-left: 300px;
+    .name-level {
+      border-bottom: 1px solid #ccc;
+      font-size: 45px;
+      padding-bottom: 15px;
+      .level {
+        height: 30px !important;
+        width: 100%;
+        div {
+          margin-top: -20px;
+          .auth {
+            font-size: 20px;
+            color: red;
+            padding: 2px 15px;
+            background-color: #fde4e2;
+            border-radius: 15px;
+            margin-right: 10px;
+          }
+          i {
+            display: inline-block;
+            width: 5%;
+            text-align: center;
+            font-size: 20px;
+            background-color: #f0f0f0;
+            border-radius: 15px;
+            margin-right: 5px;
+          }
+          .el-button {
+            float: right;
+            margin-top: 20px;
+          }
+        }
+      }
+    }
+    .other {
+      height: 90px;
+      margin-top: 10px;
+      ul > li {
+        float: left;
+        text-align: center;
+        padding: 0 30px;
+        border-right: 1px solid #ccc;
+        &:last-child {
+          border-right: 0;
+        }
+        &:first-child {
+          padding: 0;
+          padding-right: 30px;
+        }
+        h1 {
+          font-size: 45px;
+          height: 25px;
+          font-weight: 400;
+        }
+        span {
+          font-size: 20px;
+        }
+      }
+    }
+    .singer-info {
+      position: relative;
+      width: 100%;
+      float: left;
+      font-size: 19px;
+      div {
+        margin-top: 15px;
+      }
+      .show-user-info {
+        float: right;
+      }
+    }
+  }
+}
+.user-body {
+  padding: 0 20px;
+  .dj {
+    padding: 15px 0;
+    margin: 10px 0;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 5px;
+    }
+    .audio-info- {
+      font-size: 20px;
+      margin-left: -300px;
+      margin-right: 20px;
+      &category {
+        margin: 0 12px;
+        padding: 5px;
+        font-size: 12px;
+        border: 1px solid red;
+        color: red;
+      }
+    }
+    i {
+      font-size: 15px;
+      margin-right: 100px;
+    }
+  }
+}

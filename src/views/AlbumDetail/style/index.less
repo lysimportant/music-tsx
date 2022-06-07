@@ -1,0 +1,52 @@
+.songlist-detail-header {
+  padding: 135px 0 !important;
+  .songlist-detail-header-left {
+    img {
+      margin-top: -20px;
+    }
+  }
+  .songlist-detail-header-right {
+    .albumTitle {
+      &::before {
+        content: '专辑';
+        font-weight: 400;
+        border: 1px solid red;
+        color: red;
+        padding: 3px 8px;
+        font-size: 15px;
+        margin-right: 10px;
+      }
+    }
+    .operate {
+      display: flex;
+      margin-top: 30px;
+      .el-button {
+        border-radius: 20px;
+        i {
+          margin: 0 5px;
+        }
+      }
+    }
+    div {
+      font-size: 16px;
+      margin: 5px 0;
+      span {
+        cursor: pointer;
+      }
+      span,
+      i {
+        margin: 0 5px;
+      }
+    }
+  }
+}
+
+.songlist-body {
+  padding: 0 30px;
+  .el-button {
+    margin-bottom: 60px;
+  }
+  .el-table {
+    margin-top: -60px;
+  }
+}

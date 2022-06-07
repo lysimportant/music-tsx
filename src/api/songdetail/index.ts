@@ -45,3 +45,22 @@ export const findSongCatList = () => {
 export const findBoutique = (cat?: string) => {
   return request('/top/playlist/highquality?limit=1', { cat })
 }
+
+/**
+ * 获取歌单的收藏者
+ * @param {}
+ * @returns Promise
+ */
+interface SongListHobby {
+  id: string | number
+  offset: number
+  limit: number
+}
+export const findUserSongListHobby = ({ id, limit, offset }: SongListHobby) => {
+  return request('/playlist/subscribers', {
+    id,
+    limit,
+    offset,
+    timestamp: Date.parse(new Date() + '')
+  })
+}

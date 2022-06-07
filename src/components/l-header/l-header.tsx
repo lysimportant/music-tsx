@@ -108,7 +108,15 @@ const LHeader = defineComponent({
                     reference: () => {
                       return (
                         <div>
-                          <img src={this.profile?.profile?.avatarUrl} alt="" />
+                          <img
+                            onClick={() =>
+                              this.$router.push(
+                                `/user/${this.profile?.profile?.userId}/detail`
+                              )
+                            }
+                            src={this.profile?.profile?.avatarUrl}
+                            alt=""
+                          />
                           <span>{this.profile?.profile?.nickname}</span>
                         </div>
                       )
@@ -122,11 +130,25 @@ const LHeader = defineComponent({
                                 <h1>{this.userDetail?.profile?.eventCount}</h1>
                                 <div>动态</div>
                               </li>
-                              <li>
+                              <li
+                                style={`cursor: pointer;`}
+                                onClick={() =>
+                                  this.$router.push(
+                                    `/user/follows/${this.$route.params.id}`
+                                  )
+                                }
+                              >
                                 <h1>{this.userDetail?.profile?.follows}</h1>
                                 <div>关注</div>
                               </li>
-                              <li>
+                              <li
+                                style={`cursor: pointer;`}
+                                onClick={() =>
+                                  this.$router.push(
+                                    `/user/followed/${this.$route.params.id}`
+                                  )
+                                }
+                              >
                                 <h1>{this.userDetail?.profile?.followeds}</h1>
                                 <div>粉丝</div>
                               </li>
@@ -155,11 +177,33 @@ const LHeader = defineComponent({
                               {timeFormat(this.userDetail?.createTime)}
                             </span>
                           </div>
-                          <el-button
-                            onClick={() => this.logout()}
+                          <div
+                            onClick={() =>
+                              this.$router.push(
+                                `/user/${this.profile?.profile?.userId}/detail`
+                              )
+                            }
+                            style={`cursor: pointer;`}
+                            class={`level`}
                           >
-                            退出登录
-                          </el-button>
+                            <span>个人主页</span>
+                            <span>
+                              <i class={`iconfont l-31fanhui2`}></i>
+                            </span>
+                          </div>
+                          <div
+                            style={`cursor: pointer;`}
+                            onClick={() => {
+                              this.logout()
+                              this.$router.replace('/recommend')
+                            }}
+                            class={`level`}
+                          >
+                            <span>退出登录</span>
+                            <span>
+                              <i class={`iconfont l-31fanhui2`}></i>
+                            </span>
+                          </div>
                         </div>
                       )
                     }

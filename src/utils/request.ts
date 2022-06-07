@@ -6,9 +6,10 @@ import Toast from '@/plugins/Toast'
 const network = (config: AxiosRequestConfig) => {
   const instance = axios.create({
     // http://localhost:3000
-    baseURL: 'http://localhost:3000/',
+    // baseURL: 'http://localhost:3000/',
     // baseURL: 'http://124.221.63.19:3000/',
     // baseURL: 'http://120.78.137.246:3000/',
+    baseURL: 'https://lianghj.top:3000/',
     timeout: 5000,
     withCredentials: true
   })

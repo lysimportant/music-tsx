@@ -1,4 +1,6 @@
 import { ref } from 'vue'
+import { operateComment, sendComment } from '@/api/operate'
+import Toast from '@/plugins/Toast'
 import dayjs from 'dayjs'
 import { useIntersectionObserver } from '@vueuse/core'
 export const playCountFormat = (count: number) => {
@@ -14,7 +16,7 @@ export const playSongTime = (time: number) => {
   return dayjs(time).format('mm:ss')
 }
 export const timeFormat = (timestamp: number) => {
-  return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss')
+  return dayjs(timestamp).format('YYYY-MM-DD HH:mm')
 }
 /**
  *数据懒加载
@@ -41,9 +43,7 @@ export const useLazyData = (apiFn: Function) => {
 }
 export const isLoginStatus = (): any => {
   let isLogin = ref(false)
-  const res = JSON.parse(
-    window.localStorage.getItem('pinia-useUser') as string
-  )
+  const res = JSON.parse(window.localStorage.getItem('pinia-useUser') as string)
   if (res?.profile) {
     const { profile } = res
     isLogin.value = profile.code ? true : false
@@ -52,8 +52,94 @@ export const isLoginStatus = (): any => {
   return isLogin
 }
 export const getProfileLocal = (): any => {
-  const res = JSON.parse(
-    window.localStorage.getItem('pinia-useUser') as string
-  )
+  const res = JSON.parse(window.localStorage.getItem('pinia-useUser') as string)
   return res
+}
+
+// 评论点赞
+export const useOperateCommentLike = (
+  type: number,
+  item: any,
+  id: number,
+  fn: Function
+) => {
+  const isLogin = isLoginStatus()
+  if (isLogin.value) {
+    const t = item.liked === true ? 0 : 1
+    operateComment({
+      type,
+      id,
+      cid: item.commentId,
+      t
+    }).then(res => {
+      setTimeout(async () => {
+        if (res.code === 200 && t === 1) {
+          await fn()
+          Toast('success', '点赞成功')
+          return
+        } else if (res.code === 200 && t === 0) {
+          Toast('info', '取消点赞')
+          await fn()
+          return
+        } else {
+          Toast('warning', '请求失败')
+          return
+        }
+      }, 500)
+    })
+  } else {
+    Toast('warning', '亲 请先登录,再操作')
+  }
+}
+export const useOperateSendComment = async (
+  type: number,
+  id: number,
+  content: string,
+  fn: Function
+) => {
+  const isLogin = isLoginStatus()
+  if (isLogin.value) {
+    if (content.length < 1) return Toast('info', '文采不能为空噢~')
+    await sendComment({
+      content,
+      t: 1,
+      id,
+      type
+    })
+    setTimeout(() => {
+      Toast('success', '文采发送成功~')
+      fn()
+    }, 500)
+  } else {
+    return Toast('warning', '亲 请先登录 再发表文采!')
+  }
+}
+
+// 回复评论
+export const useOperateReply = (
+  type: number,
+  item: any,
+  id: number,
+  content: string,
+  fn: Function
+) => {
+  const isLogin = isLoginStatus()
+  if (isLogin.value) {
+    sendComment({
+      type,
+      id,
+      content,
+      t: 2,
+      commentId: item.commentId
+    })
+      .then(res => {
+        setTimeout(() => {
+          Toast('success', '回复评论成功~')
+          fn()
+        }, 500)
+      })
+      .catch(err => Toast('error', '回复失败'))
+  } else {
+    return Toast('warning', '亲 请先登录 再回复文采!')
+  }
 }

@@ -7,10 +7,10 @@ export default defineComponent({
   props: {
     audio: {
       type: Array,
-      default: () => []
+      default: (): any => []
     }
   },
-  setup(props) {
+  setup(props, { expose }) {
     // 是否播放
     const store = useMusic()
     const show = ref(true)
@@ -34,11 +34,14 @@ export default defineComponent({
       if (props.audio.length > 0) {
         playing.value = true
         audioRef.value.play()
+        progress.value = 0
         store.isPlay = true
+        console.log('播放')
       }
     }
     onMounted(() => {
       audioRef.value.volume = volume.value / 100
+      store.isPlay = false
       // 空格暂停
       document.onkeydown = function (e) {
         if (e.key === ' ' && props.audio.length > 0) {
@@ -54,27 +57,32 @@ export default defineComponent({
       () => {
         if (!playing.value) {
           setTimeout(() => {
+            progress.value = 0
             play()
           }, 1)
         }
       }
     )
-
+    // 暂停
     const pause = () => {
       playing.value = false
       audioRef.value.pause()
       store.isPlay = false
+      console.log('暂停')
     }
+    // 下一首
     const next = () => {
       pause()
       currentIndex.value += 1
       if (currentIndex.value > props.audio.length - 1) {
         currentIndex.value = 0
       }
+      progress.value = 0
       setTimeout(() => {
         play()
       }, 0)
     }
+    // 切换
     const toggle = () => {
       if (playing.value) {
         playing.value = false
@@ -84,6 +92,7 @@ export default defineComponent({
         play()
       }
     }
+    // 后退
     const back = () => {
       pause()
       currentIndex.value -= 1
@@ -93,6 +102,7 @@ export default defineComponent({
           currentIndex.value = 0
         }
       }
+      progress.value = 0
       setTimeout(() => {
         play()
       }, 0)
@@ -129,6 +139,12 @@ export default defineComponent({
       // 作为返回值返回
       return m + ':' + s
     }
+    expose({
+      play,
+      pause,
+      back,
+      next
+    })
     return {
       show,
       showList,
@@ -178,7 +194,7 @@ export default defineComponent({
             style={`${this.show ? ' display: none' : ''}`}
             class={`l-music-container-left`}
           >
-            {this.audio.length > 0 ? (
+            {this.audio!.length > 0 ? (
               <img
                 onClick={() => {
                   console.log(this.audio[this.currentIndex])
@@ -201,7 +217,7 @@ export default defineComponent({
               <span class={`songName`}>
                 {this.audio[this.currentIndex]?.songName}
               </span>
-              <span class={`singerName ellipsis`}>
+              <span class={`singerName `}>
                 -- {this.audio[this.currentIndex]?.singerName}
               </span>
             </div>

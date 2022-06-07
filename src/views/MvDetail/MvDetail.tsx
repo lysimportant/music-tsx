@@ -1,11 +1,17 @@
-import { defineComponent, reactive, ref, watch } from 'vue'
+import { defineComponent, onMounted, reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { findMVDetail, findMvURL, findSimiMv, findMvComment } from '@/api/mv'
 import { operateComment, sendComment } from '@/api/operate'
 import LComment from '@/components/l-comment/l-comment'
-import { playCountFormat, playSongTime, isLoginStatus } from '@/hooks'
+import {
+  playCountFormat,
+  playSongTime,
+  isLoginStatus,
+  useOperateCommentLike,
+  useOperateSendComment,
+  useOperateReply
+} from '@/hooks'
 import './style'
-import Toast from '@/plugins/Toast'
 const MvDetail = defineComponent({
   name: 'MvDetail',
   setup(props, { emit }) {
@@ -25,7 +31,10 @@ const MvDetail = defineComponent({
     // 相似
     const simiMv = ref()
     const getMvComment = async () => {
-      const Comment: any = await findMvComment({ id:route.params.id as string, ...reqParams})
+      const Comment: any = await findMvComment({
+        id: route.params.id as string,
+        ...reqParams
+      })
       reqParams.total = Comment.total
       comment.value = Comment.comments
       hotComment.value = Comment.hotComments
@@ -39,11 +48,11 @@ const MvDetail = defineComponent({
       const res = await findMvURL(mv.value.id)
       mvURL.value = res.data.url
       // 获取相似MV
-      const simiRes = await findSimiMv(mv.value.id)
+      const simiRes: any = await findSimiMv(mv.value.id)
       simiMv.value = simiRes.mvs
       getMvComment()
     }
-      // 获取MV评论
+    // 获取MV评论
 
     // 初始化数据
     watch(
@@ -55,74 +64,24 @@ const MvDetail = defineComponent({
     )
     // 评论点赞
     const operateCommentLike = (item: any) => {
-      const isLogin = isLoginStatus()
-      if (isLogin.value) {
-        const t = item.liked === true ? 0 : 1
-        operateComment({
-          type: 1,
-          id: mv.value.id,
-          cid: item.commentId,
-          t
-        }).then(res => {
-          setTimeout(async () => {
-            if (res.code === 200 && t === 1) {
-              getMvComment()
-              Toast('success', '点赞成功')
-              return
-            } else if (res.code === 200 && t === 0) {
-              getMvComment()
-              Toast('info', '取消点赞')
-              return
-            } else {
-              Toast('warning', '请求失败')
-              return
-            }
-          } ,500)
-
-        })
-      } else {
-        Toast('warning', '亲 请先登录,再操作')
-      }
-
+      useOperateCommentLike(1, item, mv.value.id, getMvComment)
     }
     // 发表评论
-    const operateSendComment = async (value) => {
-      const isLogin = isLoginStatus()
-      if (isLogin.value) {
-        if (value.length < 1) return Toast('info', '文采不能为空噢~')
-        await sendComment({
-          content: value,
-          t: 1,
-          id: mv.value.id,
-          type: 1
-        })
-        setTimeout(() => {
-          getMvComment()
-        }, 500)
-        return Toast('success', '文采发送成功~')
-      } else {
-        return Toast('warning', '亲 请先登录 再发表文采!')
-      }
+    const operateSendComment = async (value: string) => {
+      useOperateSendComment(1, mv.value.id, value, getMvComment)
     }
     // 回复评论
     const operateReply_ = (item: any, content: string) => {
-      const isLogin = isLoginStatus()
-      if (isLogin.value) {
-        sendComment({
-          type: 1,
-          id: mv.value.id,
-          content: content,
-          t: 2,
-          commentId: item.commentId
-        }).then(res => {
-          Toast('success', '回复评论成功~')
-          getMvComment()
-        }).catch(err => Toast('error', '回复失败'))
-      } else {
-        return Toast('warning', '亲 请先登录 再回复文采!')
-
-      }
-
+      useOperateReply(1, item, mv.value.id, content, getMvComment)
+    }
+    const PaginationSizeChange = (item: any) => {
+      reqParams.limit = item.limit
+      reqParams.offset = 0
+      getMvComment()
+    }
+    const PaginationCurrentChange = (item: any) => {
+      reqParams.offset = item.limit * (item.page - 1)
+      getMvComment()
     }
     return {
       mv,
@@ -133,7 +92,9 @@ const MvDetail = defineComponent({
       reqParams,
       operateCommentLike,
       operateSendComment,
-      operateReply_
+      operateReply_,
+      PaginationSizeChange,
+      PaginationCurrentChange
     }
   },
   render() {
@@ -171,7 +132,7 @@ const MvDetail = defineComponent({
             </div>
             <div class="mv-detail-header-right">
               <h1>相关推荐</h1>
-              {this.simiMv?.map(mv => {
+              {this.simiMv?.map((mv: any) => {
                 return (
                   <div
                     onClick={() => {
@@ -211,6 +172,9 @@ const MvDetail = defineComponent({
           onOperateReply={this.operateReply_}
           comment={this.comment}
           hotComment={this.hotComment}
+          total={this.reqParams.total}
+          onPaginationSizeChange={this.PaginationSizeChange}
+          onPaginationCurrentChange={this.PaginationCurrentChange}
         ></LComment>
       </div>
     )

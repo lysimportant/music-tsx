@@ -51,7 +51,10 @@ export const verifyUserCaptcha = ({ phone, captcha }: verifyType) => {
  */
 
 export const findUserDetail = (uid: string) => {
-  return request('/user/detail', { uid })
+  return request('/user/detail', {
+    uid,
+    timestamp: Date.parse(new Date() + '')
+  })
 }
 
 /**
@@ -102,4 +105,45 @@ export const checkGenerateQR = (key: string) => {
     key,
     timestamp: Date.parse(new Date() + '')
   })
+}
+
+/**
+ *获取用户信息 , 歌单，收藏，mv, dj 数量
+ * @param {String} uid - 用户ID
+ * @returns Promise
+ */
+
+export const findUserPlayList = (uid: string, limit = 500) => {
+  return request('/user/playlist', {
+    uid,
+    limit,
+    timestamp: Date.parse(new Date() + '')
+  })
+}
+
+/**
+ * 获取用户关注电台
+ * @param {String} uid - 用户ID
+ * @returns Promise
+ */
+export const findUserAudioList = () => {
+  return request('/dj/sublist')
+}
+
+/**
+ * 获取用户关注列表
+ * @param {String} uid - 用户ID
+ * @returns Promise
+ */
+export const findUserFollowsList = (uid: string) => {
+  return request('user/follows?limit=10000', { uid })
+}
+
+/**
+ * 获取用户关注列表
+ * @param {String} uid - 用户ID
+ * @returns Promise
+ */
+export const findUserFollowedList = (uid: string) => {
+  return request('/user/followeds?limit=10000', { uid })
 }

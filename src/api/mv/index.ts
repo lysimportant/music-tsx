@@ -73,22 +73,3 @@ export const findMvComment = ({ id, offset, limit }: MvComment) => {
     timestamp: Date.parse(new Date() + '')
   })
 }
-
-/**
- *
- * @param {}
- * @returns Promise
- */
-// 0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台 5: 视频 6: 动态
-export const findAllComment = (
-  type: number,
-  id: number | String,
-  offset: number
-) => {
-  return request('/comment/new?sortType=2', {
-    type,
-    id,
-    offset,
-    timestamp: Date.parse(new Date() + '')
-  })
-}

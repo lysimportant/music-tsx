@@ -95,8 +95,9 @@
 
 .user-detail {
   & > div {
-    margin: 10px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    // margin: 10px 0;
+    padding: 10px 0;
+    // border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   }
   .user-detail-data {
     width: 100%;
@@ -111,7 +112,10 @@
     }
   }
   .level {
-    padding: 0 30px 10px;
+    padding: 10px 30px 10px;
+    &:hover {
+      background-color: #ccc;
+    }
     & > span:nth-child(1) {
     }
     & > span:nth-child(2) {

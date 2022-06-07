@@ -9,11 +9,16 @@ import './style'
 const SingerDetail = defineComponent({
   name: 'SingerDetail',
   setup(props, { emit }) {
+    // 歌手详情
     const singerDetail = ref()
+    // 获取相似歌手
     const simiArtist = ref()
+    // mv 数据
     const mv = ref()
+    // 选择卡
     const activeName = ref('album')
     const route = useRoute()
+    // 获取作者信息
     const getArtistsDetail = async () => {
       const res = await findArtistDetail(route.params.id as string)
       singerDetail.value = res.data
@@ -83,12 +88,7 @@ const SingerDetail = defineComponent({
           </div>
         </div>
         <div class={`toggle-card`}>
-          <el-tabs
-            v-model={this.activeName}
-            onTabClick={() => {
-              console.log('卡点击了')
-            }}
-          >
+          <el-tabs v-model={this.activeName}>
             <el-tab-pane label="专辑" name="album">
               <SingerDetailAlbum></SingerDetailAlbum>
             </el-tab-pane>
