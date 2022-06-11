@@ -87,7 +87,7 @@ const SingerDetailAlbum = defineComponent({
               >
                 <img
                   onClick={() => console.log(item)}
-                  src={item?.album.picUrl}
+                  v-lazy={item?.album.picUrl}
                   alt=""
                 />
               </div>

@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, useRoute } from 'vue-router'
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
@@ -20,7 +20,7 @@ const router = createRouter({
           component: () => import('@/views/LeaderBoard/LeaderBoard')
         },
         {
-          path: '/songlist',
+          path: '/songlist/:tag?',
           component: () => import('@/views/SongList/SongList')
         },
         {
@@ -58,6 +58,18 @@ const router = createRouter({
         {
           path: '/user/followed/:id',
           component: () => import('@/views/UserInfo/components/user-follows')
+        },
+        {
+          path: '/search/:comment',
+          component: () => import('@/views/search/search')
+        },
+        {
+          path: '/dj/:id/detail',
+          component: () => import('@/views/DjDetail/DjDetail')
+        },
+        {
+          path: '/lrc/:id/:songname?',
+          component: () => import('@/views/LRC')
         }
       ]
     }
@@ -67,5 +79,6 @@ const router = createRouter({
     return { top: 0, y: 0 }
   }
 })
+export const useRoute_ = useRoute()
 
 export default router

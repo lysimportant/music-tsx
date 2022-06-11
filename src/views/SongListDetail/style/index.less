@@ -18,9 +18,17 @@
       }
     }
     .user-info {
+      position: relative;
       display: flex;
       margin-top: 10px;
       align-items: center;
+      .songlist-info-img {
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        bottom: 0;
+        left: 30px;
+      }
       img {
         width: 40px;
         height: 40px;
@@ -28,7 +36,7 @@
         margin-right: 5px;
       }
       span {
-        font-size: 18px;
+        font-size: 16px;
         margin-right: 10px;
       }
     }
@@ -48,9 +56,6 @@
       span {
         margin: 10px;
       }
-      pre {
-        font-size: 21px;
-      }
     }
   }
 }
@@ -60,7 +65,15 @@
   .el-button {
     margin-bottom: 60px;
   }
+
   .el-table {
     margin-top: -60px;
+  }
+}
+.el-popover {
+  .songlistpre {
+    font-size: 19px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 }

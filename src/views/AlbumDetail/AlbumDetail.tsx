@@ -56,7 +56,7 @@ const SongListDetail = defineComponent({
       },
       { deep: true, immediate: true }
     )
-    // 获取歌单详情
+    // 获取专辑详情
     const getAlbumDetail = async (id: number) => {
       const res = await findAlbumDetail(id)
       detail.value = res
@@ -68,7 +68,7 @@ const SongListDetail = defineComponent({
     }
     // 播放全部
     const playAll = () => {
-      MStore.isPlay = false
+      MStore.$reset()
       LMusic.value?.pause()
       MStore.playMusic(
         detail.value.songs.map(item => item.id),
@@ -118,7 +118,7 @@ const SongListDetail = defineComponent({
         <div class="songlist-detail-header">
           {/* 左边 */}
           <div class="songlist-detail-header-left">
-            <img src={this.detail?.album.picUrl} alt="" />
+            <img v-lazy={this.detail?.album.picUrl} alt="" />
           </div>
           {/* 右边 */}
           <div class="songlist-detail-header-right">
@@ -128,11 +128,6 @@ const SongListDetail = defineComponent({
               <el-button onClick={() => this.playAll()} type="danger">
                 <i class={`iconfont l-24gl-play`}></i>
                 播放全部
-              </el-button>
-
-              <el-button style={`text-center: center;`}>
-                <i class={`iconfont l-shoucang`}></i>
-                收藏 {playCountFormat(this.detail?.subscribedCount)}
               </el-button>
             </div>
             {/* 用户信息 */}
@@ -160,7 +155,6 @@ const SongListDetail = defineComponent({
                 )
               })}
             </div>
-            <div>创建时间: {timeFormat(this.detail?.createTime)} </div>
           </div>
         </div>
         <div class={`songlist-body`}>

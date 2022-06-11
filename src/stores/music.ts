@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { findMusicDetail, findMusicURL } from '@/api/music'
+import { findDJDetail } from '@/api/dj'
 import Toast from '@/plugins/Toast'
 interface stateType {
   list: AudioType[] // 歌曲存放的数组
@@ -14,13 +15,17 @@ type AudioType = {
 }
 interface State {
   list: any[]
+  currentMusic: any
   isPlay: boolean
+  lrc: any
 }
 export const useMusic = defineStore('useMusic', {
   state(): State {
     return {
       list: [],
-      isPlay: false
+      isPlay: false,
+      lrc: '',
+      currentMusic: ''
     }
   },
   actions: {
@@ -29,7 +34,11 @@ export const useMusic = defineStore('useMusic', {
       const songDetail: any = await findMusicURL(ids)
       musicDetail.songs.forEach((item: any, index: number) => {
         const Index = this.list.findIndex(lis => lis.id === item.id)
-        if (Index === -1 && sort == 1 && songDetail?.data[index].url !== null) {
+        if (
+          Index === -1 &&
+          sort === 1 &&
+          songDetail?.data[index].url !== null
+        ) {
           this.list = [
             {
               id: item.id,
@@ -42,12 +51,14 @@ export const useMusic = defineStore('useMusic', {
             ...this.list
           ]
           return index < 1 ? Toast('success', item.name + ' 正在播放') : ''
-        } else if (
+        }
+        // 一次太多就可以
+        else if (
           (Index === -1 && sort === 1) ||
           (sort === 0 && songDetail?.data[index].url === null)
         ) {
           findMusicURL(musicDetail.songs[index].id).then(res => {
-            this.list.unshift({
+            this.list.push({
               id: musicDetail.songs[index].id,
               duration: musicDetail.songs[index].dt,
               picUrl: musicDetail.songs[index].al.picUrl,
@@ -55,7 +66,6 @@ export const useMusic = defineStore('useMusic', {
               songName: musicDetail.songs[index].name,
               url: res.data[0].url
             })
-            this.list.reverse()
             return index < 1
               ? Toast('success', musicDetail.songs[index].name + ' 正在播放')
               : ''
@@ -63,30 +73,42 @@ export const useMusic = defineStore('useMusic', {
         } else {
           // 默认播放
           if (Index === -1 && songDetail?.data[index].url !== null) {
-            if (this.isPlay) {
-              this.list.push({
+            this.list = [
+              {
                 id: item.id,
                 duration: item.dt,
                 picUrl: item.al.picUrl,
                 singerName: item.ar[0].name,
                 songName: item.name,
                 url: songDetail?.data[index].url
-              })
-              return Toast('success', item.name + ' 已添加到播放列中')
-            } else {
-              this.list = [
-                {
-                  id: item.id,
-                  duration: item.dt,
-                  picUrl: item.al.picUrl,
-                  singerName: item.ar[0].name,
-                  songName: item.name,
-                  url: songDetail?.data[index].url
-                },
-                ...this.list
-              ]
-              return index < 1 ? Toast('success', item.name + ' 正在播放') : ''
-            }
+              },
+              ...this.list
+            ]
+            return index < 1 ? Toast('success', item.name + ' 正在播放') : ''
+            // if (this.isPlay) {
+            //   this.list.push({
+            //     id: item.id,
+            //     duration: item.dt,
+            //     picUrl: item.al.picUrl,
+            //     singerName: item.ar[0].name,
+            //     songName: item.name,
+            //     url: songDetail?.data[index].url
+            //   })
+            //   return Toast('success', item.name + ' 已添加到播放列中')
+            // } else {
+            //   this.list = [
+            //     {
+            //       id: item.id,
+            //       duration: item.dt,
+            //       picUrl: item.al.picUrl,
+            //       singerName: item.ar[0].name,
+            //       songName: item.name,
+            //       url: songDetail?.data[index].url
+            //     },
+            //     ...this.list
+            //   ]
+            //   return index < 1 ? Toast('success', item.name + ' 正在播放') : ''
+            // }
           } else {
             if (index < 1) {
               Toast('warning', item.name + ' 歌曲已在列表中')
@@ -94,6 +116,14 @@ export const useMusic = defineStore('useMusic', {
           }
         }
       })
+      if (sort === 1) {
+        this.list.reverse()
+      }
+    },
+    deleteMusic(id) {
+      const res = this.list.findIndex(item => item.id === id)
+      Toast('success', `歌曲 ${this.list[res].songName} 已删除`)
+      this.list.splice(res, 1)
     }
   }
 })

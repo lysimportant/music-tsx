@@ -45,7 +45,7 @@ const Login = defineComponent({
             }`}
           >
             <div class={`login-container-auto-left `}>
-              <img src={this.LoginBg} alt="原神 刻晴" title="刻晴 ~~" />
+              <img v-lazy={this.LoginBg} alt="原神 刻晴" title="刻晴 ~~" />
             </div>
             <div class={`login-container-auto-right `}>
               <i
@@ -77,7 +77,7 @@ const Login = defineComponent({
                 </el-tabs>
               </div>
               <div class={`zs`}>
-                <img src={imgUrl} alt="" />
+                <img v-lazy={imgUrl} alt="" />
                 <ul>
                   <li>纯属个人练习开发网站 如有问题请联系我</li>
                   <li>

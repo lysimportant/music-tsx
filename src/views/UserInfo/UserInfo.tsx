@@ -1,9 +1,16 @@
-import { defineComponent, onMounted, ref, watch, reactive } from 'vue'
+import { defineComponent, onMounted, ref, watch, withModifiers } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUser } from '@/stores/user'
-import { findUserDetail, findUserPlayList, findUserAudioList } from '@/api/user'
+import {
+  findUserDetail,
+  findUserPlayList,
+  findUserAudioList,
+  subUser
+} from '@/api/user'
+
 import LRecommend from '@/components/l-recommend/l-recommend'
 import './style'
+import Toast from '@/plugins/Toast'
 const UserInfo = defineComponent({
   name: 'UserInfo',
   setup(props, { emit }) {
@@ -19,7 +26,7 @@ const UserInfo = defineComponent({
     const getInfo = async () => {
       userDetail.value = UStore.userDetail
       detail.value = await findUserDetail(route.params.id as string)
-      if (UStore.userDetail?.profile.userId === route.params.id * 1) {
+      if (UStore.userDetail?.profile?.userId === route.params.id * 1) {
         const res = await findUserAudioList()
         audio.value = res.djRadios
         console.log(audio.value)
@@ -27,7 +34,7 @@ const UserInfo = defineComponent({
         console.log('播客')
       }
       const res: any = await findUserPlayList(route.params.id as string)
-      res?.playlist.map(item => {
+      res?.playlist?.map(item => {
         if (!item.subscribed) {
           myPlayList.value.push(item)
         } else {
@@ -54,6 +61,28 @@ const UserInfo = defineComponent({
         UStore.$reset()
       }
     )
+    const operateSub = async () => {
+      if (UStore?.profile.code === 200) {
+        const t = detail.value.profile.followed === true ? 0 : 1
+        const res = await subUser(detail.value.profile.userId, t)
+        if (res.code === -462) {
+          return Toast('warning', '关注失败, 需要官方的' + res.data.blockText)
+        }
+        console.log('收藏切换', t)
+        if (t === 0) {
+          Toast(
+            'success',
+            `已为您取消了 ${detail.value.profile.nickname} 的关注`
+          )
+        } else {
+          Toast('success', `已为您关注了 ${detail.value.profile.nickname} `)
+        }
+        console.log(res)
+        getInfo()
+      } else {
+        Toast('warning', '亲, 请先登录再操作噢')
+      }
+    }
     return {
       userDetail,
       detail,
@@ -61,7 +90,8 @@ const UserInfo = defineComponent({
       myPlayList,
       mySubsList,
       activeName,
-      audio
+      audio,
+      operateSub
     }
   },
   render() {
@@ -69,7 +99,7 @@ const UserInfo = defineComponent({
       <div class={`card`}>
         <div class="user-header clearfix">
           <div class="user-header-left">
-            <img src={this.detail?.profile?.avatarUrl} alt="" />
+            <img v-lazy={this.detail?.profile?.avatarUrl} alt="" />
           </div>
           <div class="user-header-right">
             <div class="name-level">
@@ -80,7 +110,7 @@ const UserInfo = defineComponent({
                     <span class={`auth`}>
                       <img
                         style={`width: 20px; height: 20px; margin-bottom: 4px; margin-right: 5px;`}
-                        src={this.detail?.identify.imageUrl}
+                        v-lazy={this.detail?.identify.imageUrl}
                         alt=""
                       />
                       {this.detail?.profile.mainAuthType.desc}
@@ -104,12 +134,12 @@ const UserInfo = defineComponent({
                       <use href="#l-xingbienv"></use>
                     </svg>
                   )}
-                  {this.userDetail?.profile.userId ===
+                  {this.userDetail?.profile?.userId ===
                   this.detail?.profile.userId ? (
                     <el-button round>修改个人信息</el-button>
                   ) : (
-                    <el-button round>
-                      {this.detail?.profile.followed ? '已关注' : '关注'}
+                    <el-button onClick={() => this.operateSub()} round>
+                      {this.detail?.profile?.followed ? '已关注' : '关注'}
                     </el-button>
                   )}
                 </div>
@@ -164,28 +194,57 @@ const UserInfo = defineComponent({
               label={`创建的歌单 ${this.myPlayList.length}`}
               name="song"
             >
-              <LRecommend list={this.myPlayList}></LRecommend>
+              {this.myPlayList.length > 0 ? (
+                <LRecommend list={this.myPlayList}></LRecommend>
+              ) : (
+                <div class={`user-none`}>暂无创建歌单</div>
+              )}
             </el-tab-pane>
             <el-tab-pane
               label={`收藏的歌单 ${this.mySubsList.length}`}
               name="subs"
             >
-              <LRecommend list={this.mySubsList}></LRecommend>
+              {this.myPlayList.length > 0 ? (
+                <LRecommend list={this.mySubsList}></LRecommend>
+              ) : (
+                <div class={`user-none`}>暂无收藏歌单</div>
+              )}
             </el-tab-pane>
             <el-tab-pane label={`收藏的播客 ${this.audio.length}`} name="dj">
-              {this.audio.map(item => {
-                return (
-                  <div class={`dj`}>
-                    <img src={item.picUrl} alt="" />
-                    <span class={`audio-info-`}>
-                      {item.name}{' '}
-                      <span class={`audio-info-category`}>{item.category}</span>
-                    </span>
-                    <i>by {item.dj.nickname}</i>
-                    <i>声音 {item.programCount}</i>
-                  </div>
-                )
-              })}
+              {this.audio.length > 0 ? (
+                <>
+                  {this.audio.map((item: any) => {
+                    return (
+                      <div
+                        onClick={() => {
+                          this.$router.push(`/dj/${item.id}/detail`)
+                        }}
+                        class={`dj`}
+                      >
+                        <img v-lazy={item.picUrl} alt="" />
+                        <span class={`audio-info-`}>
+                          {item.name}{' '}
+                          <span class={`audio-info-category`}>
+                            {item.category}
+                          </span>
+                        </span>
+                        <i
+                          class={`user-info-name-`}
+                          style={`cursor: pointer;`}
+                          onClick={withModifiers(() => {
+                            this.$router.push(`/user/${item?.dj.userId}/detail`)
+                          }, ['stop', 'prevent'])}
+                        >
+                          {item.dj.nickname}
+                        </i>
+                        <i>声音 {item.programCount}</i>
+                      </div>
+                    )
+                  })}
+                </>
+              ) : (
+                <div class={`user-none`}>暂无收藏播客</div>
+              )}
             </el-tab-pane>
           </el-tabs>
         </div>

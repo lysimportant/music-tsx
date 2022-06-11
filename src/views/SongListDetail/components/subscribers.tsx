@@ -30,7 +30,7 @@ const Subscribers = defineComponent({
           {this.subscribers?.map((item: any) => {
             return (
               <div class={`subs-container-item`}>
-                <img src={item?.avatarUrl} alt="" />
+                <img v-lazy={item?.avatarUrl} alt="" />
                 <div class={`subs-container-item-info`}>
                   <span class={`name`}>
                     {item.nickname}

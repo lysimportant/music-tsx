@@ -1,5 +1,7 @@
 import { ref } from 'vue'
-import { operateComment, sendComment } from '@/api/operate'
+import { operateComment, sendComment, likeMusic } from '@/api/operate'
+import { useUser } from '@/stores/user'
+import { userSubList } from '@/api/user'
 import Toast from '@/plugins/Toast'
 import dayjs from 'dayjs'
 import { useIntersectionObserver } from '@vueuse/core'
@@ -142,4 +144,20 @@ export const useOperateReply = (
   } else {
     return Toast('warning', '亲 请先登录 再回复文采!')
   }
+}
+
+export const useOperateLikeMusic = async (id: number, userId) => {
+  const res = useUser().likeList.findIndex(ids => ids === id)
+  if (res === -1) {
+    // 收藏
+    Toast('success', '已为您添加到歌曲喜欢')
+    await likeMusic(id, true)
+  } else {
+    // 取消收藏
+    Toast('success', '已为您取消该歌曲喜欢')
+    await likeMusic(id, false)
+  }
+
+  const list = await userSubList(userId)
+  return (useUser().likeList = list.ids)
 }

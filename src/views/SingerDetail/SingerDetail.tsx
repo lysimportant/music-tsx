@@ -5,10 +5,14 @@ import SingerDetailAlbum from './components/SingerDetailAlbum'
 import SingerDetailDesc from './components/SingerDetailDesc'
 import SingerDetailMV from './components/SingerDetailMV'
 import LRecommend from '@/components/l-recommend/l-recommend'
+import { useUser } from '@/stores/user'
+import { subArtists } from '@/api/user'
+import Toast from '@/plugins/Toast'
 import './style'
 const SingerDetail = defineComponent({
   name: 'SingerDetail',
   setup(props, { emit }) {
+    const UStore = useUser()
     // 歌手详情
     const singerDetail = ref()
     // 获取相似歌手
@@ -34,11 +38,34 @@ const SingerDetail = defineComponent({
       },
       { immediate: true }
     )
+    const singerSub = async () => {
+      if (UStore?.profile.code === 200) {
+        const t = singerDetail.value.user.followed === true ? 0 : 1
+        const res = await subArtists(singerDetail.value.artist.id, t)
+        if (res.code === -462) {
+          return Toast('warning', '收藏失败, 需要官方的' + res.data.blockText)
+        }
+        console.log('收藏切换', t)
+        if (t === 0) {
+          Toast(
+            'success',
+            `已为您取消了 ${singerDetail.value.user.nickname} 的收藏`
+          )
+        } else {
+          Toast('success', `已为您收藏了 ${singerDetail.value.user.nickname} `)
+        }
+        console.log(res)
+        getArtistsDetail()
+      } else {
+        Toast('warning', '亲, 请先登录再操作噢')
+      }
+    }
     return {
       singerDetail,
       activeName,
       simiArtist,
-      mv
+      mv,
+      singerSub
     }
   },
   render() {
@@ -46,7 +73,7 @@ const SingerDetail = defineComponent({
       <section class={`card`}>
         <div class="singer-detail-header">
           <div class="singer-detail-header-left">
-            <img src={this.singerDetail?.artist.cover} alt="" />
+            <img v-lazy={this.singerDetail?.artist.cover} alt="" />
           </div>
           <div class="singer-detail-header-right">
             <h1>{this.singerDetail?.artist.name}</h1>
@@ -70,7 +97,7 @@ const SingerDetail = defineComponent({
               })}
             </section>
             {/*  */}
-            <el-popover
+            {/* <el-popover
               placement="bottom-start"
               width={1000}
               trigger="hover"
@@ -84,7 +111,25 @@ const SingerDetail = defineComponent({
                   return <>{this.singerDetail?.artist.briefDesc}</>
                 }
               }}
-            </el-popover>
+            </el-popover> */}
+            {this.singerDetail?.blacklist !== true ? (
+              <el-button
+                round
+                onClick={() =>
+                  this.$router.push(
+                    `/user/${this.singerDetail?.user.userId}/detail`
+                  )
+                }
+              >
+                个人主页
+              </el-button>
+            ) : (
+              ''
+            )}
+
+            <el-button onClick={() => this.singerSub()} round>
+              {this.singerDetail?.user.followed ? '已收藏' : '收藏'}
+            </el-button>
           </div>
         </div>
         <div class={`toggle-card`}>

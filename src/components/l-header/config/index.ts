@@ -1,14 +1,9 @@
-// logo 图片导入
-import imgUrl from '@/assets/image/logo.png'
+import { useRoute_ } from '@/router'
 // 列表集中处理
 export const arr = [
   {
-    path: '/',
-    name: imgUrl
-  },
-  {
     path: '/recommend',
-    name: '个性推荐'
+    name: '主页推荐'
   },
   {
     path: '/newsong',
@@ -29,5 +24,9 @@ export const arr = [
   {
     path: '/mv',
     name: 'MV'
+  },
+  {
+    path: '/search/勾指起誓',
+    name: '搜索'
   }
 ]

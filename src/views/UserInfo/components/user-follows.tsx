@@ -38,11 +38,11 @@ const UserFollows = defineComponent({
                 class="user-follows-container-item"
               >
                 <div class="follows-img">
-                  <img class={`img`} src={item.avatarUrl} alt="" />
+                  <img class={`img`} v-lazy={item.avatarUrl} alt="" />
                   {item.avatarDetail?.identityIconUrl ? (
                     <img
                       class={`img-detail`}
-                      src={item.avatarDetail?.identityIconUrl}
+                      v-lazy={item.avatarDetail?.identityIconUrl}
                       alt=""
                     />
                   ) : (

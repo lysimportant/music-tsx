@@ -37,7 +37,10 @@ export const findArtist = ({
  * @returns Promise
  */
 export const findArtistDetail = (id: number | string) => {
-  return request('/artist/detail', { id })
+  return request('/artist/detail', {
+    id,
+    timestamp: Date.parse(new Date() + '')
+  })
 }
 
 /**

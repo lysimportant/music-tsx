@@ -15,7 +15,9 @@ export const findMusicURL = (id: [number]) => {
  * @returns Promise
  */
 export const findMusicDetail = (ids: [number]) => {
-  return request(`/song/detail?ids=${ids}`)
+  return request(
+    `/song/detail?ids=${ids}&timestamp=${Date.parse(new Date() + '')}`
+  )
 }
 
 /**

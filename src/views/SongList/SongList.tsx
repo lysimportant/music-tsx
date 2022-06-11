@@ -2,9 +2,11 @@ import { defineComponent, reactive, ref, watch } from 'vue'
 import LRecommend from '@/components/l-recommend/l-recommend'
 import { findSongList, findSongCatList, findBoutique } from '@/api/songdetail'
 import './style'
+import { useRoute } from 'vue-router'
 const SongList = defineComponent({
   name: 'SongList',
   setup(props, { emit }) {
+    const route = useRoute()
     // 全部标签
     const catAllList: any = ref([])
     // 部分标签
@@ -48,6 +50,15 @@ const SongList = defineComponent({
       boutique.value = res.playlists[0]
     }
     watch(
+      () => route.params.tag,
+      v => {
+        if (route.params.tag) {
+          reqParams.cat = route.params.tag as string
+        }
+      },
+      { immediate: true }
+    )
+    watch(
       () => reqParams,
       () => {
         getSongList()
@@ -70,11 +81,11 @@ const SongList = defineComponent({
           <div class="song-list-header">
             <img
               class={`song-list-header-bg`}
-              src={this.boutique?.coverImgUrl}
+              v-lazy={this.boutique?.coverImgUrl}
               alt=""
             />
             <div class="left">
-              <img src={this.boutique?.coverImgUrl} alt="" />
+              <img v-lazy={this.boutique?.coverImgUrl} alt="" />
             </div>
             <div class="right">
               <h1>精品歌单</h1>

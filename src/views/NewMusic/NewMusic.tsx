@@ -18,6 +18,7 @@ const NewMusic = defineComponent({
             <span
               onClick={() => {
                 this.currentMusic = 0
+                console.log(this.currentMusic, '音乐')
               }}
               class={`song ${
                 this.currentMusic === 0 ? 'selectMusic-container-active' : ''
@@ -29,6 +30,7 @@ const NewMusic = defineComponent({
             <span
               onClick={() => {
                 this.currentMusic = 1
+                console.log(this.currentMusic, '碟')
               }}
               class={`dish ${
                 this.currentMusic === 1 ? 'selectMusic-container-active' : ''

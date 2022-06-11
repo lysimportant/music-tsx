@@ -107,7 +107,7 @@ const MvDetail = defineComponent({
               <video autoplay controls src={this.mvURL}></video>
               <div class="user-info">
                 <img
-                  src={this.mv.artists[0].img1v1Url ?? this.mv.cover}
+                  v-lazy={this.mv.artists[0].img1v1Url ?? this.mv.cover}
                   alt=""
                 />
                 <span>{this.mv.artistName}</span>
@@ -141,7 +141,7 @@ const MvDetail = defineComponent({
                     class={`simi-mv-item`}
                   >
                     <div class="simi-mv-item-left">
-                      <img src={mv.cover} alt="" />
+                      <img v-lazy={mv.cover} alt="" />
                       <div class={`simi-mv-item-left-top`}>
                         <i class={`iconfont l-24gl-play`}></i>
                         {playCountFormat(mv.playCount)}

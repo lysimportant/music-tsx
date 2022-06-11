@@ -57,7 +57,7 @@ const Dish = defineComponent({
                 }}
                 class="dish-container-item"
               >
-                <img src={item.picUrl} alt="" />
+                <img v-lazy={item.picUrl} alt="" />
                 <p class={`ellipsis`}>{item.name}</p>
                 <span>{item.artist.name}</span>
               </div>

@@ -2,6 +2,7 @@ import { defineComponent, Suspense, ref } from 'vue'
 import HBanner from './components/h-banner'
 import HRecommend from './components/h-recommend'
 import HNewSong from './components/h-newsong'
+import HRecommendMV from './components/h-recommend-mv'
 const Home = defineComponent({
   name: 'Home',
   components: {
@@ -26,6 +27,9 @@ const Home = defineComponent({
         </Suspense>
         <Suspense>
           <HNewSong></HNewSong>
+        </Suspense>
+        <Suspense>
+          <HRecommendMV></HRecommendMV>
         </Suspense>
       </div>
     )

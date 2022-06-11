@@ -1,7 +1,10 @@
 import { defineComponent, ref, watch, onMounted } from 'vue'
 import { playSongTime } from '@/hooks/index'
+import { findMusicLyrics } from '@/api/music'
 import { useMusic } from '@/stores/music'
+import LMusicList from './components/l-music-list'
 import './style'
+import Toast from '@/plugins/Toast'
 export default defineComponent({
   name: 'LMusic',
   props: {
@@ -29,14 +32,26 @@ export default defineComponent({
     const progress = ref(0)
     // 总时长
     const endTime = ref(0)
+
     // 开启播放
     const play = () => {
-      if (props.audio.length > 0) {
+      if (store.list.length > 0) {
         playing.value = true
-        audioRef.value.play()
         progress.value = 0
         store.isPlay = true
-        console.log('播放')
+        store.lrc = ''
+        // timer && clearTimeout(timer)
+        // timer = setTimeout(() => {
+        //   audioRef.value.play()
+        // }, 200)
+
+        // console.log('播放', currentIndex.value)
+        findMusicLyrics(store.list[currentIndex.value].id).then(res => {
+          console.log(res)
+          store.lrc = res.lrc.lyric.split('\n') ?? '暂无歌词'
+          store.currentMusic = store.list[currentIndex.value]
+          audioRef.value.play()
+        })
       }
     }
     onMounted(() => {
@@ -44,37 +59,64 @@ export default defineComponent({
       store.isPlay = false
       // 空格暂停
       document.onkeydown = function (e) {
-        if (e.key === ' ' && props.audio.length > 0) {
+        if (e.key === ' ' && store.list.length > 0) {
           // store.
           e.preventDefault()
+          store.isPlay = !store.isPlay
           toggle()
           return e.defaultPrevented
         }
       }
     })
     watch(
-      () => props.audio,
+      () => store.list,
       () => {
-        if (!playing.value) {
-          setTimeout(() => {
-            progress.value = 0
-            play()
-          }, 1)
+        if (store.list.length > 0) {
+          progress.value = 0
+          play()
         }
+      },
+      {
+        deep: true
       }
     )
+    watch(
+      () => store.isPlay,
+      () => {
+        if (store.isPlay) {
+          progress.value = 0
+          play()
+        } else {
+          pause()
+        }
+      },
+      {
+        deep: true
+      }
+    )
+    // watch(
+    //   () => props.audio,
+    //   () => {
+    //     if (props.audio?.length === 1) {
+    //       progress.value = 0
+    //       play()
+    //     }
+    //   },
+    //   {
+    //     deep: true
+    //   }
+    // )
     // 暂停
     const pause = () => {
       playing.value = false
       audioRef.value.pause()
       store.isPlay = false
-      console.log('暂停')
     }
     // 下一首
     const next = () => {
       pause()
       currentIndex.value += 1
-      if (currentIndex.value > props.audio.length - 1) {
+      if (currentIndex.value > store.list.length - 1) {
         currentIndex.value = 0
       }
       progress.value = 0
@@ -96,8 +138,8 @@ export default defineComponent({
     const back = () => {
       pause()
       currentIndex.value -= 1
-      if (currentIndex.value < 0 || props.audio.length > 0) {
-        currentIndex.value = props.audio.length - 1
+      if (currentIndex.value < 0) {
+        currentIndex.value = store.list.length - 1
         if (currentIndex.value < 0) {
           currentIndex.value = 0
         }
@@ -132,19 +174,72 @@ export default defineComponent({
     }
     function getTime(time: number) {
       // 转换为式分秒
-      let m: any = parseInt((time / 60) % 60)
+      let m: any = parseInt(((time / 60) % 60) + '')
       m = m < 10 ? '0' + m : m
-      let s: any = parseInt(time % 60)
+      let s: any = parseInt((time % 60) + '')
       s = s < 10 ? '0' + s : s
       // 作为返回值返回
       return m + ':' + s
     }
-    expose({
-      play,
-      pause,
-      back,
-      next
-    })
+    // 切换播放
+    const togglePlay = id => {
+      const res = props.audio?.findIndex(item => item.id === id)
+      if (currentIndex.value !== res) {
+        pause()
+        progress.value = 0
+        currentIndex.value = res!
+        Toast('success', `已为您切换到 ${props!.audio[res].songName}`)
+        setTimeout(() => {
+          play()
+        }, 1)
+      } else {
+        Toast('info', '当前歌曲正在播放!')
+        play()
+      }
+    }
+    const clearList = () => {
+      progress.value = 0
+      currentIndex.value = 0
+      show.value = true
+      store.$reset()
+    }
+    watch(
+      () => props.audio,
+      () => {
+        if (props.audio?.length <= 0) {
+          show.value = true
+          showList.value = false
+        }
+      }
+    )
+    const delete_ = id => {
+      const res = props.audio?.findIndex(item => item.id === id)
+      if (!store.isPlay) {
+        pause()
+        progress.value = 0
+        store.deleteMusic(id)
+        play()
+      } else {
+        store.deleteMusic(id)
+        if (res < currentIndex.value) {
+          currentIndex.value -= 1
+        } else if (res === currentIndex.value) {
+          progress.value = 0
+          play()
+        }
+      }
+      // if (props?.audio?.length < 1) {
+      //   show.value = true
+      //   showList.value = false
+      // }
+      expose({
+        toggle,
+        play,
+        pause,
+        next,
+        back
+      })
+    }
     return {
       show,
       showList,
@@ -163,21 +258,48 @@ export default defineComponent({
       volumeInput,
       updateTime,
       changeProgress,
-      getTime
+      getTime,
+      togglePlay,
+      clearList,
+      delete_
     }
   },
   render() {
     return (
       <>
         <div class="l-music-container">
+          <div
+            style={`${this.showList ? 'height: 500px;' : ''}`}
+            class={`l-music-list`}
+          >
+            {this.showList ? (
+              <LMusicList
+                onPut-away-list={() => {
+                  this.showList = false
+                  this.show = true
+                }}
+                onDelete_={id => this.delete_(id)}
+                currentIndex={this.currentIndex}
+                onClearList={() => this.clearList()}
+                onTogglePlay={e => this.togglePlay(e)}
+                audio={this.audio}
+              ></LMusicList>
+            ) : (
+              ''
+            )}
+          </div>
+
           {/* 显示隐藏 */}
           <i
             title="显示/隐藏控件"
-            onClick={() => (this.show = !this.show)}
+            onClick={() => (
+              (this.show = !this.show), (this.showList = !this.showList)
+            )}
             class={`${
               this.show ? 'music-deg' : ''
             } iconfont music-arrow-left l-31fanhui1`}
           ></i>
+
           {this.audio.length > 0 ? (
             <i
               title="显示/隐藏列表"
@@ -195,14 +317,23 @@ export default defineComponent({
             class={`l-music-container-left`}
           >
             {this.audio!.length > 0 ? (
-              <img
-                onClick={() => {
-                  console.log(this.audio[this.currentIndex])
-                }}
-                class={`${this.playing ? 'music_play' : ''}`}
-                src={this.audio[this.currentIndex]?.picUrl}
-                alt=""
-              />
+              <>
+                <img
+                  onClick={() => {
+                    this.$router.push(
+                      `/lrc/${this.audio[this.currentIndex]?.id}/${
+                        this.audio[this.currentIndex]?.songName
+                      }`
+                    )
+                    this.showList = false
+                    this.show = true
+                  }}
+                  class={`${this.playing ? 'music_play' : ''}`}
+                  src={this.audio[this.currentIndex]?.picUrl}
+                  alt=""
+                ></img>
+                {/* <i  class={`iconfont show-lrc l-31fanhui1`}></i> */}
+              </>
             ) : (
               ''
             )}

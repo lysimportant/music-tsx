@@ -1,4 +1,4 @@
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, onMounted, onUnmounted, reactive, ref } from 'vue'
 import type { ElForm } from 'element-plus'
 import { login, findUserDetail } from '@/api/user'
 import { rules } from './config'
@@ -14,7 +14,21 @@ const AccountLogin = defineComponent({
       phone: '',
       password: ''
     })
-    const loginPhone = () => {
+    let event = el => {
+      console.log(el)
+      if (el.key === 'Enter') {
+        AccountLogin()
+      }
+    }
+    onMounted(() => {
+      document.addEventListener('keyup', event)
+      console.log('绑定事件', event)
+    })
+    onUnmounted(() => {
+      document.removeEventListener('keyup', event)
+      console.log('解除事件', event)
+    })
+    const AccountLogin = () => {
       formRef.value?.validate(async valid => {
         if (!valid) return
         const res = await login(loginPhoneForm)
@@ -33,7 +47,7 @@ const AccountLogin = defineComponent({
     return {
       loginPhoneForm,
       formRef,
-      loginPhone
+      AccountLogin
     }
   },
   render() {
@@ -56,7 +70,7 @@ const AccountLogin = defineComponent({
             ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" onClick={() => this.loginPhone()}>
+            <el-button type="primary" onClick={() => this.AccountLogin()}>
               登录
             </el-button>
           </el-form-item>

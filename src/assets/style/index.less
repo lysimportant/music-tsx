@@ -114,6 +114,12 @@ p {
   padding: 0;
   margin: 0;
 }
+.music-down {
+  &:hover {
+    cursor: pointer;
+    color: pink;
+  }
+}
 .ellipsis {
   overflow: hidden;
   text-overflow: ellipsis; /* 弹性伸缩盒子模型显示*/
@@ -197,7 +203,7 @@ img {
   color: #409eff;
 }
 .active {
-  color: #409eff;
+  color: #409eff !important;
 }
 .playnew {
   position: absolute;
@@ -271,4 +277,66 @@ img {
   100% {
     top: 40px;
   }
+}
+
+.lrc-padd {
+  padding: 0 30px;
+  .lrc {
+    display: flex;
+    justify-content: space-between;
+    &-left {
+      width: 40%;
+      height: 700px;
+      text-align: center;
+      img {
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        margin-top: 80px;
+      }
+      div {
+        font-size: 30px;
+        margin-top: 10px;
+      }
+      .lrc-name {
+        cursor: pointer;
+        font-size: 20px;
+        &:hover {
+          color: #409eff;
+        }
+      }
+    }
+    &-right {
+      height: 700px;
+      width: 60%;
+      overflow: hidden;
+      .lrc-container {
+        position: relative;
+        height: 100%;
+        transition: all 1s linear;
+        overflow: scroll;
+        text-align: center;
+        p {
+          font-size: 30px;
+          margin: 10px 0;
+        }
+      }
+    }
+  }
+}
+// 播放动画
+.music_play {
+  animation: playimge 4s infinite linear;
+}
+@keyframes playimge {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.newsong-shoucang {
+  cursor: pointer;
 }

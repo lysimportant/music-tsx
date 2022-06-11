@@ -1,9 +1,10 @@
 {
   "name": "music-tsx",
-  "version": "0.0.1",
+  "license": "ISC",
+  "version": "0.1.1",
   "scripts": {
     "serve": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build",
     "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
@@ -17,6 +18,7 @@
     "dayjs": "^1.11.2",
     "element-plus": "^2.0.5",
     "js-cookie": "^3.0.1",
+    "nprogress": "^0.2.0",
     "pinia": "^2.0.13",
     "pinia-persistedstate-plugin": "^0.1.0",
     "vue": "^3.2.33",
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/node": "^16.11.27",
+    "@types/nprogress": "^0.2.0",
     "@vitejs/plugin-vue": "^2.3.1",
     "@vitejs/plugin-vue-jsx": "^1.3.10",
     "@vue/eslint-config-prettier": "^7.0.0",

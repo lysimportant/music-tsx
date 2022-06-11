@@ -5,7 +5,10 @@ import request from '@/utils/request'
  * @returns Promise
  */
 export const findSongDetail = (id: number) => {
-  return request('/playlist/detail', { id })
+  return request('/playlist/detail', {
+    id,
+    timestamp: Date.parse(new Date() + '')
+  })
 }
 
 /**
@@ -61,6 +64,27 @@ export const findUserSongListHobby = ({ id, limit, offset }: SongListHobby) => {
     id,
     limit,
     offset,
+    timestamp: Date.parse(new Date() + '')
+  })
+}
+
+//
+
+/**
+ * 收藏歌单
+ * @param {Integer} id - 歌单ID
+ * @param {Integer} T - 1 收藏 0 取消收藏
+ * @returns Promise
+ */
+interface SongListHobby {
+  id: string | number
+  offset: number
+  limit: number
+}
+export const subSongList = (id: number, t: number) => {
+  return request('/playlist/subscribe', {
+    id,
+    t,
     timestamp: Date.parse(new Date() + '')
   })
 }

@@ -15,7 +15,9 @@ export const findBanner = () => {
  */
 
 export const findRecommendSongList = (limit = 15) => {
-  return request(`/personalized?limit=${limit}`)
+  return request(`/personalized?limit=${limit}`, {
+    timestamp: Date.parse(new Date() + '')
+  })
 }
 /**
  * 获取新音乐
@@ -24,5 +26,16 @@ export const findRecommendSongList = (limit = 15) => {
  */
 
 export const findNewSong = () => {
-  return request('/personalized/newsong')
+  return request('/personalized/newsong', {
+    timestamp: Date.parse(new Date() + '')
+  })
+}
+
+/**
+ * 获取推荐MV
+ * @param {}
+ * @returns Promise
+ */
+export const findRecommenfMV = () => {
+  return request('/personalized/mv')
 }

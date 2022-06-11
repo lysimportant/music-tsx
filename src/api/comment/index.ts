@@ -52,3 +52,36 @@ export const findAlbumComment = ({ id, limit, offset }: CommentType) => {
     timestamp: Date.parse(new Date() + '')
   })
 }
+
+/**
+ * 获取电台评论
+ * @param {Integer|String} ID - 专辑ID
+ * @param {Integer} limit - 拉取评论的个数
+ * @param {Integer} offset - 评论的偏移个数
+ * @returns Promise
+ */
+
+export const findDJComment = ({ id, limit, offset }: CommentType) => {
+  return request('/comment/dj', {
+    id,
+    limit,
+    offset,
+    timestamp: Date.parse(new Date() + '')
+  })
+}
+
+/**
+ * 获取歌曲评论
+ * @param {Integer|String} id - 歌单 的 ID
+ * @param {Integer} limit - 一次拿出的评论数量
+ * @param {Integer|String} offset - 评论的分页
+ * @returns Promise
+ */
+export const findSongComment = ({ id, offset, limit }: CommentType) => {
+  return request('/comment/music', {
+    id,
+    offset,
+    limit,
+    timestamp: Date.parse(new Date() + '')
+  })
+}

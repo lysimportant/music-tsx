@@ -14,7 +14,7 @@ import {
   ElForm,
   ElFormItem,
   ElInput,
-  ElMessage
+  ElAutocomplete
 } from 'element-plus'
 // import 'element-plus/dist/index.css'
 import type { App } from 'vue'
@@ -34,8 +34,9 @@ const components = [
   ElForm,
   ElFormItem,
   ElInput,
-  ElMessage
+  ElAutocomplete
 ]
+// el-autocomplete
 export default function (app: App) {
   components.forEach(component => {
     app.component(component.name, component)

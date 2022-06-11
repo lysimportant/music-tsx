@@ -23,7 +23,7 @@ const SingerDetailMV = defineComponent({
               }}
               class={`singer-detail-mv-container-item`}
             >
-              <img src={item.imgurl ?? item.cover} alt="" />
+              <img v-lazy={item.imgurl ?? item.cover} alt="" />
               <div class={`singer-detail-mv-container-item-top`}>
                 <i class={`iconfont l-24gl-play`}></i>
                 {playCountFormat(item.playCount)}

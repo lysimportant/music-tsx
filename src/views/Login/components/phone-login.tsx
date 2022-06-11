@@ -41,6 +41,7 @@ const PhoneLogin = defineComponent({
       formRef.value?.validate(async valid => {
         if (!valid) return
         const res = await verifyUserCaptcha(PhoneForm)
+        console.log(res)
         UStore.userDetail = res
         if (res?.code === 200) {
           Toast('success', '登录成功!')

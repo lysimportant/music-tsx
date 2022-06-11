@@ -11,7 +11,11 @@ type LoginType = {
   password: string
 }
 export const login = ({ phone, password }: LoginType) => {
-  return request('/login/cellphone', { phone, password }, 'POST')
+  return request('/login/cellphone', {
+    phone,
+    password,
+    timestamp: Date.parse(new Date() + '')
+  })
 }
 
 /**
@@ -37,11 +41,11 @@ type verifyType = {
   captcha: string
 }
 export const verifyUserCaptcha = ({ phone, captcha }: verifyType) => {
-  return request(
-    '/captcha/verify',
-    { phone, captcha, timestamp: Date.parse(new Date() + '') },
-    'POST'
-  )
+  return request('/captcha/verify', {
+    phone,
+    captcha,
+    timestamp: Date.parse(new Date() + '')
+  })
 }
 // ?uid=32953014
 /**
@@ -146,4 +150,35 @@ export const findUserFollowsList = (uid: string) => {
  */
 export const findUserFollowedList = (uid: string) => {
   return request('/user/followeds?limit=10000', { uid })
+}
+
+/**
+ * 关注歌手
+ * @param {Integer|String} ID - 歌手ID
+ * @returns Promise
+ */
+export const subUser = (id: number | string, t: number) => {
+  return request('/follow', { id, t, timestamp: Date.parse(new Date() + '') })
+}
+
+/**
+ * 关注歌手
+ * @param {Integer|String} ID - 歌手ID
+ * @returns Promise
+ */
+export const subArtists = (id: number | string, t: number) => {
+  return request('/artist/sub', {
+    id,
+    t,
+    timestamp: Date.parse(new Date() + '')
+  })
+}
+
+/**
+ *  用户喜欢的音乐列表
+ * @param {}
+ * @returns Promise
+ */
+export const userSubList = (uid: string) => {
+  return request('/likelist', { uid, timestamp: Date.parse(new Date() + '') })
 }

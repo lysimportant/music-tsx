@@ -1,0 +1,103 @@
+.search-container {
+  padding: 0 20px 30px;
+  .search-header {
+    padding-bottom: 10px;
+    border-bottom: 2px solid red;
+    margin-bottom: 10px;
+    display: flex;
+    h1 {
+      font-size: 35px;
+      margin: 0 10px;
+    }
+    .search-title {
+      font-size: 10px;
+      margin-top: 25px;
+    }
+  }
+}
+.search-res-user-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  &-item {
+    position: relative;
+    width: 30%;
+    margin: 20px;
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    span {
+      margin-left: 20px;
+      font-size: 16px;
+    }
+    .user-di {
+      position: absolute;
+      bottom: 0;
+      left: 70px;
+      width: 20px;
+      height: 20px;
+    }
+    i {
+      position: absolute;
+      top: 45px;
+      right: 10px;
+      width: 100px;
+      font-size: 12px;
+      color: rgb(100, 100, 100);
+    }
+  }
+}
+.search-res-dj-container {
+  &-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    padding: 20px;
+    &-left {
+      display: flex;
+      align-items: center;
+      width: 40%;
+      cursor: pointer;
+      span {
+        margin-left: 20px;
+      }
+    }
+    &-right {
+      width: 40%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      span {
+        padding: 0 20px;
+        color: #909091;
+      }
+      div {
+        line-height: 70px;
+        margin-bottom: 10px;
+        span {
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+      }
+      &-name {
+        margin-right: 10px;
+        &:hover {
+          color: #000;
+          cursor: pointer;
+        }
+      }
+    }
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+    span {
+      font-size: 20px;
+    }
+  }
+}

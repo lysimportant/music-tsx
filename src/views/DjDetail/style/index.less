@@ -1,0 +1,69 @@
+.songlist-detail-header {
+  padding: 135px 0 !important;
+  .songlist-detail-header-left {
+    img {
+      margin-top: -20px;
+    }
+  }
+  .songlist-detail-header-right {
+    .DJTitle {
+      &::before {
+        content: '播客';
+        font-weight: 400;
+        border: 1px solid red;
+
+        color: red;
+        padding: 3px 8px;
+        font-size: 15px;
+        margin-right: 10px;
+      }
+    }
+    .user-info {
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+    }
+    .operate {
+      display: flex;
+      margin-top: 30px;
+      .el-button {
+        border-radius: 20px;
+        i {
+          margin: 0 5px;
+        }
+      }
+    }
+    .yc {
+      margin-top: 10px;
+      span {
+        padding: 2px;
+        color: red;
+        border: 1px solid red;
+        font-size: 14px;
+      }
+    }
+    div {
+      font-size: 16px;
+      margin: 5px 0;
+      span {
+        cursor: pointer;
+      }
+      span,
+      i {
+        margin: 0 5px;
+      }
+    }
+  }
+}
+
+.songlist-body {
+  padding: 0 30px;
+  .el-button {
+    margin-bottom: 60px;
+  }
+  .el-table {
+    margin-top: -60px;
+  }
+}

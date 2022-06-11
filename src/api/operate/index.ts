@@ -56,3 +56,13 @@ export const sendComment = ({
     timestamp: Date.parse(new Date() + '')
   })
 }
+
+/**
+ *
+ * @param {Integer} id - 歌曲ID
+ * @param {Boolean} like - true 为喜欢 false 位不喜欢
+ * @returns Promise
+ */
+export const likeMusic = (id: number, like: boolean) => {
+  return request('/like', { id, like, timestamp: Date.parse(new Date() + '') })
+}

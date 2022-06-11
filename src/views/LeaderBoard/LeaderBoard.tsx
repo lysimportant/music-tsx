@@ -80,7 +80,7 @@ const LeaderBoard = defineComponent({
                   onClick={() =>
                     this.$router.push(`/songlist/${item.id}/detail`)
                   }
-                  src={item?.coverImgUrl}
+                  v-lazy={item?.coverImgUrl}
                   alt=""
                 />
                 <i

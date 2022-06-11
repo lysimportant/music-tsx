@@ -106,7 +106,7 @@ const Singer = defineComponent({
             </ul>
           </div>
         </div>
-        <LRecommend list={this.artists}></LRecommend>
+        <LRecommend showPlay={false} list={this.artists}></LRecommend>
         <div class="pagenaintaion">
           <el-pagination
             v-model:currentPage={this.reqParams.page}
