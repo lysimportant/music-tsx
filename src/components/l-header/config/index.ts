@@ -24,9 +24,5 @@ export const arr = [
   {
     path: '/mv',
     name: 'MV'
-  },
-  {
-    path: '/search/勾指起誓',
-    name: '搜索'
   }
 ]

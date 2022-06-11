@@ -44,7 +44,7 @@ const LMusicList = defineComponent({
           data={this.audio}
           height={450}
           onRowClick={e => {
-             this.$emit('togglePlay', e.id)
+            this.$emit('togglePlay', e.id)
           }}
         >
           <el-table-column align="center" type="index" width="50" />

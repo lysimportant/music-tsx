@@ -5,11 +5,11 @@ import HeaderDialog from './components/header-dialog'
 import UserPage from './components/user-page'
 import HeaderPag from './components/header-pag'
 import { RouterLink, useRouter } from 'vue-router'
+import logoImg from '@/assets/image/logo.png'
 import Login from '@/views/Login/Login'
 import { useUser } from '@/stores/user'
 // logo 图片导入
 import { userSubList, logoutUser } from '@/api/user'
-import logoImg from '@/assets/image/logo.png'
 import './style'
 // import 'element-plus/theme-chalk/el-autocomplete.css'
 const LHeader = defineComponent({
@@ -128,22 +128,19 @@ const LHeader = defineComponent({
     return (
       <>
         <div class="l-header">
-          <div class="left">
+          <div class="center">
             <RouterLink to="/">
-              <img src={logoImg} alt="logo" />
+              <img
+                style={`width: 60px; height: 60px;`}
+                src={logoImg}
+                alt="logo"
+              />
             </RouterLink>
+            <span style={`margin: 0 5px;`} onClick={() => this.show_detail()}>代码开始旅行的地方</span>
+          </div>
+          <div class="left">
             {/* 导航组件 */}
             <HeaderPag></HeaderPag>
-            <el-button onClick={() => this.toggleAllP()}>切换全屏</el-button>
-            <el-button onClick={() => this.$router.go(-1)}>
-              <i class={`iconfont l-31fanhui1`}></i>
-            </el-button>
-            <el-button onClick={() => this.$router.go(1)}>
-              <i class={`iconfont l-31fanhui2`}></i>
-            </el-button>
-          </div>
-          <div class="center">
-            <span onClick={() => this.show_detail()}>代码开始旅行的地方</span>
           </div>
           <div class="right">
             <el-autocomplete
@@ -154,9 +151,9 @@ const LHeader = defineComponent({
               onSelect={this.handleSelect}
               ref="inputRef"
             ></el-autocomplete>
-            <LButton onClick={() => this.btnClick()}>
+            <el-button onClick={() => this.btnClick()}>
               <i class="iconfont l-sousuo search"></i>
-            </LButton>
+            </el-button>
             {/* 用户信息简单展示 */}
             <UserPage
               onLogin={this.login}

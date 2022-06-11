@@ -8,12 +8,14 @@
   padding-top: 0;
   max-height: 1.6rem;
   min-height: 1.6rem;
+  background-color: #242424;
   .left {
-    margin-left: 100px;
-    .el-button {
-      margin: 0 5px;
+    margin-left: 10px;
+    line-height: 76px;
+    span {
+      margin: 0 1px;
+      color: #fff;
     }
-
     img {
       width: 1.3333rem;
       height: 1.3333rem;
@@ -24,13 +26,28 @@
         transform: scale(1.1);
       }
     }
+    .header-ul {
+      li {
+        cursor: pointer;
+        margin: 5px 10px;
+        font-size: 19px;
+        float: left;
+        color: #fff;
+        span {
+          cursor: pointer;
+          &:hover {
+            color: skyblue;
+          }
+        }
+      }
+    }
   }
   .center {
     span {
-      transition: all 0.3s linear;
+      transition: all 0.5s linear;
       cursor: pointer;
       font-size: 0.32rem;
-      height: 0.6rem;
+      // height: 0.6rem;
       line-height: 1.5rem;
       background-image: -webkit-linear-gradient(
         right,
@@ -40,7 +57,7 @@
       -webkit-background-clip: text; //以盒子内的文字作为裁剪区域向外裁剪，文字之外的区域都将被裁剪掉。
       -webkit-text-fill-color: transparent; //把文字变透明
       &:hover {
-        font-size: 0.4rem;
+        transform: scale(1.1);
       }
     }
   }
@@ -54,14 +71,15 @@
       bottom: 15px;
       z-index: 1;
     }
-    .l-button {
-      .l-sousuo:before {
-        position: absolute;
-        top: 0.02rem;
-        left: 0.32rem;
-        color: #000;
-        font-size: 0.5rem;
-      }
+    .el-button {
+      margin-right: 5px;
+      // .l-sousuo:before {
+      //   position: absolute;
+      //   top: 0.02rem;
+      //   left: 0.32rem;
+      //   color: #000;
+      //   font-size: 0.5rem;
+      // }
     }
     .header-user {
       cursor: pointer;
@@ -77,11 +95,13 @@
       }
       .l-user:before {
         font-size: 0.6rem;
+        color: #fff;
       }
       span {
         display: block;
         font-size: 0.32rem;
         margin-left: 10px;
+        color: #fff;
       }
     }
   }
@@ -160,50 +180,4 @@
 }
 .my-autocomplete li .highlighted .addr {
   color: #ddd;
-}
-// .anima-detail {
-//   width: 200px;
-//   height: 200px;
-//   animation: anima-detail 3s linear infinite;
-// }
-
-// @keyframes anima-detail {
-//   0% {
-//     transform: rotate(0);
-//     transform: translateX(0);
-//   }
-//   20% {
-//     transform: rotate(60deg);
-//     transform: translateX(15%);
-//   }
-//   40% {
-//     transform: rotate(120deg);
-//     transform: translateX(30%);
-//   }
-//   60% {
-//     transform: rotate(180deg);
-//     transform: translateX(45%);
-//   }
-//   80% {
-//     transform: rotate(240deg);
-//     transform: translateX(60%);
-//   }
-//   100% {
-//     transform: rotate(360deg);
-//     transform: translateX(80%);
-//   }
-// }
-.header-ul {
-  li {
-    margin: 5px 1px;
-    font-size: 0.32rem;
-    float: left;
-    a {
-      cursor: pointer;
-      padding: 0 0.3rem;
-      &:hover {
-        color: skyblue;
-      }
-    }
-  }
 }

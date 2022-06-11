@@ -1,5 +1,6 @@
 import { defineComponent, ref } from 'vue'
 import imgUrl from '@/assets/image/feishu.png'
+import QQUrl from '@/assets/image/程序学习交流群聊二维码.png'
 
 const HeaderDialog = defineComponent({
   name: 'HeaderDialog',
@@ -93,6 +94,7 @@ const HeaderDialog = defineComponent({
                       href="https://jq.qq.com/?_wv=1027&k=Dnui5P9V"
                       target="__blank"
                     >
+                      <img src={QQUrl} alt="" />
                       qq裙
                     </a>
                   </li>
