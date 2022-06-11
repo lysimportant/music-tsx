@@ -283,6 +283,10 @@ export default defineComponent({
                 onClearList={() => this.clearList()}
                 onTogglePlay={e => this.togglePlay(e)}
                 audio={this.audio}
+                onPutAwayList={() => {
+                  this.show = true, this.showList = false
+                  console.log('shia')
+                }}
               ></LMusicList>
             ) : (
               ''
