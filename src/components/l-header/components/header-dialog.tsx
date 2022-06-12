@@ -23,7 +23,8 @@ const HeaderDialog = defineComponent({
   render() {
     return (
       <el-dialog v-model={this.show_detail} width="70%">
-        项目还没有完成! 全部播放有的歌单过于多,请求不了 没有请求所有全部,只是部分
+        项目还没有完成! 全部播放有的歌单过于多,请求不了
+        没有请求所有全部,只是部分
         <el-tabs v-model={this.activeName}>
           <el-tab-pane label="其它" name="other">
             <ul class={`other-detail`}>
