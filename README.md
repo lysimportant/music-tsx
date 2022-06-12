@@ -11,6 +11,9 @@
 # music_Tsx English
 
 This template should help get you started developing with Vue 3 in Vite.
+# tip 还没加的功能
+  * 关注或取消关注用户后 重新获取数据
+  * ....
 
 ## Recommended IDE Setup
 

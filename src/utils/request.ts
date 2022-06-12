@@ -1,30 +1,20 @@
 import axios from 'axios'
 import type { AxiosRequestConfig } from 'axios'
-// import Cookies from 'js-cookie'
-import npro from 'nprogress'
 import Toast from '@/plugins/Toast'
-// import {} from ''
+import { startLoading, endLoading } from '@/plugins/loading'
 const network = (config: AxiosRequestConfig) => {
   const instance = axios.create({
     // http://localhost:3000
     // baseURL: 'http://localhost:3000/',
     // baseURL: 'http://124.221.63.19:3000/',
     baseURL: 'https://lianghj.top:3000/',
-    timeout: 5000,
+    timeout: 20000,
     withCredentials: true
   })
 
   instance.interceptors.request.use(
     config => {
-      npro.start()
-      const res = JSON.parse(
-        window.localStorage.getItem('pinia-useUser') as string
-      )
-      if (res) {
-        const { cookie } = res.profile
-        // config!.headers.Authorization = cookie
-      }
-
+      startLoading('数据拼命加载中.....')
       return config
     },
     err => {
@@ -34,11 +24,11 @@ const network = (config: AxiosRequestConfig) => {
 
   instance.interceptors.response.use(
     response => {
-      npro.done()
+      endLoading()
       return response.data
     },
     err => {
-      npro.done()
+      endLoading()
       if (err.response?.data) {
         if (err.response.data.code === 406) {
           return Toast('warning', err.response.data.msg)

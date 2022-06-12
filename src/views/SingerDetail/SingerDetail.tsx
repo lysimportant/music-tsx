@@ -148,6 +148,7 @@ const SingerDetail = defineComponent({
             <el-tab-pane label="相似歌手" name="xs">
               {/* <SingerSimiArtist></SingerSimiArtist> */}
               <LRecommend
+              showPlay={false}
                 onItemClick={item => {
                   this.$router.push(`/singerdetail/${item.id}`)
                 }}

@@ -26,10 +26,18 @@ const LRecommend = defineComponent({
       MStore.$reset()
       findSongDetail(id).then((res: any) => {
         console.log(res.playlist)
+        if (res?.playlist.trackIds.length > 50) {
+        MStore.playMusic(
+          res?.playlist.tracks.map(item => item.id),
+          1
+        )
+        } else {
         MStore.playMusic(
           res?.playlist.trackIds.map(item => item.id),
           1
         )
+        }
+
       })
     }
     const JumpRouter = item => {

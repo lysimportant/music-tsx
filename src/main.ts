@@ -9,7 +9,6 @@ import registerDirective from './plugins/registerDirective'
 import { reset } from '@/plugins/screen-adaptation'
 import registerComponents from './plugins/registerComponents'
 import './plugins/bg'
-import 'nprogress/nprogress.css'
 reset()
 // app的创建
 const app = createApp(App)

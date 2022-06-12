@@ -29,7 +29,7 @@ export const useMusic = defineStore('useMusic', {
     }
   },
   actions: {
-    async playMusic(ids: [number], sort?: number) {
+    async playMusic(ids: [any], sort?: number) {
       const musicDetail: any = await findMusicDetail(ids)
       const songDetail: any = await findMusicURL(ids)
       musicDetail.songs.forEach((item: any, index: number) => {

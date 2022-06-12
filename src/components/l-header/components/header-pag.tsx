@@ -39,12 +39,12 @@ const HeaderPag = defineComponent({
         <li>
           <span onClick={() => this.toggleAllP()}>切换全屏</span>
         </li>
-        <li>
-          <span title="后退" onClick={() => this.$router.go(-1)}>
-            <i class={`iconfont l-31fanhui1`}></i>
+        <li >
+          <span  title="后退" onClick={() => this.$router.go(-1)}>
+            <i  style={`font-size: 20px;`} class={`iconfont l-31fanhui1`}></i>
           </span>
           <span title="前进" onClick={() => this.$router.go(1)}>
-            <i class={`iconfont l-31fanhui2`}></i>
+            <i  style={`font-size: 20px;`} class={`iconfont l-31fanhui2`}></i>
           </span>
         </li>
       </ul>

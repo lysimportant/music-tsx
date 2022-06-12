@@ -106,12 +106,24 @@ const SongListDetail = defineComponent({
       MStore.playMusic([id])
     }
     const playAll = () => {
+      const arr = []
       MStore.$reset()
       LMusic.value?.pause()
-      MStore.playMusic(
-        detail.value.trackIds.map(item => item.id),
-        1
-      )
+      if (detail.value.trackIds.length > 50) {
+        for (let index = 0; index < 80; index++) {
+          arr.push(detail.value.trackIds[index])
+        }
+        MStore.playMusic(
+          [arr],
+          1
+        )
+        } else {
+          MStore.playMusic(
+            detail.value.trackIds.map(item => item.id),
+            1
+          )
+        }
+
     }
     // 评论点赞
 

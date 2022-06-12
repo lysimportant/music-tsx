@@ -27,6 +27,7 @@ const QRLogin = defineComponent({
     const checkQR = () => {
       timer = setInterval(async () => {
         const res = await checkGenerateQR(QRKey.value)
+        console.log(res)
         if (res.code === 800) {
           Toast('warning', res.message)
           isExpired.value = true
@@ -35,13 +36,15 @@ const QRLogin = defineComponent({
         if (res.code === 803) {
           clearInterval(timer)
           UStore.profile.cookie = res.cookie
-          const us = await getUserDetail()
-          UStore.profile = us
-          UStore.userDetail = await findUserDetail(
-            UStore.profile?.profile.userId
-          )
-          emit('qr-success')
-          return Toast('success', res.message)
+          const resUS = await getUserDetail()
+          UStore.profile = resUS
+          if (resUS.code === 200) {
+            const resDe = await findUserDetail(resUS.account.id)
+            UStore.userDetail = resDe
+            console.log('QRQRQRQRQR', UStore.userDetail, resDe)
+            emit('qr-success')
+            return Toast('success', res.message)
+          }
         }
       }, 1500)
     }
