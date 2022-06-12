@@ -136,7 +136,9 @@ const LHeader = defineComponent({
                 alt="logo"
               />
             </RouterLink>
-            <span style={`margin: 0 5px;`} onClick={() => this.show_detail()}>代码开始旅行的地方</span>
+            <span style={`margin: 0 5px;`} onClick={() => this.show_detail()}>
+              代码开始旅行的地方
+            </span>
           </div>
           <div class="left">
             {/* 导航组件 */}

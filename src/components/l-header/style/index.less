@@ -146,9 +146,19 @@
   flex-wrap: wrap;
   width: 100%;
   li {
-    padding: 10px 20px;
-    margin: 5px 0;
-    width: 50%;
+    &:nth-child(4) {
+      width: 52%;
+    }
+    .xx {
+      &:hover {
+        user-select: text;
+        background-color: #fff;
+      }
+    }
+
+    padding: 5px 15px;
+    margin: 20px 0;
+    width: 46%;
     li {
       width: 100%;
       &:hover {
@@ -156,14 +166,15 @@
         background-color: #ccc;
       }
     }
+
     span {
       font-weight: 700;
     }
   }
 
   img {
-    width: 500px;
-    height: 500px;
+    width: 300px !important;
+    height: 300px;
   }
 }
 .my-autocomplete li {

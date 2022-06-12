@@ -1,5 +1,6 @@
 import { defineComponent, ref, watch, onMounted } from 'vue'
 import { playSongTime } from '@/hooks/index'
+import { onClickOutside } from '@vueuse/core'
 import { findMusicLyrics } from '@/api/music'
 import { useMusic } from '@/stores/music'
 import LMusicList from './components/l-music-list'
@@ -94,18 +95,6 @@ export default defineComponent({
         deep: true
       }
     )
-    // watch(
-    //   () => props.audio,
-    //   () => {
-    //     if (props.audio?.length === 1) {
-    //       progress.value = 0
-    //       play()
-    //     }
-    //   },
-    //   {
-    //     deep: true
-    //   }
-    // )
     // 暂停
     const pause = () => {
       playing.value = false
@@ -228,10 +217,6 @@ export default defineComponent({
           play()
         }
       }
-      // if (props?.audio?.length < 1) {
-      //   show.value = true
-      //   showList.value = false
-      // }
       expose({
         toggle,
         play,
@@ -240,7 +225,12 @@ export default defineComponent({
         back
       })
     }
+    const music_ = ref()
+    onClickOutside(music_, () => {
+      ;(show.value = true), (showList.value = false)
+    })
     return {
+      music_,
       show,
       showList,
       currentIndex,
@@ -267,7 +257,7 @@ export default defineComponent({
   render() {
     return (
       <>
-        <div class="l-music-container">
+        <div class="l-music-container" ref="music_">
           <div
             style={`${this.showList ? 'height: 500px;' : ''}`}
             class={`l-music-list`}
@@ -283,10 +273,6 @@ export default defineComponent({
                 onClearList={() => this.clearList()}
                 onTogglePlay={e => this.togglePlay(e)}
                 audio={this.audio}
-                onPutAwayList={() => {
-                  ;(this.show = true), (this.showList = false)
-                  console.log('shia')
-                }}
               ></LMusicList>
             ) : (
               ''

@@ -1,5 +1,5 @@
 import { defineComponent, ref, withModifiers } from 'vue'
-import { onClickOutside } from '@vueuse/core'
+
 import { playSongTime } from '@/hooks'
 const LMusicList = defineComponent({
   name: 'LMusicList',
@@ -13,17 +13,11 @@ const LMusicList = defineComponent({
       default: 0
     }
   },
-  emits: ['togglePlay', 'clearList', 'put-away-list', 'delete_', 'putAwayList'],
-  setup(props, { emit }) {
-    const music_ = ref()
-    onClickOutside(music_, () => emit('putAwayList'))
-    return {
-      music_
-    }
-  },
+  emits: ['togglePlay', 'clearList', 'put-away-list', 'delete_'],
+  setup(props, { emit }) {},
   render() {
     return (
-      <div class={`l-music-list-container`} ref="music_">
+      <div class={`l-music-list-container`}>
         <div class={`music-list-title`}>
           <span>播放列表:{this.audio?.length}</span>{' '}
           <i

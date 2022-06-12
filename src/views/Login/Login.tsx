@@ -4,7 +4,7 @@ import PhoneLogin from './components/phone-login'
 import QRLogin from './components/QR-login'
 import LoginBg from '@/assets/image/login-bg.jpeg'
 import imgUrl from '@/assets/image/logo.png'
-
+import { onClickOutside } from '@vueuse/core'
 import './style'
 const Login = defineComponent({
   name: 'Login',
@@ -17,6 +17,7 @@ const Login = defineComponent({
   emits: ['update:modelValue', 'logout'],
   setup(props, { emit }) {
     const isLC = ref(false)
+    const music__ = ref()
     const activeName = ref('QR')
     onMounted(() => {
       document.body.parentNode!.style.overflowY = 'hidden'
@@ -25,10 +26,14 @@ const Login = defineComponent({
     onUnmounted(() => {
       document.body.parentNode!.style.overflowY = 'auto'
     })
+    onClickOutside(music__, () => {
+      emit('logout', false)
+    })
     return {
       LoginBg,
       isLC,
-      activeName
+      activeName,
+      music__
     }
   },
   render() {
@@ -40,8 +45,9 @@ const Login = defineComponent({
           }`}
         >
           <div
+            ref="music__"
             class={`login-container-auto ${
-              this.isLC ? 'login-container-auto-animation' : 'Not Class'
+              this.isLC ? 'login-container-auto-animation' : ''
             }`}
           >
             <div class={`login-container-auto-left `}>
