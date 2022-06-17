@@ -15,7 +15,7 @@ const network = (config: AxiosRequestConfig) => {
   instance.interceptors.request.use(
     config => {
       console.log(config.url)
-      if(config.url !== '/login/qr/check'){
+      if (config.url !== '/login/qr/check') {
         startLoading('数据拼命加载中.....')
       }
       return config

@@ -2,7 +2,6 @@ import { defineComponent, ref, watch, onMounted } from 'vue'
 import { searchHot, defaultSearch } from '@/api/search'
 import LButton from '@/library/l-button/l-button.tsx'
 import HeaderDialog from './components/header-dialog'
-import UserPage from './components/user-page'
 import HeaderPag from './components/header-pag'
 import { timeFormat } from '@/hooks'
 import { RouterLink, useRouter } from 'vue-router'
@@ -73,6 +72,9 @@ const LHeader = defineComponent({
       userDetail.value = null
       UStore.$reset()
       logoutUser()
+      const clearCookies = document.cookie.split(';').forEach(cookie => document.cookie =
+      cookie.replace(/^ +/, '')
+      .replace(/=.*/, `=;expires=${new Date(0).toUTCString()};path=/`))
       window.localStorage.removeItem('pinia-useUser')
     }
     // 初始化
@@ -163,13 +165,6 @@ const LHeader = defineComponent({
             <el-button onClick={() => this.btnClick()}>
               <i class="iconfont l-sousuo search"></i>
             </el-button>
-            {/* 用户信息简单展示 */}
-            {/* <UserPage
-              onLogin={this.login}
-              onLogout={this.logout}
-              profile={this.profile}
-              userDetail={this.userDetail}
-            ></UserPage> */}
             {this.profile ? (
               <div class={'header-user'}>
                 <el-popover
@@ -188,7 +183,6 @@ const LHeader = defineComponent({
                               )
                             }
                             src={this.profile?.profile?.avatarUrl}
-                            alt=""
                           />
                           <span>{this.profile?.profile?.nickname}</span>
                         </div>
@@ -231,7 +225,7 @@ const LHeader = defineComponent({
 
                           <div class={`level`}>
                             <span>ID</span>
-                            <span>{this.userDetail?.profile.userId}</span>
+                            <span>{this.userDetail?.profile?.userId}</span>
                           </div>
                           <div class={`level`}>
                             <span>等级</span>

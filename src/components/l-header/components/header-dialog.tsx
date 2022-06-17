@@ -103,7 +103,7 @@ const HeaderDialog = defineComponent({
               <li>
                 <h2>功能</h2>
                 <li>帐号登录</li>
-                <li>扫码登录</li>
+                <li>扫码登录 些许bug可能登录不成功</li>
                 <li>关注用户</li>
                 <li>收藏歌手</li>
                 <li>收藏歌曲</li>
