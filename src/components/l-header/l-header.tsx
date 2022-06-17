@@ -72,9 +72,14 @@ const LHeader = defineComponent({
       userDetail.value = null
       UStore.$reset()
       logoutUser()
-      const clearCookies = document.cookie.split(';').forEach(cookie => document.cookie =
-      cookie.replace(/^ +/, '')
-      .replace(/=.*/, `=;expires=${new Date(0).toUTCString()};path=/`))
+      const clearCookies = document.cookie
+        .split(';')
+        .forEach(
+          cookie =>
+            (document.cookie = cookie
+              .replace(/^ +/, '')
+              .replace(/=.*/, `=;expires=${new Date(0).toUTCString()};path=/`))
+        )
       window.localStorage.removeItem('pinia-useUser')
     }
     // 初始化

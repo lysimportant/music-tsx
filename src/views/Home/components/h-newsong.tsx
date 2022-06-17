@@ -62,7 +62,10 @@ const HNewSong = defineComponent({
           return (
             <div
               class="newsong-container-item"
-              onClick={withModifiers(() => this.playMusic(item), ['stop', 'prevent'])}
+              onClick={withModifiers(
+                () => this.playMusic(item),
+                ['stop', 'prevent']
+              )}
             >
               <img v-lazy={item.picUrl} alt="" />
               <span class={`songname`}>{item.name}</span>
